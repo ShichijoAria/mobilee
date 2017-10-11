@@ -9,6 +9,6 @@
 
     <context:property-placeholder location="classpath:config.properties"/>
     <!-- 扫描service自动注入为bean -->
-    <context:component-scan base-package="org.aria.mobilee.service.impl,org.aria.mobilee.dao.impl" />
+    <context:component-scan base-package="edu.xhu.mobilee.service.impl,edu.xhu.mobilee.dao.impl" />
 
 </beans>

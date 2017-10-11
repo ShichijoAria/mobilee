@@ -56,14 +56,15 @@
         <!-- hibernate配置信息 -->
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle12cDialect</prop>
+                <prop key="connection.driver_class">oracle.jdbc.driver.OracleDriver</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
         </property>
         <!-- 扫描hibernate注解配置的entity -->
-        <property name="packagesToScan" value="org.aria.mobilee.entity" />
+        <property name="packagesToScan" value="edu.xhu.mobilee.entity" />
     </bean>
 
     <!-- 配置事务管理器 -->
@@ -95,7 +96,7 @@
     <aop:config>
         <!-- 配置切入点 -->
         <aop:pointcut id="transactionPointcut"
-                      expression="execution(* org.aria.mobilee.service.impl.*Impl.*(..))" />
+                      expression="execution(* edu.xhu.mobilee.service.impl.*Impl.*(..))" />
         <!-- 指定在txAdvice切入点应用txAdvice事务增强处理 -->
         <aop:advisor pointcut-ref="transactionPointcut"
                      advice-ref="transactionAdvice" />
