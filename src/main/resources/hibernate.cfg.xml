@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:oracle:thin:@localhost:1521:orcl</property>
+    <property name="connection.driver_class">oracle.jdbc.OracleDriver</property>
+      <mapping class="edu.xhu.mobilee.entity.AdminEntity"/>
+      <mapping resource="edu/xhu/mobilee/entity/AdminEntity.hbm.xml"/>
+      <mapping class="edu.xhu.mobilee.entity.CollectionEntity"/>
+      <mapping resource="edu/xhu/mobilee/entity/CollectionEntity.hbm.xml"/>
+      <mapping class="edu.xhu.mobilee.entity.CommetEntity"/>
+      <mapping resource="edu/xhu/mobilee/entity/CommetEntity.hbm.xml"/>
+      <mapping class="edu.xhu.mobilee.entity.ManufaoturerEntity"/>
+      <mapping resource="edu/xhu/mobilee/entity/ManufaoturerEntity.hbm.xml"/>
+      <mapping resource="edu/xhu/mobilee/entity/OperationLogEntity.hbm.xml"/>
+      <mapping class="edu.xhu.mobilee.entity.OperationLogEntity"/>
+      <mapping class="edu.xhu.mobilee.entity.PhoneEntity"/>
+      <mapping resource="edu/xhu/mobilee/entity/PhoneEntity.hbm.xml"/>
+      <mapping class="edu.xhu.mobilee.entity.SaleEntity"/>
+      <mapping resource="edu/xhu/mobilee/entity/SaleEntity.hbm.xml"/>
+      <mapping resource="edu/xhu/mobilee/entity/ShopEntity.hbm.xml"/>
+      <mapping class="edu.xhu.mobilee.entity.ShopEntity"/>
+      <mapping class="edu.xhu.mobilee.entity.UserEntity"/>
+      <mapping resource="edu/xhu/mobilee/entity/UserEntity.hbm.xml"/>
+      <!-- <property name="connection.username"/> -->
+    <!-- <property name="connection.password"/> -->
+
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>

@@ -13,8 +13,8 @@
     <!-- 配置数据源 使用的是Druid数据源 -->
     <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close">
-        <property name="url" value="${jdbc.url}" />
-        <property name="username" value="root" />
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+        <property name="username" value="c##mobilee" />
         <property name="password" value="qwerdf" />
 
         <!-- 初始化连接大小 -->
@@ -30,7 +30,7 @@
         <property name="maxPoolPreparedStatementPerConnectionSize"
                   value="33" />
         <!-- 用来检测有效sql -->
-        <property name="validationQuery" value="${validationQuery}" />
+        <property name="validationQuery" value="select 1 from dual" />
         <property name="testOnBorrow" value="false" />
         <property name="testOnReturn" value="false" />
         <property name="testWhileIdle" value="true" />

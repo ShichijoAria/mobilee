@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="edu.xhu.mobilee.entity.ShopEntity" table="T_SHOP" schema="C##MOBILEE">
+        <id name="id" column="ID"/>
+        <property name="name" column="NAME"/>
+        <property name="address" column="ADDRESS"/>
+    </class>
+</hibernate-mapping>

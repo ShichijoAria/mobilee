@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="edu.xhu.mobilee.entity.PhoneEntity" table="T_PHONE" schema="C##MOBILEE">
+        <id name="id" column="ID"/>
+        <property name="name" column="NAME"/>
+        <property name="cpu" column="CPU"/>
+        <property name="memory" column="MEMORY"/>
+        <property name="storage" column="STORAGE"/>
+        <property name="picture" column="PICTURE"/>
+        <property name="listingTime" column="LISTING_TIME"/>
+        <property name="size" column="SIZE"/>
+        <property name="length" column="LENGTH"/>
+        <property name="pixel" column="PIXEL"/>
+        <property name="cameraPixel" column="CAMERA_PIXEL"/>
+    </class>
+</hibernate-mapping>
