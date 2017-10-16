@@ -10,11 +10,17 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring.version>4.1.4.RELEASE</spring.version>
+    <spring.version>5.0.0.RELEASE</spring.version>
     <hibernate.version>5.2.11.Final</hibernate.version>
-    <struts2.version>2.3.20</struts2.version>
+    <struts2.version>2.3.34</struts2.version>
     <jackson.version>2.5.0</jackson.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
+
+  <build>
+    <finalName>mobilee</finalName>
+  </build>
 
   <dependencies>
 
@@ -79,12 +85,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.hibernate.javax.persistence</groupId>
-      <artifactId>hibernate-jpa-2.0-api</artifactId>
-      <version>1.0.0.Final</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-ehcache</artifactId>
       <version>${hibernate.version}</version>
@@ -105,6 +105,14 @@
       </exclusions>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.apache.struts/struts2-json-plugin -->
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-json-plugin</artifactId>
+      <version>${struts2.version}</version>
+    </dependency>
+
+
     <dependency>
       <groupId>org.apache.struts</groupId>
       <artifactId>struts2-spring-plugin</artifactId>
@@ -122,6 +130,19 @@
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>1.2.17</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.7.25</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.25</version>
     </dependency>
 
     <!-- mysql连接 -->
@@ -188,10 +209,14 @@
           <artifactId>junit-jupiter-api</artifactId>
           <version>RELEASE</version>
       </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.2.11.Final</version>
+    </dependency>
 
   </dependencies>
 
-  <build>
-    <finalName>mobilee</finalName>
-  </build>
+
+
 </project>

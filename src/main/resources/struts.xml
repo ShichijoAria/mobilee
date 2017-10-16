@@ -41,5 +41,8 @@
     </package>
 
     <!-- 使用Convention插件,实现约定大于配置的零配置文件风格. 特殊的Result路径在Action类中使用@Result设定. -->
+    
+    <include file="struts2/admin.xml"/>
+    <include file="struts2/user.xml"/>
 
 </struts>

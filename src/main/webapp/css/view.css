@@ -1,0 +1,52 @@
+/*#foot{
+    position: fixed;
+    bottom: 5px;
+    left: 3%;
+    text-align: center;
+    z-index: 99;
+    margin: 1px 1px 1px 1px!important;
+}*/
+.long.arrow.icon{
+    color: white;
+    margin-left: 5px!important;
+}
+.ui.grid.centered.segment.vertical{
+    padding-bottom: 14px!important;
+}
+.pusher{
+    background-color: white!important;
+}
+h2{
+    margin-top: 10px!important;
+}
+.ui.segment{
+    padding: 0 0 0 0!important;
+}
+table{
+    width: 100%!important;
+}
+form{
+    margin: 0 0 0 0!important;
+}
+.sub.header{
+    padding-left: 30px!important;
+}
+a.item.foot{
+    padding: 0 0 0 0!important;
+}
+table{
+    margin-bottom: 20px!important;
+}
+tr:hover{
+    cursor:pointer!important;
+}
+.ui.black.inverted.button:hover{
+    color: white!important;
+}
+.ui.black.inverted.button{
+    color: black!important;
+    font-weight: 100 !important;
+}
+#segment{
+    height: 65%;
+}

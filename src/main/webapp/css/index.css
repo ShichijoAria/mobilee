@@ -1,0 +1,71 @@
+.logo{
+    font-size: 36px;
+}
+.menu{
+    color: black;
+    font-weight: 100;
+}
+.menu:hover{
+    color: black;
+}
+.ui.inverted.labeled.icon.left.inline.vertical.sidebar.menu{
+    background-color: #2B333E;
+}
+.item.acc{
+    padding: 0 0 0 0!important;
+    font-size: 15px!important;
+}
+a.title{
+    padding: 18px 30px 18px 30px!important;
+}
+.title.active{
+    border-left-color: #00AAFF!important;
+    border-left: solid;
+    border-left-width: 5px;
+}
+.title{
+    border-left-color: transparent!important;
+    border-left: solid;
+    border-left-width: 5px;
+}
+.acc.item.active{
+    background-color: #252c35!important;
+}
+.indexmenu.active.item, .ui.menu .dropdown.item:hover{
+    background-color: white!important;
+}
+.padrig{
+    padding-right: 10px;
+}
+.myblue{
+    color: #00AAFF!important;
+}
+.child{
+    color: #AEB7C2;
+}
+.child:hover{
+    color: white;
+}
+.content.active{
+    padding-bottom: 7.5px!important;
+}
+.pusher{
+    background-color: #ffffff!important;
+    transition:width 0.05s;
+    -webkit-transition:width 0.05s;
+}
+.indexmenu {
+    font-size: 20px!important;
+    font-weight: 100!important;
+    color: black!important;
+}
+.arrow{
+    color: black;
+}
+.arrow:hover{
+    color: black;
+}
+iframe{
+    padding: 0 0 0 0!important;
+    border-width: 0!important;
+}
