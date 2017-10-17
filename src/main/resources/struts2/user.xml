@@ -34,7 +34,7 @@
             </result>
         </action>
         <action name="index" class="edu.xhu.mobilee.action.UserAction" method="index">
-            <result>/WEB-INF/content/view/user.jsp</result>
+            <result>/WEB-INF/content/view/template.jsp</result>
         </action>
 
     </package>

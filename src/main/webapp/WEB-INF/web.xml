@@ -77,6 +77,6 @@
   </session-config>
 
   <welcome-file-list>
-    <welcome-file>/admin/index.action</welcome-file>
+    <welcome-file>/admin/login.action</welcome-file>
   </welcome-file-list>
 </web-app>

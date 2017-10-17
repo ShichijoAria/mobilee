@@ -104,6 +104,7 @@
         document.onkeydown = function(e){
             var ev = document.all ? window.event : e;
             if(ev.keyCode==13) {
+                postLogin();
                 reLayout();
             }
         }
@@ -150,7 +151,7 @@
                         showError(["无法连接服务器"]);
                     }else {
                         if(data.msg=="success"){
-                            window.location.href="/mobilee/admin/index.action"
+                            window.location.href="<%=path%>/admin/index.action"
                         }else {
                             showError([data.msg]);
                         }

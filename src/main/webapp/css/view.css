@@ -1,11 +1,4 @@
-/*#foot{
-    position: fixed;
-    bottom: 5px;
-    left: 3%;
-    text-align: center;
-    z-index: 99;
-    margin: 1px 1px 1px 1px!important;
-}*/
+
 .long.arrow.icon{
     color: white;
     margin-left: 5px!important;
@@ -35,7 +28,7 @@ a.item.foot{
     padding: 0 0 0 0!important;
 }
 table{
-    margin-bottom: 20px!important;
+    margin-bottom: 0px!important;
 }
 tr:hover{
     cursor:pointer!important;

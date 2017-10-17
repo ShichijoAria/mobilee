@@ -28,10 +28,9 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public List<UserEntity> selectUserPage(int start,int end) {
-        String sql=QuerySql.pagination.replaceAll("TABLENAME","T_USER");
+    public List<UserEntity> selectUserPage() {
         List<UserEntity> userEntityList = this.getSession()
-                .createNativeQuery(sql,UserEntity.class).setParameter(1,10).setParameter(2,0).list();
+                .createQuery("FROM UserEntity",UserEntity.class).list();
         return userEntityList;
     }
 

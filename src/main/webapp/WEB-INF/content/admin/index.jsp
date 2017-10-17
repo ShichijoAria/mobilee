@@ -173,8 +173,8 @@
             return $('.container').outerHeight()-Number($('.ui.massive.attached.stackable.menu.borderless').outerHeight()+2);
         });
     }
-    $('#CourseQuery').click(function () {
-        $('iframe').attr("src","/SIS/course/view")
+    $('#user').click(function () {
+        $('iframe').attr("src","<%=path%>/user/index.action")
     })
     ;
     $('#PasswordManager').click(function () {

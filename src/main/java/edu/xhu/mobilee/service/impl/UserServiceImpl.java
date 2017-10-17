@@ -3,31 +3,37 @@ package edu.xhu.mobilee.service.impl;
 import edu.xhu.mobilee.dao.UserDao;
 import edu.xhu.mobilee.entity.UserEntity;
 import edu.xhu.mobilee.service.UserService;
+import edu.xhu.mobilee.util.Format;
+import edu.xhu.mobilee.util.Proper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("userService")
-@Component("config")
 public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserDao userDao;
 
-    @Value("${pageSize}")
-    private int size;
 
     public UserEntity findUserById(long id) {
         return userDao.findUserById(id);
     }
 
     @Override
-    public List<UserEntity> selectUser(int page) {
-        int start=(page-1)*size+1;
-        int end=(page-1)*size;
-        return userDao.selectUserPage(start,end);
+    public Map<String,Object> selectUser(int page) {
+        int pageSize=Proper.pageSize();
+        Map<String,Object> map=new HashMap<String, Object>();
+        List<UserEntity> userEntityList=userDao.selectUserPage();
+        List<UserEntity> subList=Format.sublist(page,userEntityList);
+        map.put("total",userEntityList.size()/pageSize+1);
+        map.put("page",page);
+/*        map.put("pageSize",pageSize);
+        map.put("row",subList.size());*/
+        map.put("list",subList);
+        return map;
     }
 }

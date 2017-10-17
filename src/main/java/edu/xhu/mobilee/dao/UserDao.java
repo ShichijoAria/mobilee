@@ -8,5 +8,5 @@ public interface UserDao {
 
     public UserEntity findUserById(long id);
 
-    public List<UserEntity> selectUserPage(int start,int end);
+    public List<UserEntity> selectUserPage();
 }

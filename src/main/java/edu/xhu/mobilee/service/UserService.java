@@ -2,11 +2,11 @@ package edu.xhu.mobilee.service;
 
 import edu.xhu.mobilee.entity.UserEntity;
 
-import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
-    public UserEntity findUserById(long id);
+    UserEntity findUserById(long id);
 
-    public List<UserEntity> selectUser(int page);
+    Map<String,Object> selectUser(int page);
 }
