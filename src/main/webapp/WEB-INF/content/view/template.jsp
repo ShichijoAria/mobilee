@@ -35,10 +35,20 @@
                 <c:forEach items="${requestScope.head}" var="myMap" >
                     <div class="column">
                         <div class="ui black basic label">
-                                ${myMap.value}
+                                ${myMap.value.value}
                         </div>
                         <div class="ui input">
-                            <input class="input" type="text" name="${myMap.key}" value="${param.searchId}">
+                            <c:if test="${myMap.value.type=='select'}">
+                                <select class="ui dropdown">
+                                    <option value="">&nbsp;</option>
+                                    <c:forEach items="${myMap.value.opt}" var="opt" >
+                                        <option value="${opt.key}">${opt.value}</option>
+                                    </c:forEach>
+                                </select>
+                            </c:if>
+                            <c:if test="${myMap.value.type!='select'}">
+                                <input class="input" type="${myMap.value.type}" name="${myMap.key}" value="${param.searchId}">
+                            </c:if>
                             <i class="icon"></i>
                         </div>
                     </div>
@@ -78,7 +88,7 @@
                         </div>
                     </th>
                     <c:forEach items="${requestScope.head}" var="myMap" >
-                        <th class="" id="<c:out value="${myMap.key}" />"><c:out value="${myMap.value}" /></th>
+                        <th class="" id="<c:out value="${myMap.key}" />"><c:out value="${myMap.value.value}" /></th>
                     </c:forEach>
                 </tr>
                 </thead>

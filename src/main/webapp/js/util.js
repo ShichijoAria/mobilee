@@ -24,8 +24,6 @@ function addInfoList(arr,data) {
         var body="";
         for (var n in arr){
             for(var j in list[i]){
-                console.log(j)
-                console.log(j==arr[n])
                 if(j==arr[n]) {
                     body += "<td class='td'>" + list[i][j] + "</td>";
                 }

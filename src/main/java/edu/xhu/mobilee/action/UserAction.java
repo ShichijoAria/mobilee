@@ -1,7 +1,9 @@
 package edu.xhu.mobilee.action;
 
 import edu.xhu.mobilee.service.UserService;
+import edu.xhu.mobilee.util.Field;
 import edu.xhu.mobilee.util.Format;
+import edu.xhu.mobilee.util.GenderEnum;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,12 +31,10 @@ public class UserAction {
     public String index(){
         HttpServletRequest request = ServletActionContext.getRequest();
         Map<String,Object> head=new LinkedHashMap<String, Object>();
-        Map<String,Object> id=new HashMap<String,Object>();
-        id.put("value","用户编号");
-        head.put("id",id);
-        head.put("name","用户名称");
-        head.put("gender","用户性别");
-        head.put("created","注册时间");
+        head.put("id", Field.textField("用户编号","number"));
+        head.put("name",Field.textField("用户姓名","text"));
+        head.put("gender",Field.optField("用户性别","select", GenderEnum.getMap()));
+        head.put("created",Field.textField("入站时间","date"));
         request.setAttribute("title","网站用户");
         request.setAttribute("extra","Website User");
         request.setAttribute("icon","user");
