@@ -24,16 +24,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Map<String,Object> selectUser(int page) {
+    public Map<String,Object> selectUser(int page,String hql) {
         int pageSize=Proper.pageSize();
         Map<String,Object> map=new HashMap<String, Object>();
-        List<UserEntity> userEntityList=userDao.selectUserPage();
+        List<UserEntity> userEntityList=userDao.selectUserPage(hql);
         List<UserEntity> subList=Format.sublist(page,userEntityList);
         map.put("total",userEntityList.size()/pageSize+1);
         map.put("page",page);
-/*        map.put("pageSize",pageSize);
-        map.put("row",subList.size());*/
         map.put("list",subList);
+        map.put("msg","success");
         return map;
     }
 }

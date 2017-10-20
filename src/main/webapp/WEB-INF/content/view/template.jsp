@@ -16,9 +16,11 @@
     <meta charset="UTF-8">
     <title>学生信息系统</title>
     <script src="<%=path%>/dist/jquery.js"></script>
-    <link rel="stylesheet" href="../dist/semantic.css">
     <script src="<%=path%>/dist/semantic.min.js"></script>
+    <script src="<%=path%>/dist/jquery.datetimepicker.full.js"></script>
     <script src="<%=path%>/js/util.js"></script>
+    <link rel="stylesheet" href="<%=path%>/dist/jquery.datetimepicker.css">
+    <link rel="stylesheet" href="../dist/semantic.css">
     <link rel="stylesheet" href="<%=path%>/css/index.css">
     <link rel="stylesheet" href="<%=path%>/css/view.css">
     <link rel="stylesheet" href="<%=path%>/css/general.css">
@@ -32,7 +34,7 @@
         </a>
         <div class="content">
             <div class="ui grid stackable segment three column vertical container">
-                <c:forEach items="${requestScope.head}" var="myMap" >
+                <c:forEach items="${requestScope.fields.head}" var="myMap" >
                     <div class="column">
                         <div class="ui black basic label">
                                 ${myMap.value.value}
@@ -46,10 +48,22 @@
                                     </c:forEach>
                                 </select>
                             </c:if>
-                            <c:if test="${myMap.value.type!='select'}">
+                            <c:if test="${myMap.value.type=='datetime'}">
+                                <input class="input" name="${myMap.key}SearchUp" datetime="true">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui black basic label">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="ui input">
+                        <input class="input" name="${myMap.key}Low" datetime="true">
+                        </div>
+                    </div>
+                            </c:if>
+                            <c:if test="${myMap.value.type=='text'||myMap.value.type=='number'}">
                                 <input class="input" type="${myMap.value.type}" name="${myMap.key}" value="${param.searchId}">
                             </c:if>
-                            <i class="icon"></i>
                         </div>
                     </div>
                 </c:forEach>
@@ -87,7 +101,7 @@
                             <input type="checkbox" name="switch" id="checkAll"><label></label>
                         </div>
                     </th>
-                    <c:forEach items="${requestScope.head}" var="myMap" >
+                    <c:forEach items="${requestScope.fields.head}" var="myMap" >
                         <th class="" id="<c:out value="${myMap.key}" />"><c:out value="${myMap.value.value}" /></th>
                     </c:forEach>
                 </tr>
@@ -108,7 +122,7 @@
 <script>
     "use strict"
 
-    var viewName='${requestScope.namespace}';
+    var viewName='${requestScope.fields.namespace}';
     var arr=[];
 
     for(var i=1;i<$('th').length;i++){
@@ -117,11 +131,14 @@
     getInfoList(viewName,arr,"");
 
 
-
     $('#reset').click(function () {
         $('.input').val("");
     });
 
+
+    //时间日期选择框初始化
+    $.datetimepicker.setLocale('zh');
+    $("input[datetime='true']").datetimepicker({format: 'Y-m-d H:i'});
 
     //页面初始化
     changeSize();

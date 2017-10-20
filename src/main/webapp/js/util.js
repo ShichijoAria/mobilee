@@ -32,9 +32,6 @@ function addInfoList(arr,data) {
         html+=head+body+"</tr>";
     }
     $('tbody').html(html);
-    $('tbody')
-        .transition('fade')
-    ;
 }
 //获取列表信息
 function getInfoList(module,arr,param) {
@@ -48,8 +45,6 @@ function getInfoList(module,arr,param) {
                 showError(["无法连接服务器"]);
             }else {
                 if(data.msg=="success"){
-
-                }else {
                     $('tbody')
                         .transition({
                             animation  : 'fade',
@@ -61,6 +56,15 @@ function getInfoList(module,arr,param) {
                             }
                         })
                     ;
+                    $('tbody')
+                        .transition({
+                            animation: 'fade',
+                            onComplete: function () {
+
+                            }
+                        });
+                }else {
+
                 }
             }
             $('#segment').removeClass('loading');

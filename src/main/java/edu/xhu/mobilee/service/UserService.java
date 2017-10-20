@@ -8,5 +8,5 @@ public interface UserService {
 
     UserEntity findUserById(long id);
 
-    Map<String,Object> selectUser(int page);
+    Map<String,Object> selectUser(int page,String hql);
 }

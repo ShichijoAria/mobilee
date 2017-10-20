@@ -28,9 +28,9 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public List<UserEntity> selectUserPage() {
+    public List<UserEntity> selectUserPage(String hql) {
         List<UserEntity> userEntityList = this.getSession()
-                .createQuery("FROM UserEntity",UserEntity.class).list();
+                .createQuery("FROM UserEntity user "+hql,UserEntity.class).list();
         return userEntityList;
     }
 
