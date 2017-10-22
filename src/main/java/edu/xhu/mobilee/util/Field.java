@@ -8,6 +8,8 @@ import org.dom4j.io.SAXReader;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 //抽象出表单的域，方便template.jsp的渲染
@@ -140,9 +142,63 @@ public class Field {
         return hqlHead.substring(0,hqlHead.length()-1)+hqlBody+hqlFoot.replaceAll("^and","where");
     }
 
-    public static Object getObject(Object obj){
-        System.out.println(obj.getClass());
-        return null;
+    public static Object getObject(Object obj,HttpServletRequest request){
+        Class entity=obj.getClass();
+        String name=obj.getClass().getName();
+        name=name.substring(23,name.length()-6).toLowerCase();
+        File file = new File(Field.class.getResource("/interface/"+name+".xml").getPath());
+        SAXReader reader = new SAXReader();
+        Document doc = null;
+        try {
+            doc = reader.read(file);
+            Element root = doc.getRootElement();
+            Element properties=root.element("properties");
+            Element property;
+            for (Iterator ite = properties.elementIterator(); ite.hasNext(); ) {
+                property = (Element) ite.next();
+                if (property.attributeValue("edit").equals("true")) {
+                    String key=property.attributeValue("key");
+                    String value=request.getParameter(key);
+                    String clazz=property.attributeValue("class");
+                    if(value!=null){
+                        try {
+                            Method setAttr =entity.getDeclaredMethod("set"+captureName(key),getType(clazz));
+                            try {
+                                setAttr.invoke(obj,value);
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            } catch (InvocationTargetException e) {
+                                e.printStackTrace();
+                            }
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(entity);
+        System.out.println(name);
+        return obj;
     }
 
+    //首字母大写
+    public static String captureName(String name) {
+        char[] cs=name.toCharArray();
+        cs[0]-=32;
+        return String.valueOf(cs);
+    }
+
+    public static Class getType(String name){
+        if(name.equals("String"))
+            return String.class;
+        else if(name.equals("long"))
+            return long.class;
+        else if(name.equals("Date"))
+            return Date.class;
+        return null;
+    }
 }

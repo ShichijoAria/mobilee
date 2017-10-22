@@ -52,13 +52,11 @@ public class UserAction implements SessionAware{
     }
 
     public String save(){
-        Object obj=ServletActionContext.getRequest().getSession().getAttribute("user"+String.valueOf(userEntity.getId()));
-        if(obj!=null);{
-            UserEntity temp=(UserEntity) obj;
-            //这里与验证框架的耦合还待实现
-            temp.setName(userEntity.getName());
-            //``temp.setName(userEntity.getHeadPortrait());
-            userService.saveUser(temp);
+        HttpServletRequest request = ServletActionContext.getRequest();
+        Object obj=request.getSession().getAttribute("user"+String.valueOf(request.getParameter("id")));
+        if(obj!=null){
+            UserEntity user=(UserEntity) obj;
+            user= (UserEntity) Field.getObject(user,request);userService.saveUser(user);
         }
         return "success";
     }
