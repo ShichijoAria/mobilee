@@ -51,10 +51,11 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.Oracle12cDialect</prop>
-                <prop key="connection.driver_class">oracle.jdbc.driver.OracleDriver</prop>
+                <prop key="connection.driver_class">oracle.jdbc.OracleDriver</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:orcl</prop>
             </props>
         </property>
         <!-- 扫描hibernate注解配置的entity -->

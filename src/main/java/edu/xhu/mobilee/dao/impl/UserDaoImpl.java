@@ -5,6 +5,7 @@ import edu.xhu.mobilee.entity.UserEntity;
 import edu.xhu.mobilee.util.QuerySql;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,8 +31,13 @@ public class UserDaoImpl implements UserDao{
     @Override
     public List<UserEntity> selectUserPage(String hql) {
         List<UserEntity> userEntityList = this.getSession()
-                .createQuery("FROM UserEntity user "+hql,UserEntity.class).list();
+                .createQuery(hql,UserEntity.class).list();
         return userEntityList;
+    }
+
+    @Override
+    public void saveUser(UserEntity userEntity) {
+        getSession().update(userEntity);
     }
 
 }

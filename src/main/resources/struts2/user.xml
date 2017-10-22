@@ -33,6 +33,19 @@
                 <param name="root">dataMap</param>
             </result>
         </action>
+
+        <action name="info" class="edu.xhu.mobilee.action.UserAction" method="info">
+            <result type="json">
+                <param name="root">dataMap</param>
+            </result>
+        </action>
+
+        <action name="save" class="edu.xhu.mobilee.action.UserAction" method="save">
+            <result type="json">
+                <param name="root">dataMap</param>
+            </result>
+        </action>
+
         <action name="index" class="edu.xhu.mobilee.action.UserAction" method="index">
             <result>/WEB-INF/content/view/template.jsp</result>
         </action>

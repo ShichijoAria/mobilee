@@ -28,11 +28,16 @@ public class UserServiceImpl implements UserService{
         int pageSize=Proper.pageSize();
         Map<String,Object> map=new HashMap<String, Object>();
         List<UserEntity> userEntityList=userDao.selectUserPage(hql);
-        List<UserEntity> subList=Format.sublist(page,userEntityList);
+        List<Object> subList=Format.sublist(page,userEntityList);
         map.put("total",userEntityList.size()/pageSize+1);
         map.put("page",page);
         map.put("list",subList);
         map.put("msg","success");
         return map;
+    }
+
+    @Override
+    public void saveUser(UserEntity userEntity) {
+        userDao.saveUser(userEntity);
     }
 }

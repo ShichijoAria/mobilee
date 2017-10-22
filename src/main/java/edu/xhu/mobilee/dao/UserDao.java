@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface UserDao {
 
-    public UserEntity findUserById(long id);
+    UserEntity findUserById(long id);
 
-    public List<UserEntity> selectUserPage(String hql);
+    List<UserEntity> selectUserPage(String hql);
+
+    void saveUser(UserEntity userEntity);
 }

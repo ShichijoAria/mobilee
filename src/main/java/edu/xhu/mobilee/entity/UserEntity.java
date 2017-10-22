@@ -1,7 +1,7 @@
 package edu.xhu.mobilee.entity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "T_USER", schema = "C##MOBILEE", catalog = "")
@@ -9,12 +9,23 @@ public class UserEntity {
     private long id;
     private Long gender;
     private String password;
-    private Timestamp created;
-    private Timestamp birthday;
+    private Date created;
+    private Date birthday;
     private String headPortrait;
     private String phone;
     private String email;
     private String name;
+    private Long edition;
+
+    public UserEntity() {
+    }
+
+    public UserEntity(long id, String name, Long gender, Date created) {
+        this.id = id;
+        this.gender = gender;
+        this.created = created;
+        this.name = name;
+    }
 
     @Id
     @Column(name = "ID")
@@ -48,21 +59,21 @@ public class UserEntity {
 
     @Basic
     @Column(name = "CREATED")
-    public Timestamp getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Timestamp created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
     @Basic
     @Column(name = "BIRTHDAY")
-    public Timestamp getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Timestamp birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
@@ -106,6 +117,16 @@ public class UserEntity {
         this.name = name;
     }
 
+    @Basic
+    @Column(name = "EDITION")
+    public Long getEdition() {
+        return edition;
+    }
+
+    public void setEdition(Long edition) {
+        this.edition = edition;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -122,6 +143,7 @@ public class UserEntity {
         if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (edition != null ? !edition.equals(that.edition) : that.edition != null) return false;
 
         return true;
     }
@@ -137,6 +159,7 @@ public class UserEntity {
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (edition != null ? edition.hashCode() : 0);
         return result;
     }
 }

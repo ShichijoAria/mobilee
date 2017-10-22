@@ -1,5 +1,6 @@
 package edu.xhu.mobilee.util;
 
+import edu.xhu.mobilee.entity.UserEntity;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -36,10 +37,12 @@ public class Field {
                     String key=property.attributeValue("key");
                     String value=property.attributeValue("value");
                     String type=property.attributeValue("type");
-                    String range=property.attributeValue("type");
+                    String range=property.attributeValue("range");
+                    String edit=property.attributeValue("edit");
                     map.put("value",value);
                     map.put("type",type);
                     map.put("range",range);
+                    map.put("edit",edit);
                     if(type.equals("select")){
                         Map<String,String> opt=new HashMap<String,String>();
                         if(property.element("foreign")==null) {
@@ -48,7 +51,6 @@ public class Field {
                                 enums=(Element) it.next();
                                 opt.put(enums.attributeValue("key"),enums.attributeValue("value"));
                             }
-                            System.out.println(opt);
                         }
                         map.put("opt", opt);
                     }
@@ -67,7 +69,11 @@ public class Field {
     }
 
     public static String getHql(String entity,HttpServletRequest request){
-        String hql="";
+        String hqlFoot="";
+        String hqlHead="SELECT new "+entity+"Entity(";
+        String hqlBody=") FROM "+entity+"Entity ";
+        entity=entity.toLowerCase();
+        hqlBody+=entity+" ";
         try {
             File file = new File(Field.class.getResource("/interface/"+entity+".xml").getPath());
             SAXReader reader = new SAXReader();
@@ -83,44 +89,45 @@ public class Field {
                     String type = property.attributeValue("type");
                     String range = property.attributeValue("range");
                     String param;
+                    hqlHead+=entity+"."+key+",";
                     if (type.equals("text")){
                         param = request.getParameter(key + "Search");
                         if(param!=null) {
                             param = "'%" + param + "%'";
-                            hql += "where " + entity + "." + key + " like " + param + " ";
+                            hqlFoot += "where " + entity + "." + key + " like " + param + " ";
                         }
                     } else if (type.equals("select")) {
                         param = request.getParameter(key + "Search");
                         if(param!=null)
-                            hql += "where " + entity + "." + key + "= "+param+" ";
+                            hqlFoot += "where " + entity + "." + key + "= "+param+" ";
                     } else {
                         if (range.equals("false")) {
                             param = request.getParameter(key + "Search");
                             if (type.equals("number")) {
                                 /*预留*/
                             } else if (type.equals("datetime")) {
-                                param="'"+param+"'";
+                                param="to_timestamp(''"+param+",'yyyy-mm-dd hh24:mi:ss:ff')";
                             }
                             if(param!=null)
-                                hql += "where " + entity + "." + key + "= "+param+" ";
+                                hqlFoot += "where " + entity + "." + key + "= "+param+" ";
                         } else {
                             if (type.equals("number")) {
                                 param = request.getParameter(key + "UpSearch");
                                 if(param!=null)
-                                    hql += "where " + entity + "." + key + "<= "+param+" ";
+                                    hqlFoot += "where " + entity + "." + key + "<= "+param+" ";
                                 param = request.getParameter(key + "LowSearch");
                                 if(param!=null)
-                                    hql += "where " + entity + "." + key + ">= "+param+" ";
+                                    hqlFoot += "where " + entity + "." + key + ">= "+param+" ";
                             } else if (type.equals("datetime")) {
                                 param = request.getParameter(key + "UpSearch");
                                 if(param!=null) {
-                                    param = "'" + param + "'";
-                                    hql += "where " + entity + "." + key + "<= " + param + " ";
+                                    param = "to_timestamp('" + param + "','yyyy-mm-dd hh24:mi:ss:ff')";
+                                    hqlFoot += "where " + entity + "." + key + "<= " + param + " ";
                                 }
                                 param = request.getParameter(key + "LowSearch");
                                 if(param!=null) {
-                                    param = "'" + param + "'";
-                                    hql += "where " + entity + "." + key + ">= " + param + " ";
+                                    param = "to_timestamp('" + param + "','yyyy-mm-dd hh24:mi:ss:ff')";
+                                    hqlFoot += "where " + entity + "." + key + ">= " + param + " ";
                                 }
                             }
                         }
@@ -130,6 +137,12 @@ public class Field {
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-        return hql;
+        return hqlHead.substring(0,hqlHead.length()-1)+hqlBody+hqlFoot.replaceAll("^and","where");
     }
+
+    public static Object getObject(Object obj){
+        System.out.println(obj.getClass());
+        return null;
+    }
+
 }

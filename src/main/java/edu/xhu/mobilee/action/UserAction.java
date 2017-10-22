@@ -1,10 +1,12 @@
 package edu.xhu.mobilee.action;
 
+import edu.xhu.mobilee.entity.UserEntity;
 import edu.xhu.mobilee.service.UserService;
 import edu.xhu.mobilee.util.Field;
 import edu.xhu.mobilee.util.Format;
 import edu.xhu.mobilee.util.GenderEnum;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,17 +14,31 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class UserAction {
+public class UserAction implements SessionAware{
 
     @Autowired
     private UserService userService;
+    private UserEntity userEntity;
     private Map<String,Object> dataMap;
+    private Map session;
 
+    public String info(){
+        dataMap = new HashMap<String, Object>();
+        if(userEntity!=null) {
+            UserEntity temp=userService.findUserById(userEntity.getId());
+            this.session.put("user"+userEntity.getId(),temp);
+            dataMap.put("entity", temp);
+            dataMap.put("msg","success");
+        }else {
+            dataMap.put("msg","非法的数据");
+        }
+        return "success";
+    }
 
     public String list(){
         HttpServletRequest request = ServletActionContext.getRequest();
         int page= Format.stringToInt(request.getParameter("page"));
-        String hql=Field.getHql("user",request);
+        String hql=Field.getHql("User",request);
         page=page>0?page:1;
         dataMap = new HashMap<String, Object>();
         dataMap = userService.selectUser(page,hql);
@@ -35,8 +51,32 @@ public class UserAction {
         return "success";
     }
 
+    public String save(){
+        Object obj=ServletActionContext.getRequest().getSession().getAttribute("user"+String.valueOf(userEntity.getId()));
+        if(obj!=null);{
+            UserEntity temp=(UserEntity) obj;
+            //这里与验证框架的耦合还待实现
+            temp.setName(userEntity.getName());
+            //``temp.setName(userEntity.getHeadPortrait());
+            userService.saveUser(temp);
+        }
+        return "success";
+    }
+
     public Map<String, Object> getDataMap() {
         return dataMap;
     }
 
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    @Override
+    public void setSession(Map session) {
+        this.session=session;
+    }
 }

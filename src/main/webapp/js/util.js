@@ -10,32 +10,40 @@ function showError(arr) {
     $('.ui.error.message').css("display","block");
 }
 
-//添加列表信息到页面
-function addInfoList(arr,data) {
-    var list=data.list;
-    var html='';
-    for(var i in list) {
-        var head = "<tr id='" +list[i].id+"' class='center aligned'>\n" +
-            "    <td>\n" +
-            "    <div class='ui checkbox'>\n" +
-            "    <input type='checkbox' name='item' value='"+list[i].id+"'><label></label>\n" +
-            "    </div>\n" +
-            "    </td>";
-        var body="";
-        for (var n in arr){
-            for(var j in list[i]){
-                if(j==arr[n]) {
-                    body += "<td class='td'>" + list[i][j] + "</td>";
+function getInfo(module,id) {
+    $('form').addClass('loading');
+    $.post("/mobilee/"+module+"/info.action?userEntity.id="+id,
+        {
+
+        },
+        function (data, status) {
+            $('form').removeClass('loading');
+            if (status != "success") {
+                //showError(["无法连接服务器"]);
+            }else {
+                if(data.msg=="success"){
+                    var entity=data.entity;
+                    for(var i in entity){
+                        var choose="input[name='"+i+"']";
+                        $(choose).val(entity[i]);
+                        var choose="select[name='"+i+"']";
+                        var opt="[data-value='"+entity[i]+"']";
+                        $(choose).parent().dropdown('set selected', entity[i])
+                    }
+                    $('.ui.modal')
+                        .modal('show')
+                    ;
+                }else {
+
                 }
             }
-        }
-        html+=head+body+"</tr>";
-    }
-    $('tbody').html(html);
+        });
 }
+
+
 //获取列表信息
-function getInfoList(module,arr,param) {
-    $.post("/mobilee/"+module+"/list.action?page="+param,
+function getInfoList(module,arr,param,url) {
+    $.post("/mobilee/"+module+"/list.action?page="+param+url,
         {
 
         },
@@ -49,7 +57,7 @@ function getInfoList(module,arr,param) {
                         .transition({
                             animation  : 'fade',
                             onComplete:function () {
-                                addInfoList(arr,data);
+                                addInfoList(arr,data,module);
                                 generatePagination(data.total,data.page,module)
                                 var select="a[page='"+data.page+"']";
                                 $(select).addClass('active');
@@ -121,7 +129,7 @@ function pageItem(i) {
 function bind(viewname) {
     $('a.item').click(function () {
         if($(this).attr('page')!=undefined) {
-            getInfoList(viewname, arr, $(this).attr('page'))
+            getInfoList(viewname, arr, $(this).attr('page'),'')
         }
     });
 }
