@@ -11,8 +11,8 @@
         <property key="created" value="入站时间" type="datetime" head="true" show="true" edit="false"  range="true"  class="Date"/>
         <property key="password" value="用户密码" type="text" head="false" show="true" edit="false"  range="false"  class="String"/>
         <property key="birthday" value="出生日期" type="date" head="false" show="true" edit="false"  range="false"  class="Date"/>
-        <property key="headPortrait" value="用户头像" type="file" head="false" show="true" edit="true"  range="false"  class="String"/>
         <property key="phone" value="手机号码" type="text" head="false" show="true" edit="false"  range="false"  class="String"/>
         <property key="email" value="电子邮箱" type="text" head="false" show="true" edit="false"  range="false" class="String"/>
+        <property key="headPortrait" value="用户头像" type="img" head="false" show="true" edit="true"  range="false"  class="String"/>
     </properties>
 </root>

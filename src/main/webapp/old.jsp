@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="<%=path%>/css/general.css">
 </head>
 <body style="background-color: #fff;">
-<div class="ui form pusher" method="post" action="view.action" id="main">
+<form class="ui form pusher" method="post" action="view.action" id="main">
     <%--侧边栏--%>
     <div class="ui top left vertical menu sidebar">
         <a class="ui right grey large corner label">
@@ -88,7 +88,8 @@
             <a class="ui button" id="reset">重置</a>
         </div>
     </div>
-
+    </div>
+    </div>
 
     <div class="pusher">
         <h2 class="ui header">
@@ -133,42 +134,33 @@
             </div>
         </div>
     </div>
-</div>
+</form>
 
-<%--模态框 主信息--%>
-<div class="ui first modal">
+<%--模态框--%>
+<div class="ui modal">
+    <i class="close icon"></i>
     <div class="image content">
-        <form class="ui stackable  form three column grid" id="modal">
+        <div class="ui form">
             <c:forEach items="${requestScope.fields.show}" var="showMap" >
-                <c:if test="${showMap.value.type=='img'}">
-                    <div class="row">
-                        <div class="field column">
-                            <label>${showMap.value.value}</label>
-                            <img class="ui medium circular image" src="../images/wireframe/square-image.png"/>
-                        </div>
-                    </div>
-                </c:if>
-                <c:if test="${showMap.value.type!='img'}">
-                    <div class="field column">
-                        <label>${showMap.value.value}</label>
-                        <c:if test="${showMap.value.type=='select'}">
-                            <select  class="ui dropdown <c:if test="${showMap.value.edit=='false'}">disabled</c:if>" name="${showMap.key}">
-                                <option value="">&nbsp;</option>
-                                <c:forEach items="${showMap.value.opt}" var="opt" >
-                                    <option value="${opt.key}">${opt.value}</option>
-                                </c:forEach>
-                            </select>
-                        </c:if>
-                        <c:if test="${showMap.value.type=='text'||showMap.value.type=='number'}">
-                            <input <c:if test="${showMap.value.edit=='false'}">readonly=""</c:if> type="${showMap.value.type}" name="${showMap.key}">
-                        </c:if>
-                        <c:if test="${showMap.value.type=='datetime'||showMap.value.type=='date'}">
-                            <input <c:if test="${showMap.value.edit=='false'}">readonly=""</c:if> <c:if test="${showMap.value.edit!='false'}">${showMap.value.type}="true"</c:if>  name="${showMap.key}">
-                        </c:if>
-                    </div>
-                </c:if>
+                <div class="field">
+                    <label>${showMap.value.value}</label>
+                    <c:if test="${showMap.value.type=='select'}">
+                        <select  class="ui dropdown <c:if test="${showMap.value.edit=='false'}">disabled</c:if>" name="${showMap.key}">
+                            <option value="">&nbsp;</option>
+                            <c:forEach items="${showMap.value.opt}" var="opt" >
+                                <option value="${opt.key}">${opt.value}</option>
+                            </c:forEach>
+                        </select>
+                    </c:if>
+                    <c:if test="${showMap.value.type=='text'||showMap.value.type=='number'}">
+                        <input <c:if test="${showMap.value.edit=='false'}">readonly=""</c:if> type="${showMap.value.type}" name="${showMap.key}">
+                    </c:if>
+                    <c:if test="${showMap.value.type=='datetime'||showMap.value.type=='date'}">
+                        <input <c:if test="${showMap.value.edit=='false'}">readonly=""</c:if> <c:if test="${showMap.value.edit!='false'}">${showMap.value.type}="true"</c:if>  name="${showMap.key}">
+                    </c:if>
+                </div>
             </c:forEach>
-        </form>
+        </div>
     </div>
     <div class="actions">
         <div class="ui black deny button">
@@ -180,23 +172,6 @@
         </div>
     </div>
 </div>
-
-<%--模态框 反馈信息--%>
-<div class="ui small modal">
-    <div class="ui icon header">
-        <i class="archive icon"></i>
-        保存成功
-    </div>
-
-    <div class="actions">
-        <div class="ui green ok inverted button">
-            <i class="checkmark icon"></i>
-            是
-        </div>
-    </div>
-</div>
-
-
 </body>
 <script>
     "use strict"
@@ -232,22 +207,16 @@
     });
 
     $('#saveEntity').click(function () {
-        $('#modal').addClass('loading');
-        $.post("/mobilee/"+viewName+"/save.action",
+        $.post("/mobilee/"+module+"/save.action",
             {
-                id:$(".field.column [name='id']").val()
-                <c:forEach items="${requestScope.fields.show}" var="editMap" varStatus="stat" >
-                    <c:if test="${editMap.value.edit=='true'}">
-                        ,${editMap.key}:$(".field.column [name='${editMap.key}']").val()
-                    </c:if>
-                </c:forEach>
+
             },
             function (data, status) {
                 if (status != "success") {
 
                 }else {
                     if(data.msg=="success"){
-                        $('.ui.small.modal').modal('show');
+
                     }else {
 
                     }
@@ -268,7 +237,7 @@
         changeSize();
     });
     $('.ui.sidebar').sidebar({
-        context: $('#main'),
+        context: $('form'),
         useLegacy:true,
         transition:'push'
     })
@@ -276,26 +245,6 @@
         $('.ui.sidebar')
             .sidebar('toggle')
     })
-    //模态框
-    $('.ui.first.modal').modal({
-        //allowMultiple: true,
-        //closable  : false,
-        onDeny    : function(){
-            if($('#modal').hasClass('loading'))
-                return false;
-        },
-        onApprove : function() {
-            return false;
-        }
-    }) .modal('setting', 'closable', false)
-    $('.small.modal')
-        .modal({
-            allowMultiple: true,
-            onApprove : function() {
-                $('#modal').removeClass('loading');
-            }
-        })
-        .modal('setting', 'closable', false)
 
     //添加列表信息到页面
     function addInfoList(arr,data,module) {

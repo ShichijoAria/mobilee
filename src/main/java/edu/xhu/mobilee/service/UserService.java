@@ -2,6 +2,7 @@ package edu.xhu.mobilee.service;
 
 import edu.xhu.mobilee.entity.UserEntity;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserService {
@@ -11,4 +12,6 @@ public interface UserService {
     Map<String,Object> selectUser(int page,String hql);
 
     void saveUser(UserEntity userEntity);
+
+    void deleteUser(long[] list);
 }

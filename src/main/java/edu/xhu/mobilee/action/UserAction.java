@@ -54,10 +54,26 @@ public class UserAction implements SessionAware{
     public String save(){
         HttpServletRequest request = ServletActionContext.getRequest();
         Object obj=request.getSession().getAttribute("user"+String.valueOf(request.getParameter("id")));
+        dataMap = new HashMap<String, Object>();
+        String msg="非法的数据";
         if(obj!=null){
             UserEntity user=(UserEntity) obj;
             user= (UserEntity) Field.getObject(user,request);userService.saveUser(user);
+            msg="success";
         }
+        dataMap.put("msg",msg);
+        return "success";
+    }
+
+    public String delete(){
+        HttpServletRequest request = ServletActionContext.getRequest();
+        String arr=request.getParameter("arr");
+        String []list=arr.split(",");
+        long []newList =new long[list.length];
+        for (int i = 0; i < list.length; i++) {
+            newList[i]=Format.stringToLong(list[i]);
+        }
+        userService.deleteUser(newList);
         return "success";
     }
 

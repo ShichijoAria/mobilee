@@ -40,4 +40,9 @@ public class UserServiceImpl implements UserService{
     public void saveUser(UserEntity userEntity) {
         userDao.saveUser(userEntity);
     }
+
+    @Override
+    public void deleteUser(long[] list) {
+        userDao.deleteUser(list);
+    }
 }

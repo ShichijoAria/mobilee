@@ -2,6 +2,7 @@ package edu.xhu.mobilee.dao;
 
 import edu.xhu.mobilee.entity.UserEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface UserDao {
@@ -11,4 +12,6 @@ public interface UserDao {
     List<UserEntity> selectUserPage(String hql);
 
     void saveUser(UserEntity userEntity);
+
+    void deleteUser(long [] list);
 }

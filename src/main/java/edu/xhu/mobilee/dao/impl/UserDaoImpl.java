@@ -40,4 +40,13 @@ public class UserDaoImpl implements UserDao{
         getSession().update(userEntity);
     }
 
+    @Override
+    public void deleteUser(long [] list) {
+        for (int i = 0; i < list.length; i++) {
+            UserEntity userEntity=new UserEntity();
+            userEntity.setId(list[i]);
+            getSession().delete(userEntity);
+        }
+    }
+
 }

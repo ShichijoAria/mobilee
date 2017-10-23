@@ -28,6 +28,12 @@
             <result name="illegal">/WEB-INF/content/admin/login.jsp</result>
         </global-results>
 
+        <action name="delete" class="edu.xhu.mobilee.action.UserAction" method="delete">
+            <result type="json">
+                <param name="root">dataMap</param>
+            </result>
+        </action>
+
         <action name="list" class="edu.xhu.mobilee.action.UserAction" method="list">
             <result type="json">
                 <param name="root">dataMap</param>

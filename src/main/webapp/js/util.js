@@ -30,7 +30,7 @@ function getInfo(module,id) {
                         var opt="[data-value='"+entity[i]+"']";
                         $(choose).parent().dropdown('set selected', entity[i])
                     }
-                    $('.ui.modal')
+                    $('.ui.first.modal')
                         .modal('show')
                     ;
                 }else {
