@@ -40,6 +40,11 @@ function getInfo(module,id) {
         });
 }
 
+//显示反馈信息
+function showToast(html) {
+    $('.ui.small.modal .ui.icon.header').html(html);
+    $('.ui.small.modal').modal('show');
+}
 
 //获取列表信息
 function getInfoList(module,arr,param,url) {

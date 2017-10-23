@@ -98,6 +98,11 @@
         </h2>
         <div  id="menu">
             <div class="ui small menu">
+                <div class="left menu">
+                    <div class="item">
+                        <div class="ui red button" id="delete">删除</div>
+                    </div>
+                </div>
                 <div class="right menu">
                     <div class="item">
                         <div id="search" class="ui teal icon button">
@@ -184,8 +189,7 @@
 <%--模态框 反馈信息--%>
 <div class="ui small modal">
     <div class="ui icon header">
-        <i class="archive icon"></i>
-        保存成功
+
     </div>
 
     <div class="actions">
@@ -208,6 +212,28 @@
         arr.push($('th')[i].id)
     }
     getInfoList(viewName,arr,"");
+
+    $('#delete').click(function () {
+        var myCheck=$(".pusher input[name='item'][type='checkbox']");
+        var arr=[];
+        for(i in myCheck){
+            if(myCheck[i].checked){
+                arr.push(myCheck[i].value);
+            }
+        }
+        $.post("/mobilee/"+viewName+"/delete.action", "arr="+arr.join(','),
+            function (data, status) {
+                if (status != "success") {
+
+                }else {
+                    if(data.msg=="success"){
+                        $('.ui.small.modal').modal('show');
+                    }else {
+
+                    }
+                }
+            });
+    });
 
     $('#lookFor').click(function () {
         var url='';
@@ -242,12 +268,12 @@
                     </c:if>
                 </c:forEach>
             },
-            function (data, status) {
+            function(data, status) {
                 if (status != "success") {
 
                 }else {
                     if(data.msg=="success"){
-                        $('.ui.small.modal').modal('show');
+                        showToast("<i class='archive icon'></i>保存成功");
                     }else {
 
                     }
@@ -276,6 +302,8 @@
         $('.ui.sidebar')
             .sidebar('toggle')
     })
+
+
     //模态框
     $('.ui.first.modal').modal({
         //allowMultiple: true,
