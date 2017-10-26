@@ -3,7 +3,7 @@
 function showError(arr) {
     $('.ui.error.message').css("display","none");
     $('ul.list').empty();
-    for(i in arr){
+    for(var i in arr){
         var html="<li>"+arr[i]+"</li>";
         $('ul.list').append(html);
     }
@@ -12,7 +12,7 @@ function showError(arr) {
 
 function getInfo(module,id) {
     $('form').addClass('loading');
-    $.post("/mobilee/"+module+"/info.action?userEntity.id="+id,
+    $.post("/mobilee/"+module+"/info?id="+id,
         {
 
         },
@@ -48,7 +48,7 @@ function showToast(html) {
 
 //获取列表信息
 function getInfoList(module,arr,param,url) {
-    $.post("/mobilee/"+module+"/list.action?page="+param+url,
+    $.post("/mobilee/"+module+"/list?page="+param+url,
         {
 
         },
@@ -83,6 +83,23 @@ function getInfoList(module,arr,param,url) {
             }
             $('#segment').removeClass('loading');
         });
+}
+
+function getList(page) {
+    currentUrl='';
+    var inputs=$('.ui.grid.stackable.segment.three.column.vertical.container input');
+    var selects=$('.ui.grid.stackable.segment.three.column.vertical.container select');
+    for(var i in inputs){
+        if(inputs[i].value!=undefined&&inputs[i].value!='') {
+            currentUrl += "&"+inputs[i].name +'='+ inputs[i].value;
+        }
+    }
+    for(var i in selects){
+        if(selects[i].value!=undefined&&selects[i].value!='') {
+            currentUrl += "&"+selects[i].name +'='+ selects[i].value;
+        }
+    }
+    getInfoList(viewName,arr,page,currentUrl);
 }
 
 function changeSize() {
@@ -135,7 +152,7 @@ function pageItem(i) {
 function bind(viewname) {
     $('a.item').click(function () {
         if($(this).attr('page')!=undefined) {
-            getInfoList(viewname, arr, $(this).attr('page'),'')
+            getList($(this).attr('page'));
         }
     });
 }

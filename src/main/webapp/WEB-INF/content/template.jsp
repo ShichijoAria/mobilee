@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="<%=path%>/css/general.css">
 </head>
 <body style="background-color: #fff;">
-<div class="ui form pusher" method="post" action="view.action" id="main">
+<div class="ui form pusher" method="post" action="view" id="main">
     <%--侧边栏--%>
     <div class="ui top left vertical menu sidebar">
         <a class="ui right grey large corner label">
@@ -92,7 +92,7 @@
     </div>
 
 
-    <div class="pusher">
+    <div class="pusher" style="height: 100%">
         <h2 class="ui header">
             <i class="${requestScope.fields.icon} alternate icon"></i>
             <div class="content">${requestScope.fields.title}</div>
@@ -146,13 +146,12 @@
 <div class="ui first modal">
     <div class="image content">
         <div class="ui stackable  form three column grid" id="modal">
-            <input type="file" name="file" id="file" form="upFile">
             <c:forEach items="${requestScope.fields.show}" var="showMap" >
                 <c:if test="${showMap.value.type=='img'}">
                     <div class="row">
                         <div class="field column">
                             <label>${showMap.value.value}</label>
-                            <img class="ui medium circular image" src="<%=path%>/head/user/timg.jpg"/>
+                            <img class="ui medium circular image" src="<%=path%>/head/user/timg.jpg" onclick="document.getElementById('file').click();"/>
                         </div>
                     </div>
                 </c:if>
@@ -203,7 +202,9 @@
     </div>
 </div>
 
-<form id="upFile"  enctype="multipart/form-data"></form>
+<form id="upFile"  enctype="multipart/form-data">
+    <input type="file" name="file" id="file" style="display: none" onchange="upload()">
+</form>
 </body>
 <script>
     "use strict"
@@ -227,7 +228,7 @@
             }
         }
         if(arr.length>0) {
-            $.post("/mobilee/" + viewName + "/delete.action", "deleteArr=" + deleteArr.join(','),
+            $.post("/mobilee/" + viewName + "/delete", "deleteArr=" + deleteArr.join(','),
                 function (data, status) {
                     if (status != "success") {
 
@@ -244,20 +245,7 @@
     });
 
     $('#lookFor').click(function () {
-        currentUrl='';
-        var inputs=$('.ui.grid.stackable.segment.three.column.vertical.container input');
-        var selects=$('.ui.grid.stackable.segment.three.column.vertical.container select');
-        for(var i in inputs){
-            if(inputs[i].value!=undefined&&inputs[i].value!='') {
-                currentUrl += "&"+inputs[i].name +'='+ inputs[i].value;
-            }
-        }
-        for(var i in selects){
-            if(selects[i].value!=undefined&&selects[i].value!='') {
-                currentUrl += "&"+selects[i].name +'='+ selects[i].value;
-            }
-        }
-        getInfoList(viewName,arr,"1",currentUrl);
+        getList();
     });
 
     $('#reset').click(function () {
@@ -266,7 +254,7 @@
 
     $('#saveEntity').click(function () {
         $('#modal').addClass('loading');
-        $.post("/mobilee/"+viewName+"/save.action",
+        $.post("/mobilee/"+viewName+"/save",
             {
                 id:$(".field.column [name='id']").val()
                 <c:forEach items="${requestScope.fields.show}" var="editMap" varStatus="stat" >
@@ -314,8 +302,6 @@
 
     //模态框
     $('.ui.first.modal').modal({
-        //allowMultiple: true,
-        //closable  : false,
         onDeny    : function(){
             if($('#modal').hasClass('loading'))
                 return false;
@@ -372,20 +358,23 @@
     }
 
     function upload() {
-        $('#upFile').ajaxSubmit({
-            url : "upload.action",
-            type : "POST",
-            success : function(data) {
-                console.log(data);
+        var formData = new FormData($( "#upFile" )[0]);
+        $.ajax({
+            url: 'upload' ,
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (returndata) {
+                alert(returndata);
             },
-            error : function(data) {
-                console.log(data);
+            error: function (returndata) {
+                alert(returndata);
             }
         });
     }
-
-
-
 
 </script>
 </html>

@@ -23,7 +23,7 @@
 </head>
 <body>
 
-<div class="ui middle aligned center Stackable aligned centered grid" id="myContainer" action>
+<div class="ui middle aligned center centered grid" id="myContainer" action>
     <div id="login" class="six wide column">
         <h2 class="ui center aligned icon header">
             <i class="circular mobile icon"></i>
@@ -141,10 +141,10 @@
         if(point==0) {
             $('.ui.error.message').css("display","none");
             $('form').addClass('loading');
-            $.post("/mobilee/admin/login.action",
+            $.post("<%=path%>/admin/login",
                 {
-                    "adminEntity.id": id,
-                    "adminEntity.password": password
+                    "id": id,
+                    "password": password
                 },
                 function (data, status) {
                     $('form').removeClass('loading');
@@ -152,7 +152,7 @@
                         showError(["无法连接服务器"]);
                     }else {
                         if(data.msg=="success"){
-                            window.location.href="<%=path%>/admin/index.action"
+                            window.location.href="<%=path%>/admin/index"
                         }else {
                             showError([data.msg]);
                         }
