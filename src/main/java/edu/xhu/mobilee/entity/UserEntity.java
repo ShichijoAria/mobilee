@@ -11,7 +11,6 @@ public class UserEntity {
     private String password;
     private Date created;
     private Date birthday;
-    private String headPortrait;
     private String phone;
     private String email;
     private String name;
@@ -78,16 +77,6 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "HEAD_PORTRAIT")
-    public String getHeadPortrait() {
-        return headPortrait;
-    }
-
-    public void setHeadPortrait(String headPortrait) {
-        this.headPortrait = headPortrait;
-    }
-
-    @Basic
     @Column(name = "PHONE")
     public String getPhone() {
         return phone;
@@ -139,7 +128,6 @@ public class UserEntity {
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (created != null ? !created.equals(that.created) : that.created != null) return false;
         if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
-        if (headPortrait != null ? !headPortrait.equals(that.headPortrait) : that.headPortrait != null) return false;
         if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -155,7 +143,6 @@ public class UserEntity {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (created != null ? created.hashCode() : 0);
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-        result = 31 * result + (headPortrait != null ? headPortrait.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);

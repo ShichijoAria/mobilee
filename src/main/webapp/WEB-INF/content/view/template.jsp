@@ -3,6 +3,7 @@
 <%
     String path = request.getContextPath();
 %>
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -15,7 +16,8 @@
     <meta http-equiv="description" content="This is my page">
     <meta charset="UTF-8">
     <title>学生信息系统</title>
-    <script src="<%=path%>/dist/jquery.js"></script>
+    <script src="<%=path%>/dist/jquery.min.js"></script>
+    <script src="<%=path%>/dist/jquery.form.js"></script>
     <script src="<%=path%>/dist/semantic.min.js"></script>
     <script src="<%=path%>/dist/jquery.datetimepicker.full.js"></script>
     <script src="<%=path%>/js/util.js"></script>
@@ -92,9 +94,9 @@
 
     <div class="pusher">
         <h2 class="ui header">
-            <i class="${requestScope.icon} alternate icon"></i>
-            <div class="content">${requestScope.title}</div>
-            <div class="sub header">${requestScope.extra}</div>
+            <i class="${requestScope.fields.icon} alternate icon"></i>
+            <div class="content">${requestScope.fields.title}</div>
+            <div class="sub header">${requestScope.fields.extra}</div>
         </h2>
         <div  id="menu">
             <div class="ui small menu">
@@ -143,13 +145,14 @@
 <%--模态框 主信息--%>
 <div class="ui first modal">
     <div class="image content">
-        <form class="ui stackable  form three column grid" id="modal">
+        <div class="ui stackable  form three column grid" id="modal">
+            <input type="file" name="file" id="file" form="upFile">
             <c:forEach items="${requestScope.fields.show}" var="showMap" >
                 <c:if test="${showMap.value.type=='img'}">
                     <div class="row">
                         <div class="field column">
                             <label>${showMap.value.value}</label>
-                            <img class="ui medium circular image" src="../images/wireframe/square-image.png"/>
+                            <img class="ui medium circular image" src="<%=path%>/head/user/timg.jpg"/>
                         </div>
                     </div>
                 </c:if>
@@ -173,7 +176,7 @@
                     </div>
                 </c:if>
             </c:forEach>
-        </form>
+        </div>
     </div>
     <div class="actions">
         <div class="ui black deny button">
@@ -200,11 +203,13 @@
     </div>
 </div>
 
-
+<form id="upFile"  enctype="multipart/form-data"></form>
 </body>
 <script>
     "use strict"
 
+    var currentPage=1;
+    var currentUrl='';
     var viewName='${requestScope.fields.namespace}';
     var arr=[];
 
@@ -215,42 +220,44 @@
 
     $('#delete').click(function () {
         var myCheck=$(".pusher input[name='item'][type='checkbox']");
-        var arr=[];
+        var deleteArr=[];
         for(i in myCheck){
             if(myCheck[i].checked){
-                arr.push(myCheck[i].value);
+                deleteArr.push(myCheck[i].value);
             }
         }
-        $.post("/mobilee/"+viewName+"/delete.action", "arr="+arr.join(','),
-            function (data, status) {
-                if (status != "success") {
+        if(arr.length>0) {
+            $.post("/mobilee/" + viewName + "/delete.action", "deleteArr=" + deleteArr.join(','),
+                function (data, status) {
+                    if (status != "success") {
 
-                }else {
-                    if(data.msg=="success"){
-                        $('.ui.small.modal').modal('show');
-                    }else {
+                    } else {
+                        if (data.msg == "success") {
+                            showToast("<i class='remove circle icon'></i>删除成功")
+                            getInfoList(viewName, arr, currentPage, currentUrl);
+                        } else {
 
+                        }
                     }
-                }
-            });
+                });
+        }
     });
 
     $('#lookFor').click(function () {
-        var url='';
+        currentUrl='';
         var inputs=$('.ui.grid.stackable.segment.three.column.vertical.container input');
         var selects=$('.ui.grid.stackable.segment.three.column.vertical.container select');
         for(var i in inputs){
             if(inputs[i].value!=undefined&&inputs[i].value!='') {
-                url += "&"+inputs[i].name +'='+ inputs[i].value;
+                currentUrl += "&"+inputs[i].name +'='+ inputs[i].value;
             }
         }
         for(var i in selects){
-
             if(selects[i].value!=undefined&&selects[i].value!='') {
-                url += "&"+selects[i].name +'='+ selects[i].value;
+                currentUrl += "&"+selects[i].name +'='+ selects[i].value;
             }
         }
-        getInfoList(viewName,arr,"1",url,'');
+        getInfoList(viewName,arr,"1",currentUrl);
     });
 
     $('#reset').click(function () {
@@ -274,6 +281,7 @@
                 }else {
                     if(data.msg=="success"){
                         showToast("<i class='archive icon'></i>保存成功");
+                        getInfoList(viewName, arr, currentPage, currentUrl);
                     }else {
 
                     }
@@ -362,6 +370,22 @@
             getInfo(module,$(this).parent().attr('id'));
         })
     }
+
+    function upload() {
+        $('#upFile').ajaxSubmit({
+            url : "upload.action",
+            type : "POST",
+            success : function(data) {
+                console.log(data);
+            },
+            error : function(data) {
+                console.log(data);
+            }
+        });
+    }
+
+
+
 
 </script>
 </html>

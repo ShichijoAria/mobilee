@@ -5,11 +5,14 @@ import edu.xhu.mobilee.service.UserService;
 import edu.xhu.mobilee.util.Field;
 import edu.xhu.mobilee.util.Format;
 import edu.xhu.mobilee.util.GenderEnum;
+import edu.xhu.mobilee.util.Upload;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -67,13 +70,29 @@ public class UserAction implements SessionAware{
 
     public String delete(){
         HttpServletRequest request = ServletActionContext.getRequest();
-        String arr=request.getParameter("arr");
+        String arr=request.getParameter("deleteArr");
         String []list=arr.split(",");
         long []newList =new long[list.length];
         for (int i = 0; i < list.length; i++) {
             newList[i]=Format.stringToLong(list[i]);
         }
+        dataMap = new HashMap<String, Object>();
+        String msg="success";
+        dataMap.put("msg",msg);
         userService.deleteUser(newList);
+        return "success";
+    }
+
+    public String upload(){
+        HttpServletRequest request = ServletActionContext.getRequest();
+        System.out.println(request.getParameter("file"));
+        try {
+            Upload.upload(request,"/upload/user");
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "success";
     }
 

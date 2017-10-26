@@ -3,6 +3,7 @@
 <%
     String path = request.getContextPath();
 %>
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -10,7 +11,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta charset="UTF-8">
     <title>手百网</title>
-    <script src="<%=path%>/dist/jquery.js"></script>
+    <script src="<%=path%>/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="<%=path%>/dist/semantic.css">
     <script src="<%=path%>/dist/semantic.min.js"></script>
     <link rel="stylesheet" href="<%=path%>/css/index.css">
@@ -89,8 +90,8 @@
                 </div>
             </div>
         </div>
-        <div class="pusher">
-            <div class="ui segment">
+        <div class="pusher" style="height: 100%">
+            <div class="ui segment" style="height: 100%">
                 <iframe class="" id="myframe" src="/SIS/desktop/welcome" height="95%" width="100%" frameborder="no" border="0" ></iframe>
             </div>
         </div>

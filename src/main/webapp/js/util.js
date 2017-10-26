@@ -65,6 +65,7 @@ function getInfoList(module,arr,param,url) {
                                 addInfoList(arr,data,module);
                                 generatePagination(data.total,data.page,module)
                                 var select="a[page='"+data.page+"']";
+                                currentPage=data.page;
                                 $(select).addClass('active');
                             }
                         })
@@ -119,7 +120,7 @@ function generatePagination(total,curPage,viewName) {
         array.push(2);
         array.push(0)
         array.push(total);
-    }else {
+    }else if(total==2){
         array.push(2);
     }
     var html=array.map(pageItem).join('');
