@@ -30,9 +30,11 @@ function getInfo(module,id) {
                         var opt="[data-value='"+entity[i]+"']";
                         $(choose).parent().dropdown('set selected', entity[i])
                     }
+                    $('#myPicture').attr('src',"../upload/"+module+"/"+entity.id+".jpg?"+Math.random())
                     $('.ui.first.modal')
                         .modal('show')
                     ;
+                    changeSize();
                 }else {
 
                 }
@@ -103,6 +105,7 @@ function getList(page) {
 }
 
 function changeSize() {
+    $('#myPicture').outerHeight($('#myPicture').outerWidth());
     $('form').outerWidth($('body').width())
     $('#foot').width($('body').width())
     $('.ui.input').outerWidth($('input').outerWidth())

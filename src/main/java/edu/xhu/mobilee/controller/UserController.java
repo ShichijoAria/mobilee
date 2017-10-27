@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RequestMapping("user")
 @Controller
@@ -96,23 +98,32 @@ public class UserController {
     }
 
     @RequestMapping(value = "upload", method = RequestMethod.POST)
-    public void upload(HttpServletRequest request, @RequestParam("file") MultipartFile file, ModelMap model) {
-        System.out.println("开始");
-        String path = request.getSession().getServletContext().getRealPath("upload");
-        String fileName = file.getOriginalFilename();
-        // String fileName = new Date().getTime()+".jpg";
-        System.out.println(path);
-        File targetFile = new File(path, fileName);
-        if (!targetFile.exists()) {
-            targetFile.mkdirs();
+    @ResponseBody
+    public Map upload(HttpServletRequest request, @RequestParam("file") MultipartFile file,@RequestParam("fileId") long id) {
+        String path = request.getSession().getServletContext().getRealPath("upload/user");
+        String fileName=file.getOriginalFilename();
+        String extensionName=fileName.substring(fileName.lastIndexOf('.')+1);
+        String msg = "";
+        if(extensionName.equals("jpg")) {
+            String name = id + fileName.substring(fileName.lastIndexOf('.'));
+            File targetFile = new File(path, name);
+            if (!targetFile.exists()) {
+                targetFile.mkdirs();
+            }
+            // 保存
+            try {
+                file.transferTo(targetFile);
+                msg = "success";
+            } catch (Exception e) {
+                msg = "上传失败";
+                e.printStackTrace();
+            }
+        }else {
+            msg="只支持jpg格式的图片！";
         }
-
-        // 保存
-        try {
-            file.transferTo(targetFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Map dataMap = new HashMap<String, Object>();
+        dataMap.put("msg",msg);
+        return dataMap;
     }
 
 }

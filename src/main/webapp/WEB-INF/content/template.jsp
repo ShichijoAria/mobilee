@@ -151,7 +151,7 @@
                     <div class="row">
                         <div class="field column">
                             <label>${showMap.value.value}</label>
-                            <img class="ui medium circular image" src="<%=path%>/head/user/timg.jpg" onclick="document.getElementById('file').click();"/>
+                            <img class="ui medium bordered  circular image" onerror="javascript:this.src='../upload/${requestScope.fields.namespace}/timg.jpg'" src="" id="myPicture" onclick="document.getElementById('file').click();"/>
                         </div>
                     </div>
                 </c:if>
@@ -204,6 +204,7 @@
 
 <form id="upFile"  enctype="multipart/form-data">
     <input type="file" name="file" id="file" style="display: none" onchange="upload()">
+    <input type="number" name="fileId" id="fileId" style="display: none">
 </form>
 </body>
 <script>
@@ -265,13 +266,13 @@
             },
             function(data, status) {
                 if (status != "success") {
-
+                    showToast("<i class='warning icon'></i>连接服务器失败！");
                 }else {
                     if(data.msg=="success"){
                         showToast("<i class='archive icon'></i>保存成功");
                         getInfoList(viewName, arr, currentPage, currentUrl);
                     }else {
-
+                        showToast("<i class='remove circle outline icon'></i>"+data.msg);
                     }
                 }
             });
@@ -358,20 +359,31 @@
     }
 
     function upload() {
+        $('#fileId').val($("input[name='id']").val());
+        $('#modal').addClass('loading');
         var formData = new FormData($( "#upFile" )[0]);
         $.ajax({
-            url: 'upload' ,
+            url: 'upload',
             type: 'POST',
             data: formData,
             async: false,
             cache: false,
             contentType: false,
             processData: false,
-            success: function (returndata) {
-                alert(returndata);
+            success: function (data) {
+                if(data.msg=="success"){
+                    $('#modal').removeClass('loading');
+                    showToast("<i class='upload icon'></i>上传成功");
+                    $('#myPicture').attr('src',"../upload/"+viewName+"/"+$("input[name='id']").val()+".jpg?"+Math.random())
+                }else {
+                    $('#modal').removeClass('loading');
+                    showToast("<i class='remove circle outline icon'></i>"+data.msg);
+                }
+
             },
-            error: function (returndata) {
-                alert(returndata);
+            error: function (data) {
+                $('#modal').removeClass('loading');
+                showToast("<i class='warning icon'></i>连接服务器失败！");
             }
         });
     }
