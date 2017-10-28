@@ -1,3 +1,4 @@
+/*
 package edu.xhu.mobilee.dao.impl;
 
 import edu.xhu.mobilee.dao.UserDao;
@@ -50,3 +51,4 @@ public class UserDaoImpl implements UserDao{
     }
 
 }
+*/

@@ -53,10 +53,8 @@
     <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
   </listener>
 
-  <!-- Struts2 filter -->
-
   <welcome-file-list>
-    <welcome-file>/WEB-INF/content/welcome.jsp</welcome-file>
+    <welcome-file>/login.jsp</welcome-file>
   </welcome-file-list>
 
   <!-- spring MVC config start-->

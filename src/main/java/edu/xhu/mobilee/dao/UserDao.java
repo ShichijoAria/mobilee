@@ -9,7 +9,7 @@ public interface UserDao {
 
     UserEntity findUserById(long id);
 
-    List<UserEntity> selectUserPage(String hql);
+    List<UserEntity> selectUserPage(String sql);
 
     void saveUser(UserEntity userEntity);
 

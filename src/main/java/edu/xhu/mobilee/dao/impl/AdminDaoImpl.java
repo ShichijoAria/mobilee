@@ -1,3 +1,4 @@
+/*
 package edu.xhu.mobilee.dao.impl;
 
 import edu.xhu.mobilee.dao.AdminDao;
@@ -22,3 +23,4 @@ public class AdminDaoImpl implements AdminDao{
         return (AdminEntity) this.getSession().get(AdminEntity.class, id);
     }
 }
+*/
