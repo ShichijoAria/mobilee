@@ -1,6 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-</beans>
+<mapper namespace="edu.xhu.mobilee.dao.AdminDao">
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <select id="findAdminById" parameterType="long" resultType="AdminEntity">
+        <!-- 具体的sql -->
+        SELECT id,name,password FROM t_admin WHERE id = #{id}
+    </select>
+
+
+</mapper>

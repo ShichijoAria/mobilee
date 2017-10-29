@@ -22,13 +22,13 @@
     <script src="<%=path%>/dist/jquery.datetimepicker.full.js"></script>
     <script src="<%=path%>/js/util.js"></script>
     <link rel="stylesheet" href="<%=path%>/dist/jquery.datetimepicker.css">
-    <link rel="stylesheet" href="../dist/semantic.css">
+    <link rel="stylesheet" href="<%=path%>/dist/semantic.css">
     <link rel="stylesheet" href="<%=path%>/css/index.css">
     <link rel="stylesheet" href="<%=path%>/css/view.css">
     <link rel="stylesheet" href="<%=path%>/css/general.css">
 </head>
 <body style="background-color: #fff;">
-<div class="ui form pusher" method="post" action="view" id="main">
+<div class="ui form pushable" method="post" action="view" id="main">
     <%--侧边栏--%>
     <div class="ui top left vertical menu sidebar">
         <a class="ui right grey large corner label">
@@ -41,17 +41,13 @@
                     <div class="ui black basic label">
                             ${myMap.value.value}
                     </div>
-                    <div class="ui input">
-                        <c:if test="${myMap.value.type=='select'}">
-                            <select class="ui dropdown" name="${myMap.key}Search">
-                                <option value="">&nbsp;</option>
-                                <c:forEach items="${myMap.value.opt}" var="opt" >
-                                    <option value="${opt.key}">${opt.value}</option>
-                                </c:forEach>
-                            </select>
-                        </c:if>
-                        <c:if test="${myMap.value.type=='datetime'||myMap.value.type=='date'}">
-                        <c:if test="${myMap.value.range=='true'}">
+                    <div class="ui input"><c:if test="${myMap.value.type=='select'}">
+                        <select class="ui dropdown" name="${myMap.key}Search">
+                            <option value="">&nbsp;</option>
+                            <c:forEach items="${myMap.value.opt}" var="opt" >
+                                <option value="${opt.key}">${opt.value}</option>
+                            </c:forEach>
+                        </select></c:if><c:if test="${myMap.value.type=='datetime'||myMap.value.type=='date'}"><c:if test="${myMap.value.range=='true'}">
                         <input class="input" name="${myMap.key}LowSearch" ${myMap.value.type}="true">
                     </div>
                 </div>
@@ -61,30 +57,25 @@
                     </div>
                     <div class="ui input">
                         <input class="input" name="${myMap.key}UpSearch" ${myMap.value.type}="true">
+                    </c:if><c:if test="${myMap.value.range=='false'}">
+                        <input class="input" name="${myMap.key}Search" ${myMap.value.type}="true"></c:if></c:if><c:if test="${myMap.value.type=='number'&&myMap.value.range=='true'}">
+                        <input class="input" name="${myMap.key}LowSearch" ${myMap.value.type}="true">
                     </div>
                 </div>
-                </c:if>
-                <c:if test="${myMap.value.range=='false'}">
-                    <input class="input" name="${myMap.key}Search" ${myMap.value.type}="true">
-                </c:if>
-                </c:if>
-                <c:if test="${myMap.value.type=='number'&&myMap.value.range=='true'}">
-                <input class="input" name="${myMap.key}LowSearch" ${myMap.value.type}="true">
+                <div class="column">
+                    <div class="ui black basic label">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div class="ui input">
+                        <input class="input" type="${myMap.value.type}" name="${myMap.key}UpSearch"></c:if><c:if test="${myMap.value.type=='text'||myMap.value.type=='number'&&myMap.value.range=='false'}">
+                        <input class="input" type="${myMap.value.type}" name="${myMap.key}Search">
+                    </c:if>
+                    </div>
+                </div>
+                </c:forEach>
             </div>
         </div>
-        <div class="column">
-            <div class="ui black basic label">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </div>
-            <div class="ui input">
-                <input class="input" type="${myMap.value.type}" name="${myMap.key}UpSearch">
-                </c:if>
-                <c:if test="${myMap.value.type=='text'||myMap.value.type=='number'&&myMap.value.range=='false'}">
-                    <input class="input" type="${myMap.value.type}" name="${myMap.key}Search">
-                </c:if>
-            </div>
-        </div>
-        </c:forEach>
+
         <div style="text-align: center;width:100%;padding-top: 5%">
             <div class="ui button blue" id="lookFor">查询</div>
             <a class="ui button" id="reset">重置</a>
@@ -124,7 +115,7 @@
                         </div>
                     </th>
                     <c:forEach items="${requestScope.fields.head}" var="myMap" >
-                        <th class="" id="<c:out value="${myMap.key}" />"><c:out value="${myMap.value.value}" /></th>
+                        <th class="<c:out value="type${myMap.value.type}"/>" id="<c:out value="${myMap.key}"/>"><c:out value="${myMap.value.value}" /></th>
                     </c:forEach>
                 </tr>
                 </thead>
@@ -170,7 +161,7 @@
                             <input <c:if test="${showMap.value.edit=='false'}">readonly=""</c:if> type="${showMap.value.type}" name="${showMap.key}">
                         </c:if>
                         <c:if test="${showMap.value.type=='datetime'||showMap.value.type=='date'}">
-                            <input <c:if test="${showMap.value.edit=='false'}">readonly=""</c:if> <c:if test="${showMap.value.edit!='false'}">${showMap.value.type}="true"</c:if>  name="${showMap.key}">
+                            <input <c:if test="${showMap.value.edit=='false'}">readonly="" ${showMap.value.type}="false"</c:if> <c:if test="${showMap.value.edit!='false'}">${showMap.value.type}="true"</c:if>  name="${showMap.key}">
                         </c:if>
                     </div>
                 </c:if>

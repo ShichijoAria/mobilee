@@ -9,9 +9,9 @@ public interface UserService {
 
     UserEntity findUserById(long id);
 
-    Map<String,Object> selectUser(int page,String hql);
+    Map<String,Object> selectUser(Map<String, Object> paramMap);
 
-    void saveUser(UserEntity userEntity);
+    void updateUserById(UserEntity userEntity);
 
     void deleteUser(long[] list);
 }

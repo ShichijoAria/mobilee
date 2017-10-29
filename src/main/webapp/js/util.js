@@ -26,6 +26,10 @@ function getInfo(module,id) {
                     for(var i in entity){
                         var choose="input[name='"+i+"']";
                         $(choose).val(entity[i]);
+                        if($(choose).attr('date')=="false"||$(choose).attr('date')=="true")
+                            $(choose).val(new Date(entity[i]).format('yyyy-MM-dd'));
+                        if($(choose).attr('datetime')=="false"||$(choose).attr('datetime')=="true")
+                            $(choose).val(new Date(entity[i]).format('yyyy-MM-dd hh:mm'));
                         var choose="select[name='"+i+"']";
                         var opt="[data-value='"+entity[i]+"']";
                         $(choose).parent().dropdown('set selected', entity[i])
@@ -147,11 +151,13 @@ function generatePagination(total,curPage,viewName) {
     $('#pagination').html(html);
     bind(viewName);
 }
+
 function pageItem(i) {
     if(i>0)
         return "<a class='item' page='"+i+"'>"+i+"</a>";
     return "<div class='disabled item'>...</div>";
 }
+
 function bind(viewname) {
     $('a.item').click(function () {
         if($(this).attr('page')!=undefined) {
@@ -165,4 +171,26 @@ function bindCheck() {
     $('#checkAll').click(function () {
         $("input[name='item']").prop('checked',$(this)[0].checked);
     });
+}
+
+Date.prototype.format = function(format) {
+    var date = {
+        "M+": this.getMonth() + 1,
+        "d+": this.getDate(),
+        "h+": this.getHours(),
+        "m+": this.getMinutes(),
+        "s+": this.getSeconds(),
+        "q+": Math.floor((this.getMonth() + 3) / 3),
+        "S+": this.getMilliseconds()
+    };
+    if (/(y+)/i.test(format)) {
+        format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+    }
+    for (var k in date) {
+        if (new RegExp("(" + k + ")").test(format)) {
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1
+                ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
+        }
+    }
+    return format;
 }

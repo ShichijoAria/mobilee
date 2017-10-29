@@ -70,12 +70,15 @@ public class Field {
         return render;
     }
 
-    public static String getHql(String entity,HttpServletRequest request){
-        String hqlFoot="";
-        String hqlHead="SELECT new "+entity+"Entity(";
-        String hqlBody=") FROM "+entity+"Entity ";
-        entity=entity.toLowerCase();
-        hqlBody+=entity+" ";
+    public static Map<String,Object> getParamMap(String entity,HttpServletRequest request){
+        Map<String, Object> paramMap=new HashMap<String,Object>();
+        String fields="";
+        String where="";
+        String orderBy="id";
+        String orderByParam= request.getParameter("order_by");
+        int pageIndex= Format.stringToInt(request.getParameter("page_index"));
+        pageIndex=pageIndex>0?pageIndex:1;
+
         try {
             File file = new File(Field.class.getResource("/interface/"+entity+".xml").getPath());
             SAXReader reader = new SAXReader();
@@ -91,45 +94,52 @@ public class Field {
                     String type = property.attributeValue("type");
                     String range = property.attributeValue("range");
                     String param;
-                    hqlHead+=entity+"."+key+",";
+                    if(orderByParam!=null&&orderByParam.equals(key))
+                        orderBy=orderByParam;
                     if (type.equals("text")){
+                        fields+=entity+"."+key+",";
                         param = request.getParameter(key + "Search");
                         if(param!=null) {
                             param = "'%" + param + "%'";
-                            hqlFoot += "where " + entity + "." + key + " like " + param + " ";
+                            where += "and " + entity + "." + key + " like " + param + " ";
                         }
                     } else if (type.equals("select")) {
+                        fields+=entity+"."+key+",";
                         param = request.getParameter(key + "Search");
                         if(param!=null)
-                            hqlFoot += "where " + entity + "." + key + "= "+param+" ";
+                            where += "and " + entity + "." + key + "= "+param+" ";
                     } else {
                         if (range.equals("false")) {
+                            fields+=entity+"."+key+",";
                             param = request.getParameter(key + "Search");
                             if (type.equals("number")) {
                                 /*预留*/
                             } else if (type.equals("datetime")) {
-                                param="to_timestamp(''"+param+",'yyyy-mm-dd hh24:mi:ss:ff')";
+                                fields+="date_format("+entity+"."+key+",'%Y-%m-%d %H:%i')"+key+",";
+                                param="UNIX_TIMESTAMP('"+param+"')";
                             }
                             if(param!=null)
-                                hqlFoot += "where " + entity + "." + key + "= "+param+" ";
+                                where += "and " + entity + "." + key + "= "+param+" ";
                         } else {
                             if (type.equals("number")) {
+                                fields+=entity+"."+key+",";
                                 param = request.getParameter(key + "UpSearch");
                                 if(param!=null)
-                                    hqlFoot += "where " + entity + "." + key + "<= "+param+" ";
+                                    where += "and " + entity + "." + key + "<= "+param+" ";
                                 param = request.getParameter(key + "LowSearch");
                                 if(param!=null)
-                                    hqlFoot += "where " + entity + "." + key + ">= "+param+" ";
+                                    where += "and " + entity + "." + key + ">= "+param+" ";
                             } else if (type.equals("datetime")) {
+                                fields+="date_format("+entity+"."+key+",'%Y-%m-%d %H:%i')"+key+",";
                                 param = request.getParameter(key + "UpSearch");
                                 if(param!=null) {
-                                    param = "to_timestamp('" + param + "','yyyy-mm-dd hh24:mi:ss:ff')";
-                                    hqlFoot += "where " + entity + "." + key + "<= " + param + " ";
+                                    param = "UNIX_TIMESTAMP('" + param + "')";
+                                    where += "and " + entity + "." + key + "<= " + param + " ";
                                 }
                                 param = request.getParameter(key + "LowSearch");
                                 if(param!=null) {
-                                    param = "to_timestamp('" + param + "','yyyy-mm-dd hh24:mi:ss:ff')";
-                                    hqlFoot += "where " + entity + "." + key + ">= " + param + " ";
+                                    param = "UNIX_TIMESTAMP('" + param + "')";
+                                    where += "and " + entity + "." + key + ">= " + param + " ";
                                 }
                             }
                         }
@@ -139,7 +149,17 @@ public class Field {
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-        return hqlHead.substring(0,hqlHead.length()-1)+hqlBody+hqlFoot.replaceAll("^and","where");
+
+        if (where.length()>3)
+            where=where.substring(3);
+        paramMap.put("tables","t_"+entity+" "+entity);
+        paramMap.put("pageIndex",pageIndex);
+        paramMap.put("fields",fields.substring(0,fields.length()-1));
+        paramMap.put("where",where);
+        paramMap.put("orderBy","id");
+        paramMap.put("pageSize", Proper.pageSize());
+
+        return paramMap;
     }
 
     public static Object getObject(Object obj,HttpServletRequest request){

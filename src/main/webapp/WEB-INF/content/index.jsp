@@ -175,39 +175,11 @@
         });
     }
     $('#user').click(function () {
-        $('iframe').attr("src","<%=path%>/user/index.action")
+        $('iframe').attr("src","<%=path%>/user/view")
     })
     ;
-    $('#PasswordManager').click(function () {
-        $('iframe').attr("src","/SIS/user/view")
-    })
-    ;
-    $('#TeacherManagement').click(function () {
-        $('iframe').attr("src","/SIS/teacher/view")
-    })
-    ;
-    $('#StudentManagement').click(function () {
-        $('iframe').attr("src","/SIS/student/view")
-    })
-    ;
-    $('#TeachingClassQuery').click(function () {
-        $('iframe').attr("src","/SIS/teachingClass/view")
-    })
-    ;
-    $('#homepage').click(function () {
-        $('iframe').attr("src","/SIS/desktop/welcome")
-    })
-    ;
-    $('#SelectCourse').click(function () {
-        $('iframe').attr("src","/SIS/teachingClass/view")
-    })
-    ;
-    $('#MyGrade').click(function () {
-        $('iframe').attr("src","/SIS/grade/view")
-    })
-    ;
-    $('#MyStudent').click(function () {
-        $('iframe').attr("src","/SIS/grade/view")
+    $('#admin').click(function () {
+        $('iframe').attr("src","<%=path%>/admin/view")
     })
     ;
     $('.circular.users.icon').click(function () {

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <render title="管理人员" extra="Admin User" icon="user" namespace="admin"/>
+    <properties>
+        <property key="id" value="管理员编号" type="number" head="true" show="true" edit="false" range="false" class="long"/>
+        <property key="name" value="管理员姓名" type="text" head="true" show="true" edit="true"  range="false"  class="String"/>
+
+    </properties>
+</root>

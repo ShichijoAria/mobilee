@@ -6,7 +6,6 @@ import edu.xhu.mobilee.util.Field;
 import edu.xhu.mobilee.util.Format;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,8 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @RequestMapping("user")
 @Controller
@@ -28,8 +25,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "index",method = RequestMethod.GET)
-    public ModelAndView index(){
+    @RequestMapping(value = "view",method = RequestMethod.GET)
+    public ModelAndView view(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("fields", Field.textField("user"));
         modelAndView.setViewName("template");
@@ -39,11 +36,8 @@ public class UserController {
     @RequestMapping(value = "list",method = RequestMethod.POST)
     @ResponseBody
     public Map list( HttpServletRequest request){
-        int page= Format.stringToInt(request.getParameter("page"));
-        String hql=Field.getHql("User",request);
-        page=page>0?page:1;
         Map dataMap = new HashMap<String, Object>();
-        dataMap = userService.selectUser(page,hql);
+        dataMap = userService.selectUser(Field.getParamMap("user",request));
         return dataMap;
     }
 
@@ -63,12 +57,10 @@ public class UserController {
 
     @RequestMapping(value = "save",method = RequestMethod.POST)
     @ResponseBody
-    public Map save(HttpServletRequest request,@RequestParam(value = "id") long id){
+    public Map save(HttpServletRequest request,UserEntity userEntity,@RequestParam(value = "id") long id){
         Map dataMap = new HashMap<String, Object>();
         String msg="非法的数据";
-        UserEntity user=userService.findUserById(id);
-        user= (UserEntity) Field.getObject(user,request);
-        userService.saveUser(user);
+        userService.updateUserById(userEntity);
         msg="success";
         dataMap.put("msg",msg);
         return dataMap;

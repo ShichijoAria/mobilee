@@ -1,13 +1,14 @@
 package edu.xhu.mobilee.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class UserEntity {
     private long id;
     private Long gender;
     private String password;
-    private Date created;
-    private Date birthday;
+    private Timestamp created;
+    private Timestamp birthday;
     private String phone;
     private String email;
     private String name;
@@ -40,19 +41,19 @@ public class UserEntity {
         this.password = password;
     }
 
-    public Date getCreated() {
+    public Timestamp getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
 
-    public Date getBirthday() {
+    public Timestamp getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(Timestamp birthday) {
         this.birthday = birthday;
     }
 

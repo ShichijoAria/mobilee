@@ -1,5 +1,6 @@
 package edu.xhu.mobilee.service.impl;
 
+import edu.xhu.mobilee.dao.ProcedureDao;
 import edu.xhu.mobilee.dao.UserDao;
 import edu.xhu.mobilee.entity.UserEntity;
 import edu.xhu.mobilee.service.UserService;
@@ -17,6 +18,8 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private ProcedureDao procedureDao;
 
 
     public UserEntity findUserById(long id) {
@@ -24,21 +27,16 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Map<String,Object> selectUser(int page,String hql) {
-        int pageSize=Proper.pageSize();
+    public Map<String,Object> selectUser(Map<String, Object> paramMap) {
         Map<String,Object> map=new HashMap<String, Object>();
-        List<UserEntity> userEntityList=userDao.selectUserPage(hql);
-        List<Object> subList=Format.sublist(page,userEntityList);
-        map.put("total",userEntityList.size()/pageSize+1);
-        map.put("page",page);
-        map.put("list",subList);
+        map.put("list",procedureDao.pagedQuery(paramMap));
         map.put("msg","success");
         return map;
     }
 
     @Override
-    public void saveUser(UserEntity userEntity) {
-        userDao.saveUser(userEntity);
+    public void updateUserById(UserEntity userEntity) {
+        userDao.updateUserById(userEntity);
     }
 
     @Override

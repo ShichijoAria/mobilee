@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.xhu.mobilee.dao.ProcedureDao">
+
+    <select id="pagedQuery" statementType="CALLABLE" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        <![CDATA[
+            {call p_get_page(
+                    #{fields,mode=IN,jdbcType=VARCHAR},
+                    #{tables,mode=IN,jdbcType=VARCHAR},
+                    #{where,mode=IN,jdbcType=VARCHAR},
+                    #{orderBy,mode=IN,jdbcType=VARCHAR},
+                    #{pageIndex,mode=IN,jdbcType=INTEGER},
+                    #{pageSize,mode=IN,jdbcType=INTEGER},
+                    #{totalCount,mode=OUT,jdbcType=INTEGER},
+                    #{pageCount,mode=OUT,jdbcType=INTEGER}
+                )
+            }
+        ]]>
+    </select>
+
+</mapper>
