@@ -164,7 +164,7 @@ public class Field {
         paramMap.put("pageIndex",pageIndex);
         paramMap.put("fields",fields.substring(0,fields.length()-1));
         paramMap.put("where",where);
-        paramMap.put("orderBy","id");
+        paramMap.put("orderBy",orderBy);
         paramMap.put("pageSize", Proper.pageSize());
 
         return paramMap;

@@ -205,8 +205,6 @@
     //声明全局变量
     //初始页
     var currentPage=1;
-    //查询条件where
-    var currentUrl='';
     //trim().length()>0为降序
     var sequence="";
     //排序字段
@@ -247,7 +245,10 @@
     });
 
     $('#lookFor').click(function () {
-        getInfoList()
+        orderBy="";
+        sequence="";
+        getInfoList(viewName,arr,1,true,orderBy,sequence);
+        $('th').children('i').attr("class","icon sort")
     });
 
     $('#reset').click(function () {
@@ -282,10 +283,16 @@
     //排序图标变化
     $('th').click(function () {
         if($(this).children('i').attr("class")=="icon sort ascending"||$(this).children().attr("class")=="icon sort") {
+            orderBy=$(this).attr('id');
+            sequence="desc";
+            getInfoList(viewName,arr,currentPage,true,orderBy,sequence);
             $(this).children('i').attr("class", "icon sort descending");
             $(this).siblings('i').children().attr("class", "icon sort");
         }
         else if($(this).children('i').attr("class")=="icon sort descending") {
+            orderBy=$(this).attr('id');
+            sequence="";
+            getInfoList(viewName,arr,currentPage,true,$(this).attr('id'),null);
             $(this).children('i').attr("class", "icon sort ascending");
         }
     })

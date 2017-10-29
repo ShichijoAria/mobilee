@@ -175,7 +175,7 @@ function pageItem(i) {
 function bind(viewname) {
     $('a.item').click(function () {
         if($(this).attr('page')!=undefined) {
-            getList($(this).attr('page'),sequence);
+            getInfoList(viewName,arr,$(this).attr('page'),true,orderBy,sequence);
         }
     });
 }
