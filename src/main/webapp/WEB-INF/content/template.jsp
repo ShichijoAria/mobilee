@@ -92,8 +92,9 @@
         <div  id="menu">
             <div class="ui small menu">
                 <div class="left menu">
-                    <div class="item">
-                        <div class="ui red button" id="delete">删除</div>
+                    <div class="item"><c:if test="${requestScope.fields.insert=='true'}">
+                        <div class="ui primary button" id="new" style="margin-right: 5px">新建</div></c:if><c:if test="${requestScope.fields.delete=='true'}">
+                        <div class="ui red button" id="delete">删除</div></c:if>
                     </div>
                 </div>
                 <div class="right menu">
@@ -115,7 +116,7 @@
                         </div>
                     </th>
                     <c:forEach items="${requestScope.fields.head}" var="myMap" >
-                        <th class="<c:out value="type${myMap.value.type}"/>" id="<c:out value="${myMap.key}"/>"><c:out value="${myMap.value.value}" /></th>
+                        <th class="<c:out value="type${myMap.value.type}"/>" id="<c:out value="${myMap.key}"/>"><i class="icon sort"></i><c:out value="${myMap.value.value}" /></th>
                     </c:forEach>
                 </tr>
                 </thead>
@@ -171,11 +172,11 @@
     <div class="actions">
         <div class="ui black deny button">
             关闭
-        </div>
+        </div><c:if test="${requestScope.fields.insert=='true'}">
         <div class="ui positive right labeled icon button" id="saveEntity">
             保存
             <i class="checkmark icon"></i>
-        </div>
+        </div></c:if>
     </div>
 </div>
 
@@ -201,15 +202,23 @@
 <script>
     "use strict"
 
+    //声明全局变量
+    //初始页
     var currentPage=1;
+    //查询条件where
     var currentUrl='';
-    var viewName='${requestScope.fields.namespace}';
-    var arr=[];
+    //trim().length()>0为降序
+    var sequence="";
+    //排序字段
+    var orderBy="";
 
+    var viewName='${requestScope.fields.namespace}';
+    //table head初始化
+    var arr=[];
     for(var i=1;i<$('th').length;i++){
         arr.push($('th')[i].id)
     }
-    getInfoList(viewName,arr,"");
+    getInfoList(viewName,arr,1,false,null,null);
 
     $('#delete').click(function () {
         var myCheck=$(".pusher input[name='item'][type='checkbox']");
@@ -227,7 +236,8 @@
                     } else {
                         if (data.msg == "success") {
                             showToast("<i class='remove circle icon'></i>删除成功")
-                            getInfoList(viewName, arr, currentPage, currentUrl);
+                            getInfoList(viewName,arr,currentPage,true,orderBy,sequence);
+                            getInfoList(viewName, arr, currentPage, currentUrl,sequence);
                         } else {
 
                         }
@@ -237,7 +247,7 @@
     });
 
     $('#lookFor').click(function () {
-        getList();
+        getInfoList()
     });
 
     $('#reset').click(function () {
@@ -267,6 +277,17 @@
                     }
                 }
             });
+    })
+
+    //排序图标变化
+    $('th').click(function () {
+        if($(this).children('i').attr("class")=="icon sort ascending"||$(this).children().attr("class")=="icon sort") {
+            $(this).children('i').attr("class", "icon sort descending");
+            $(this).siblings('i').children().attr("class", "icon sort");
+        }
+        else if($(this).children('i').attr("class")=="icon sort descending") {
+            $(this).children('i').attr("class", "icon sort ascending");
+        }
     })
 
     //时间日期选择框初始化

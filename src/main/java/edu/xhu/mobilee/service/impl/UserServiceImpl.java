@@ -30,6 +30,10 @@ public class UserServiceImpl implements UserService{
     public Map<String,Object> selectUser(Map<String, Object> paramMap) {
         Map<String,Object> map=new HashMap<String, Object>();
         map.put("list",procedureDao.pagedQuery(paramMap));
+        //total为总页数
+        map.put("total",paramMap.get("pageCount"));
+        //page为当前页
+        map.put("page",paramMap.get("pageIndex"));
         map.put("msg","success");
         return map;
     }

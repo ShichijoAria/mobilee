@@ -30,7 +30,7 @@ a.item.foot{
 table{
     margin-bottom: 0px!important;
 }
-tr:hover{
+tr:hover,th:hover{
     cursor:pointer!important;
 }
 .ui.black.inverted.button:hover{

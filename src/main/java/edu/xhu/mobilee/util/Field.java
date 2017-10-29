@@ -22,15 +22,12 @@ public class Field {
             SAXReader reader = new SAXReader();
             Document doc = reader.read(file);
             Element root = doc.getRootElement();
-            Element renderele = root.element("render");
+            Element renderEle = root.element("render");
             Element properties=root.element("properties");
+            Element grant=root.element("grant");
             Element property;
             Map<String,Object> show=new LinkedHashMap<String, Object>();
             Map<String,Object> head=new LinkedHashMap<String, Object>();
-            render.put("title",renderele.attributeValue("title"));
-            render.put("extra",renderele.attributeValue("extra"));
-            render.put("icon",renderele.attributeValue("icon"));
-            render.put("namespace",renderele.attributeValue("namespace"));
 
             for (Iterator ite = properties.elementIterator(); ite.hasNext(); ) {
                 property = (Element) ite.next();
@@ -62,8 +59,15 @@ public class Field {
                     }
                 }
             }
+            render.put("title",renderEle.attributeValue("title"));
+            render.put("extra",renderEle.attributeValue("extra"));
+            render.put("icon",renderEle.attributeValue("icon"));
+            render.put("namespace",renderEle.attributeValue("namespace"));
             render.put("head",head);
             render.put("show",show);
+            render.put("update",grant.element("update").getStringValue());
+            render.put("insert",grant.element("insert").getStringValue());
+            render.put("delete",grant.element("delete").getStringValue());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,8 +79,9 @@ public class Field {
         String fields="";
         String where="";
         String orderBy="id";
-        String orderByParam= request.getParameter("order_by");
-        int pageIndex= Format.stringToInt(request.getParameter("page_index"));
+        String orderByParam= request.getParameter("orderBy");
+        String sequence=request.getParameter("sequence");
+        int pageIndex= Format.stringToInt(request.getParameter("page"));
         pageIndex=pageIndex>0?pageIndex:1;
 
         try {
@@ -149,6 +154,9 @@ public class Field {
         } catch (DocumentException e) {
             e.printStackTrace();
         }
+
+        if(sequence!=null&&sequence.trim().length()>0)
+            orderBy+=" DESC";
 
         if (where.length()>3)
             where=where.substring(3);

@@ -15,4 +15,9 @@
         <property key="email" value="电子邮箱" type="text" head="false" show="true" edit="false"  range="false" class="String"/>
         <property key="headPortrait" value="用户头像" type="img" head="false" show="true" edit="true"  range="false"  class="String"/>
     </properties>
+    <grant>
+        <update>true</update>
+        <insert>false</insert>
+        <delete>false</delete>
+    </grant>
 </root>

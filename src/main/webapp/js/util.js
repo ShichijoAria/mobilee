@@ -1,5 +1,6 @@
 "use strict"
 
+//semantic-ui 表单验证ajax实现
 function showError(arr) {
     $('.ui.error.message').css("display","none");
     $('ul.list').empty();
@@ -53,8 +54,37 @@ function showToast(html) {
 }
 
 //获取列表信息
-function getInfoList(module,arr,param,url) {
-    $.post("/mobilee/"+module+"/list?page="+param+url,
+/*
+* module viewName
+* arr tableHead
+* page 请求的页码
+* where 查询条件是否开启
+* order 排序字段
+* sequence 正序倒序
+* */
+function getInfoList(module,arr,page,where,order,sequence) {
+    var url="/mobilee/"+module+"/list?page="+page;
+    if (where){
+        var inputs=$('.ui.grid.stackable.segment.three.column.vertical.container input');
+        var selects=$('.ui.grid.stackable.segment.three.column.vertical.container select');
+        for(var i in inputs){
+            if(inputs[i].value!=undefined&&inputs[i].value!='') {
+                url += "&"+inputs[i].name +'='+ inputs[i].value;
+            }
+        }
+        for(var i in selects){
+            if(selects[i].value!=undefined&&selects[i].value!='') {
+                url += "&"+selects[i].name +'='+ selects[i].value;
+            }
+        }
+    }
+    if(order!=null||order!=undefined){
+        url+="&orderBy="+order;
+    }
+    if(sequence!=null||sequence!=undefined) {
+        url += "&sequence=" + sequence;
+    }
+    $.post(url,
         {
 
         },
@@ -91,23 +121,6 @@ function getInfoList(module,arr,param,url) {
         });
 }
 
-function getList(page) {
-    currentUrl='';
-    var inputs=$('.ui.grid.stackable.segment.three.column.vertical.container input');
-    var selects=$('.ui.grid.stackable.segment.three.column.vertical.container select');
-    for(var i in inputs){
-        if(inputs[i].value!=undefined&&inputs[i].value!='') {
-            currentUrl += "&"+inputs[i].name +'='+ inputs[i].value;
-        }
-    }
-    for(var i in selects){
-        if(selects[i].value!=undefined&&selects[i].value!='') {
-            currentUrl += "&"+selects[i].name +'='+ selects[i].value;
-        }
-    }
-    getInfoList(viewName,arr,page,currentUrl);
-}
-
 function changeSize() {
     $('#myPicture').outerHeight($('#myPicture').outerWidth());
     $('form').outerWidth($('body').width())
@@ -131,7 +144,8 @@ function generatePagination(total,curPage,viewName) {
             array.push(curPage - 1)
         }
         if(curPage!=total-1) {
-            array.push(curPage);
+            if(curPage!=2)
+                array.push(curPage);
             array.push(curPage + 1)
             if(curPage<total-2)
                 array.push(0);
@@ -161,7 +175,7 @@ function pageItem(i) {
 function bind(viewname) {
     $('a.item').click(function () {
         if($(this).attr('page')!=undefined) {
-            getList($(this).attr('page'));
+            getList($(this).attr('page'),sequence);
         }
     });
 }

@@ -4,6 +4,10 @@
     <properties>
         <property key="id" value="管理员编号" type="number" head="true" show="true" edit="false" range="false" class="long"/>
         <property key="name" value="管理员姓名" type="text" head="true" show="true" edit="true"  range="false"  class="String"/>
-
     </properties>
+    <grant>
+        <update>false</update>
+        <insert>false</insert>
+        <delete>false</delete>
+    </grant>
 </root>
