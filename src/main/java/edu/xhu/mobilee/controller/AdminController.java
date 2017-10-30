@@ -1,7 +1,6 @@
 package edu.xhu.mobilee.controller;
 
 import edu.xhu.mobilee.entity.AdminEntity;
-import edu.xhu.mobilee.entity.UserEntity;
 import edu.xhu.mobilee.service.AdminService;
 import edu.xhu.mobilee.util.Field;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +83,33 @@ public class AdminController {
     public Map list( HttpServletRequest request){
         Map dataMap = new HashMap<String, Object>();
         dataMap = adminService.selectAdmin(Field.getParamMap("admin",request));
+        return dataMap;
+    }
+
+    @RequestMapping(value = "info",method = RequestMethod.POST)
+    @ResponseBody
+    public Map info(@RequestParam(value = "id") long id){
+        Map dataMap = new HashMap<String, Object>();
+        if(id>0) {
+            AdminEntity temp=adminService.findAdminById(id);
+            dataMap.put("entity", temp);
+            dataMap.put("msg","success");
+        }else {
+            dataMap.put("msg","非法的数据");
+        }
+        return dataMap;
+    }
+
+    @RequestMapping(value = "save",method = RequestMethod.POST)
+    @ResponseBody
+    public Map save(HttpSession session,HttpServletRequest request,AdminEntity adminEntity,@RequestParam(value = "id") long id){
+        Map dataMap = new HashMap<String, Object>();
+        String msg="非法的数据";
+        if(id==(long)session.getAttribute("USER_ID")&&adminService.updateAdminById(adminEntity)>0)
+            session.setAttribute("USER_NAME", adminEntity.getName());
+            session.setAttribute("USER_PASSWORD", adminEntity.getPassword());
+        msg="success";
+        dataMap.put("msg",msg);
         return dataMap;
     }
 

@@ -140,7 +140,7 @@
         详细信息
     </div>
     <div class="image content">
-        <div class="ui stackable  form three column grid" id="modal">
+        <div class="ui stackable  form three column grid" id="modal" style="width: 100%">
             <c:forEach items="${requestScope.fields.show}" var="showMap" >
                 <c:if test="${showMap.value.type=='img'}">
                     <div class="row">
@@ -278,7 +278,7 @@
                 }else {
                     if(data.msg=="success"){
                         showToast("<i class='archive icon'></i>保存成功");
-                        getInfoList(viewName, arr, currentPage, currentUrl);
+                        getInfoList(viewName, arr, currentPage,true,orderBy,sequence);
                     }else {
                         showToast("<i class='remove circle outline icon'></i>"+data.msg);
                     }
@@ -293,13 +293,14 @@
             sequence="desc";
             getInfoList(viewName,arr,currentPage,true,orderBy,sequence);
             $(this).children('i').attr("class", "icon sort descending");
-            $(this).siblings('i').children().attr("class", "icon sort");
+            $(this).siblings().children('i').attr("class", "icon sort");
         }
         else if($(this).children('i').attr("class")=="icon sort descending") {
             orderBy=$(this).attr('id');
             sequence="";
             getInfoList(viewName,arr,currentPage,true,$(this).attr('id'),null);
             $(this).children('i').attr("class", "icon sort ascending");
+            $(this).siblings().children('i').attr("class", "icon sort");
         }
     })
 
@@ -382,35 +383,6 @@
         })
     }
 
-    function upload() {
-        $('#fileId').val($("input[name='id']").val());
-        $('#modal').addClass('loading');
-        var formData = new FormData($( "#upFile" )[0]);
-        $.ajax({
-            url: 'upload',
-            type: 'POST',
-            data: formData,
-            async: false,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                if(data.msg=="success"){
-                    $('#modal').removeClass('loading');
-                    showToast("<i class='upload icon'></i>上传成功");
-                    $('#myPicture').attr('src',"../upload/"+viewName+"/"+$("input[name='id']").val()+".jpg?"+Math.random())
-                }else {
-                    $('#modal').removeClass('loading');
-                    showToast("<i class='remove circle outline icon'></i>"+data.msg);
-                }
-
-            },
-            error: function (data) {
-                $('#modal').removeClass('loading');
-                showToast("<i class='warning icon'></i>连接服务器失败！");
-            }
-        });
-    }
 
 </script>
 </html>

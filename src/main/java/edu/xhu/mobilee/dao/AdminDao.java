@@ -4,6 +4,7 @@ import edu.xhu.mobilee.entity.AdminEntity;
 
 public interface AdminDao {
 
-    public AdminEntity findAdminById(long id);
+    AdminEntity findAdminById(long id);
 
+    int updateAdminById(AdminEntity adminEntity);
 }

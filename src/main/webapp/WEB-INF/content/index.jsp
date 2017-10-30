@@ -12,8 +12,9 @@
     <meta charset="UTF-8">
     <title>手百网</title>
     <script src="<%=path%>/dist/jquery.min.js"></script>
-    <link rel="stylesheet" href="<%=path%>/dist/semantic.css">
+    <script src="<%=path%>/js/util.js"></script>
     <script src="<%=path%>/dist/semantic.min.js"></script>
+    <link rel="stylesheet" href="<%=path%>/dist/semantic.css">
     <link rel="stylesheet" href="<%=path%>/css/index.css">
     <link rel="stylesheet" href="<%=path%>/css/general.css">
 </head>
@@ -36,9 +37,9 @@
             </div>
             <div class="menu right">
                 <div class="ui dropdown fluid item indexmenu">
-                    <i class="user icon"></i>${sessionScope.USER_NAME}
+                    <i class="user icon"></i><div id="adminName">${sessionScope.USER_NAME}</div>
                     <div class="menu">
-                        <a class="item"><i class="icon setting"></i> 个人信息</a>
+                        <a class="item" id="personalInformation"><i class="icon setting"></i> 个人信息</a>
                         <a class="item" href="/SIS/desktop/loginOut"><i class="icon sign out"></i> 注销</a>
                     </div>
                 </div>
@@ -97,6 +98,76 @@
         </div>
     </div>
 </div>
+
+<%--模态框 个人信息--%>
+<div class="ui first modal">
+    <div class="header">
+        详细信息
+    </div>
+    <div class="image content">
+        <form class="ui stackable  form two column grid" id="modal" style="width:100%">
+            <div class="field column">
+                <img class="ui medium bordered  circular image" data-position="right center" data-title='点击更改图片', onerror="javascript:this.src='<%=path%>/upload/timg.jpg'" src="<%=path%>/upload/admin/${sessionScope.USER_ID}" id="myPicture" onclick="document.getElementById('file').click();"/>
+            </div>
+            <div class="field column">
+                <div class="ui items">
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui label">
+                                编号：
+                            </div>
+                            <input name="id" value="${sessionScope.USER_ID}" readonly/>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui label">
+                                姓名：
+                            </div>
+                            <input name="name" value="${sessionScope.USER_NAME}"/>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui label">
+                                密码：
+                            </div>
+                            <input name="password" value="${sessionScope.USER_PASSWORD}"/>
+                        </div>
+                    </div>
+                    <input type="file" name="file" id="file" style="display: none" onchange="upload()">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            关闭
+        </div>
+        <div class="ui positive right labeled icon button" id="saveEntity">
+            保存
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>
+
+<%--模态框 反馈信息--%>
+<div class="ui small modal">
+    <div class="header">
+
+    </div>
+    <div class="ui icon header">
+
+    </div>
+
+    <div class="actions">
+        <div class="ui green ok inverted button">
+            <i class="checkmark icon"></i>
+            是
+        </div>
+    </div>
+</div>
+
 </body>
 <script>
     $('.ui.menu')
@@ -149,6 +220,9 @@
     $('.ui.accordion')
         .accordion()
     ;/*手风琴初始化*/
+    $('.ui.medium.bordered.circular.image')
+        .popup()
+    ;/*弹出框初始化*/
     $(".title").mouseover(function(){
         $(this).css("color","white")
             .children().addClass("myblue")
@@ -174,6 +248,48 @@
             return $('.container').outerHeight()-Number($('.ui.massive.attached.stackable.menu.borderless').outerHeight()+2);
         });
     }
+    //模态框
+    $('.ui.first.modal').modal({
+        onDeny    : function(){
+            if($('#modal').hasClass('loading'))
+                return false;
+        },
+        onApprove : function() {
+            return false;
+        }
+    }) .modal('setting', 'closable', false)
+    $('.small.modal')
+        .modal({
+            allowMultiple: true,
+            onApprove : function() {
+                $('#modal').removeClass('loading');
+            }
+        })
+        .modal('setting', 'closable', false)
+
+
+
+    $('#saveEntity').click(function () {
+        $('#modal').addClass('loading');
+        $.post("/mobilee/admin/save",
+            {
+                id:$(".field.column [name='id']").val(),
+                name:$(".field.column [name='name']").val(),
+                password:$(".field.column [name='password']").val()
+    },
+        function(data, status) {
+            if (status != "success") {
+                showToast("<i class='warning icon'></i>连接服务器失败！");
+            }else {
+                if(data.msg=="success"){
+                    showToast("<i class='archive icon'></i>保存成功");
+                    $('#adminName').text($(".field.column [name='name']").val());
+                }else {
+                    showToast("<i class='remove circle outline icon'></i>"+data.msg);
+                }
+            }
+        });
+    })
     $('#user').click(function () {
         $('iframe').attr("src","<%=path%>/user/view")
     })
@@ -182,6 +298,11 @@
         $('iframe').attr("src","<%=path%>/admin/view")
     })
     ;
+    $('#personalInformation').click(function () {
+        $('.ui.first.modal')
+            .modal('show')
+        ;
+    })
     $('.circular.users.icon').click(function () {
         $('iframe').attr("src","/SIS/desktop/welcome")
     })

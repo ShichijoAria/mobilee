@@ -11,7 +11,7 @@ public interface UserDao {
 
     UserEntity findUserById(long id);
 
-    void updateUserById(UserEntity userEntity);
+    int updateUserById(UserEntity userEntity);
 
     void deleteUser(long [] list);
 }

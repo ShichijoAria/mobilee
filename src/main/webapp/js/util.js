@@ -211,3 +211,33 @@ Date.prototype.format = function(format) {
     }
     return format;
 }
+
+function upload() {
+    $('#fileId').val($("input[name='id']").val());
+    $('#modal').addClass('loading');
+    var formData = new FormData($( "#upFile" )[0]);
+    $.ajax({
+        url: 'upload',
+        type: 'POST',
+        data: formData,
+        async: false,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            if(data.msg=="success"){
+                $('#modal').removeClass('loading');
+                showToast("<i class='upload icon'></i>上传成功");
+                $('#myPicture').attr('src',"../upload/"+viewName+"/"+$("input[name='id']").val()+".jpg?"+Math.random())
+            }else {
+                $('#modal').removeClass('loading');
+                showToast("<i class='remove circle outline icon'></i>"+data.msg);
+            }
+
+        },
+        error: function (data) {
+            $('#modal').removeClass('loading');
+            showToast("<i class='warning icon'></i>连接服务器失败！");
+        }
+    });
+}

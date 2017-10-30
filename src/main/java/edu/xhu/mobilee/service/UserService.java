@@ -11,7 +11,7 @@ public interface UserService {
 
     Map<String,Object> selectUser(Map<String, Object> paramMap);
 
-    void updateUserById(UserEntity userEntity);
+    int updateUserById(UserEntity userEntity);
 
     void deleteUser(long[] list);
 }

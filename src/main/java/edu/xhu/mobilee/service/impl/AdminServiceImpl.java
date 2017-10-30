@@ -31,4 +31,11 @@ public class AdminServiceImpl implements AdminService{
         map.put("msg","success");
         return map;
     }
+
+    @Override
+    public int updateAdminById(AdminEntity adminEntity) {
+        return adminDao.updateAdminById(adminEntity);
+    }
+
+
 }
