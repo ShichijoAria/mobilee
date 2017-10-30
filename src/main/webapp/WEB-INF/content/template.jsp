@@ -146,7 +146,7 @@
                     <div class="row">
                         <div class="field column">
                             <label>${showMap.value.value}</label>
-                            <img class="ui medium bordered  circular image" data-position="right center" data-title='点击更改图片', onerror="javascript:this.src='../upload/${requestScope.fields.namespace}/timg.jpg'" src="" id="myPicture" onclick="document.getElementById('file').click();"/>
+                            <img class="ui medium bordered  circular image" <c:if test="${showMap.value.edit=='true'}"> onclick="document.getElementById('file').click();" data-position="right center" data-title='点击更改图片'</c:if> onerror="javascript:this.src='../upload/${requestScope.fields.namespace}/timg.jpg'" src="" id="myPicture" />
                         </div>
                     </div>
                 </c:if>

@@ -37,7 +37,7 @@
             </div>
             <div class="menu right">
                 <div class="ui dropdown fluid item indexmenu">
-                    <img class="ui avatar image" src="<%=path%>/upload/admin/${sessionScope.USER_ID}.jpg" onerror="javascript:this.src='<%=path%>/upload/timg.jpg'">
+                    <img class="ui avatar image" src="<%=path%>/upload/admin/${sessionScope.USER_ID}.jpg?a" onerror="javascript:this.src='<%=path%>/upload/timg.jpg'">
                     <span id="adminName">${sessionScope.USER_NAME}</span>
                     <div class="menu">
                         <a class="item" modal="personalInformation"><i class="icon setting"></i> 个人信息</a>
@@ -267,8 +267,10 @@
             }
         })
         .modal('setting', 'closable', false)
-
-
+    $('#myPicture').outerHeight($('#myPicture').outerWidth());
+    $(window).resize(function () {
+        $('#myPicture').outerHeight($('#myPicture').outerWidth());
+    })
 
     $('#saveEntity').click(function () {
         $('#modal').addClass('loading');
@@ -284,8 +286,8 @@
                 if(data.msg=="success"){
                     showToast("<i class='archive icon'></i>保存成功");
                     $('#adminName').text($(".field.column [name='name']").val());
-                    $('#myPicture').attr('src',"../upload/admin/"+entity.id+".jpg?"+Math.random());
-                    $('.ui.avatar.image').attr('src',"../upload/admin/"+entity.id+".jpg?"+Math.random());
+                    $('#myPicture').attr('src',"../upload/admin/${sessionScope.USER_ID}.jpg?"+Math.random());
+                    $('.ui.avatar.image').attr('src',"../upload/admin/${sessionScope.USER_ID}.jpg?"+Math.random());
                 }else {
                     showToast("<i class='remove circle outline icon'></i>"+data.msg);
                 }
@@ -327,7 +329,8 @@
                 if(data.msg=="success"){
                     $('#modal').removeClass('loading');
                     showToast("<i class='upload icon'></i>上传成功");
-                    $('#myPicture').attr('src',"../upload/admin/"+$("input[name='id']").val()+".jpg?"+Math.random())
+                    $('#myPicture').attr('src',"../upload/admin/${sessionScope.USER_ID}.jpg?"+Math.random())
+                    $('.ui.avatar.image').attr('src',"../upload/admin/${sessionScope.USER_ID}.jpg?"+Math.random());
                 }else {
                     $('#modal').removeClass('loading');
                     showToast("<i class='remove circle outline icon'></i>"+data.msg);
