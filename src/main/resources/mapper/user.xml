@@ -46,4 +46,11 @@
         WHERE id = #{id}
     </update>
 
+    <delete id="deleteUser" parameterType="list">
+            DELETE FROM t_user WHERE id IN
+        <foreach collection="list" item="ids"  open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
 </mapper>

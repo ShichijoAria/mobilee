@@ -18,6 +18,6 @@
     <grant>
         <update>true</update>
         <insert>false</insert>
-        <delete>false</delete>
+        <delete>true</delete>
     </grant>
 </root>

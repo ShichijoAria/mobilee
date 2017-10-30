@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void deleteUser(long[] list) {
-        userDao.deleteUser(list);
+    public void deleteUser(List<String> id) {
+        userDao.deleteUser(id);
     }
 }

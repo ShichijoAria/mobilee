@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,14 +73,11 @@ public class UserController {
     @ResponseBody
     public Map delete(@RequestParam(value = "deleteArr") String arr){
         String []list=arr.split(",");
-        long []newList =new long[list.length];
-        for (int i = 0; i < list.length; i++) {
-            newList[i]=Format.stringToLong(list[i]);
-        }
+        ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(list));
         Map dataMap = new HashMap<String, Object>();
         String msg="success";
         dataMap.put("msg",msg);
-        userService.deleteUser(newList);
+        userService.deleteUser(arrayList);
         return dataMap;
     }
 
