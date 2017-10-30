@@ -39,6 +39,9 @@ function getInfo(module,id) {
                     $('.ui.first.modal')
                         .modal('show')
                     ;
+                    $('.ui.medium.bordered.circular.image')
+                        .popup()
+                    ;
                     changeSize();
                 }else {
 

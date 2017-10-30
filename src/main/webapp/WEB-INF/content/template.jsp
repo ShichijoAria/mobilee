@@ -136,6 +136,9 @@
 
 <%--模态框 主信息--%>
 <div class="ui first modal">
+    <div class="header">
+        详细信息
+    </div>
     <div class="image content">
         <div class="ui stackable  form three column grid" id="modal">
             <c:forEach items="${requestScope.fields.show}" var="showMap" >
@@ -143,7 +146,7 @@
                     <div class="row">
                         <div class="field column">
                             <label>${showMap.value.value}</label>
-                            <img class="ui medium bordered  circular image" onerror="javascript:this.src='../upload/${requestScope.fields.namespace}/timg.jpg'" src="" id="myPicture" onclick="document.getElementById('file').click();"/>
+                            <img class="ui medium bordered  circular image" data-position="right center" data-title='点击更改图片', onerror="javascript:this.src='../upload/${requestScope.fields.namespace}/timg.jpg'" src="" id="myPicture" onclick="document.getElementById('file').click();"/>
                         </div>
                     </div>
                 </c:if>
@@ -172,7 +175,7 @@
     <div class="actions">
         <div class="ui black deny button">
             关闭
-        </div><c:if test="${requestScope.fields.insert=='true'}">
+        </div><c:if test="${requestScope.fields.update=='true'}">
         <div class="ui positive right labeled icon button" id="saveEntity">
             保存
             <i class="checkmark icon"></i>
@@ -182,6 +185,9 @@
 
 <%--模态框 反馈信息--%>
 <div class="ui small modal">
+    <div class="header">
+
+    </div>
     <div class="ui icon header">
 
     </div>
@@ -318,7 +324,6 @@
         $('.ui.sidebar')
             .sidebar('toggle')
     })
-
 
     //模态框
     $('.ui.first.modal').modal({
