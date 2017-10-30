@@ -220,7 +220,7 @@ $.fn.ajaxSubmit = function(options) {
         };
     }
 
-    // are there files to upload?
+    // are there files to myUpload?
 
     // [value] (issue #113), also see comment:
     // https://github.com/malsup/form/commit/588306aedba1de01388032d5f42a60159eea9228#commitcomment-2180219
@@ -311,7 +311,7 @@ $.fn.ajaxSubmit = function(options) {
         });
 
         if (options.uploadProgress) {
-            // workaround because jqXHR does not expose upload property
+            // workaround because jqXHR does not expose myUpload property
             s.xhr = function() {
                 var xhr = $.ajaxSettings.xhr();
                 if (xhr.upload) {
@@ -400,7 +400,7 @@ $.fn.ajaxSubmit = function(options) {
             setRequestHeader: function() {},
             abort: function(status) {
                 var e = (status === 'timeout' ? 'timeout' : 'aborted');
-                log('aborting upload... ' + e);
+                log('aborting myUpload... ' + e);
                 this.aborted = 1;
 
                 try { // #214, #257
@@ -504,7 +504,7 @@ $.fn.ajaxSubmit = function(options) {
             s.extraData[csrf_param] = csrf_token;
         }
 
-        // take a breath so that pending repaints get some cpu time before the upload starts
+        // take a breath so that pending repaints get some cpu time before the myUpload starts
         function doSubmit() {
             // make sure form attrs are set
             var t = $form.attr2('target'), 
@@ -729,7 +729,7 @@ $.fn.ajaxSubmit = function(options) {
             }
 
             if (xhr.aborted) {
-                log('upload aborted');
+                log('myUpload aborted');
                 status = null;
             }
 

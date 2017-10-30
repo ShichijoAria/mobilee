@@ -37,10 +37,11 @@
             </div>
             <div class="menu right">
                 <div class="ui dropdown fluid item indexmenu">
-                    <i class="user icon"></i><div id="adminName">${sessionScope.USER_NAME}</div>
+                    <img class="ui avatar image" src="<%=path%>/upload/admin/${sessionScope.USER_ID}.jpg" onerror="javascript:this.src='<%=path%>/upload/timg.jpg'">
+                    <span id="adminName">${sessionScope.USER_NAME}</span>
                     <div class="menu">
-                        <a class="item" id="personalInformation"><i class="icon setting"></i> 个人信息</a>
-                        <a class="item" href="/SIS/desktop/loginOut"><i class="icon sign out"></i> 注销</a>
+                        <a class="item" modal="personalInformation"><i class="icon setting"></i> 个人信息</a>
+                        <a class="item" href="<%=path%>/admin/loginOut"><i class="icon sign out"></i> 注销</a>
                     </div>
                 </div>
                 <div class="ui item">
@@ -56,7 +57,7 @@
             <div class="ui icon floating item indexmenu dropdown" style="width: 33%!important">
                 <i class="circular user icon"></i>
                 <div class="menu">
-                    <a class="item"><i class="icon setting"></i> 个人信息</a>
+                    <a class="item" modal="personalInformation"><i class="icon setting"></i> 个人信息</a>
                     <a class="item" href="/SIS/desktop/loginOut"><i class="icon sign out"></i> 注销</a>
                 </div>
             </div>
@@ -107,13 +108,13 @@
     <div class="image content">
         <form class="ui stackable  form two column grid" id="modal" style="width:100%">
             <div class="field column">
-                <img class="ui medium bordered  circular image" data-position="right center" data-title='点击更改图片', onerror="javascript:this.src='<%=path%>/upload/timg.jpg'" src="<%=path%>/upload/admin/${sessionScope.USER_ID}" id="myPicture" onclick="document.getElementById('file').click();"/>
+                <img id="myPicture" class="ui medium bordered  circular image" data-position="right center" data-title='点击更改图片', onerror="javascript:this.src='<%=path%>/upload/timg.jpg'" src="<%=path%>/upload/admin/${sessionScope.USER_ID}.jpg?a" id="myPicture" onclick="document.getElementById('file').click();"/>
             </div>
             <div class="field column">
                 <div class="ui items">
                     <div class="item">
                         <div class="ui labeled input">
-                            <div class="ui label">
+                            <div class="ui teal label">
                                 编号：
                             </div>
                             <input name="id" value="${sessionScope.USER_ID}" readonly/>
@@ -121,7 +122,7 @@
                     </div>
                     <div class="item">
                         <div class="ui labeled input">
-                            <div class="ui label">
+                            <div class="ui teal label">
                                 姓名：
                             </div>
                             <input name="name" value="${sessionScope.USER_NAME}"/>
@@ -129,13 +130,13 @@
                     </div>
                     <div class="item">
                         <div class="ui labeled input">
-                            <div class="ui label">
+                            <div class="ui teal label">
                                 密码：
                             </div>
                             <input name="password" value="${sessionScope.USER_PASSWORD}"/>
                         </div>
                     </div>
-                    <input type="file" name="file" id="file" style="display: none" onchange="upload()">
+                    <input type="file" name="file" id="file" style="display: none" onchange="myUpload()">
                 </div>
             </div>
         </form>
@@ -275,8 +276,7 @@
             {
                 id:$(".field.column [name='id']").val(),
                 name:$(".field.column [name='name']").val(),
-                password:$(".field.column [name='password']").val()
-    },
+                password:$(".field.column [name='password']").val()},
         function(data, status) {
             if (status != "success") {
                 showToast("<i class='warning icon'></i>连接服务器失败！");
@@ -284,6 +284,8 @@
                 if(data.msg=="success"){
                     showToast("<i class='archive icon'></i>保存成功");
                     $('#adminName').text($(".field.column [name='name']").val());
+                    $('#myPicture').attr('src',"../upload/admin/"+entity.id+".jpg?"+Math.random());
+                    $('.ui.avatar.image').attr('src',"../upload/admin/"+entity.id+".jpg?"+Math.random());
                 }else {
                     showToast("<i class='remove circle outline icon'></i>"+data.msg);
                 }
@@ -296,17 +298,47 @@
     ;
     $('#admin').click(function () {
         $('iframe').attr("src","<%=path%>/admin/view")
-    })
-    ;
-    $('#personalInformation').click(function () {
+    });
+    $("[modal='personalInformation']").click(function () {
         $('.ui.first.modal')
-            .modal('show')
-        ;
+            .modal('show');
     })
     $('.circular.users.icon').click(function () {
         $('iframe').attr("src","/SIS/desktop/welcome")
-    })
+    });
+    $('.ui.medium.bordered.circular.image')
+        .popup()
     ;
     checkHeight();
+
+
+    function myUpload() {
+        $('#modal').addClass('loading');
+        var formData = new FormData($( "form" )[0]);
+        $.ajax({
+            url: "upload?fileId="+$("input[name='id']").val(),
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if(data.msg=="success"){
+                    $('#modal').removeClass('loading');
+                    showToast("<i class='upload icon'></i>上传成功");
+                    $('#myPicture').attr('src',"../upload/admin/"+$("input[name='id']").val()+".jpg?"+Math.random())
+                }else {
+                    $('#modal').removeClass('loading');
+                    showToast("<i class='remove circle outline icon'></i>"+data.msg);
+                }
+
+            },
+            error: function (data) {
+                $('#modal').removeClass('loading');
+                showToast("<i class='warning icon'></i>连接服务器失败！");
+            }
+        });
+    }
 </script>
 </html>
