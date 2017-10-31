@@ -87,7 +87,7 @@
                 </a>
                 <div class="content">
                     <p><a id="CourseQuery" class="child" href="javascript:void(0)">手机信息</a></p>
-                    <p><a id="TeachingClassQuery" class="child" href="javascript:void(0)">手机厂商</a></p>
+                    <p><a id="manufacturer" class="child" href="javascript:void(0)">出品厂商</a></p>
                     <p><a id="SelectCourse" class="child" href="javascript:void(0)">手机卖家</a></p>
                 </div>
             </div>
@@ -294,12 +294,8 @@
             }
         });
     })
-    $('#user').click(function () {
-        $('iframe').attr("src","<%=path%>/user/view")
-    })
-    ;
-    $('#admin').click(function () {
-        $('iframe').attr("src","<%=path%>/admin/view")
+    $('p a.child').click(function () {
+        $('iframe').attr("src","<%=path%>/"+$(this).attr('id')+"/view")
     });
     $("[modal='personalInformation']").click(function () {
         $('.ui.first.modal')

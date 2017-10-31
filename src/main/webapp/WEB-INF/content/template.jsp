@@ -116,7 +116,7 @@
                         </div>
                     </th>
                     <c:forEach items="${requestScope.fields.head}" var="myMap" >
-                        <th class="<c:out value="type${myMap.value.type}"/>" id="<c:out value="${myMap.key}"/>"><i class="icon sort"></i><c:out value="${myMap.value.value}" /></th>
+                        <th class="<c:out value="type${myMap.value.type}"/>" id="<c:out value="${fields.namespace}_${myMap.key}"/>"><i class="icon sort"></i><c:out value="${myMap.value.value}" /></th>
                     </c:forEach>
                 </tr>
                 </thead>
@@ -146,7 +146,7 @@
                     <div class="row">
                         <div class="field column">
                             <label>${showMap.value.value}</label>
-                            <img class="ui medium bordered  circular image" <c:if test="${showMap.value.edit=='true'}"> onclick="document.getElementById('file').click();" data-position="right center" data-title='点击更改图片'</c:if> onerror="javascript:this.src='../upload/${requestScope.fields.namespace}/timg.jpg'" src="" id="myPicture" />
+                            <img class="ui medium bordered  circular image" <c:if test="${showMap.value.edit=='true'}"> onclick="document.getElementById('file').click();" data-position="right center" data-title='点击更改图片'</c:if> onerror="javascript:this.src='../upload/timg.jpg'" src="" id="myPicture" />
                         </div>
                     </div>
                 </c:if>
@@ -350,7 +350,7 @@
         var list=data.list;
         var html='';
         for(var i in list) {
-            var head = "<tr id='" +list[i].id+"' class='center aligned'>\n" +
+            var head = "<tr id='" +list[i].${fields.namespace}_id+"' class='center aligned'>\n" +
                 "    <td>\n" +
                 "    <div class='ui checkbox'>\n" +
                 "    <input type='checkbox' name='item' value='"+list[i].id+"'><label></label>\n" +

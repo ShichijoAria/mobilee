@@ -2,8 +2,10 @@ package edu.xhu.test;
 
 import javax.annotation.Resource;
 
+import edu.xhu.mobilee.dao.ManufacturerDao;
 import edu.xhu.mobilee.dao.ProcedureDao;
 import edu.xhu.mobilee.dao.UserDao;
+import edu.xhu.mobilee.entity.ManufacturerEntity;
 import org.apache.log4j.Logger;
 import org.junit.Test;  
 import org.junit.runner.RunWith;
@@ -22,6 +24,8 @@ public class TestMyBatis {
 //  private ApplicationContext ac = null;  
     @Resource  
     private ProcedureDao procedureDao = null;
+    @Resource
+    private ManufacturerDao manufacturerDao = null;
   
 //  @Before  
 //  public void before() {  
@@ -34,7 +38,7 @@ public class TestMyBatis {
 
         Map<String, Object> paramMap=new HashMap<String,Object>();
         paramMap.put("fields","*");
-        paramMap.put("tables","t_user");
+        paramMap.put("tables","t_manufacturer");
         paramMap.put("where",null);
         paramMap.put("orderBy","id");
         paramMap.put("pageIndex",1);
@@ -47,7 +51,8 @@ public class TestMyBatis {
 
     @Test
     public void test2(){
-
+        ManufacturerEntity manufacturerEntity=manufacturerDao.findManufacturerById(1);
+        System.out.println(1);
     }
 
 }  

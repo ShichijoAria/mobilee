@@ -102,32 +102,32 @@ public class Field {
                     if(orderByParam!=null&&orderByParam.equals(key))
                         orderBy=orderByParam;
                     if (type.equals("text")){
-                        fields+=entity+"."+key+",";
+                        fields+=entity+"."+key+" as "+entity+"_"+key+",";
                         param = request.getParameter(key + "Search");
                         if(param!=null) {
                             param = "'%" + param + "%'";
                             where += "and " + entity + "." + key + " like " + param + " ";
                         }
                     } else if (type.equals("select")) {
-                        fields+=entity+"."+key+",";
+                        fields+=entity+"."+key+" as "+entity+"_"+key+",";
                         param = request.getParameter(key + "Search");
                         if(param!=null)
                             where += "and " + entity + "." + key + "= "+param+" ";
                     } else {
                         if (range.equals("false")) {
-                            fields+=entity+"."+key+",";
+                            fields+=entity+"."+key+" as "+entity+"_"+key+",";
                             param = request.getParameter(key + "Search");
                             if (type.equals("number")) {
                                 /*预留*/
                             } else if (type.equals("datetime")) {
-                                fields+="date_format("+entity+"."+key+",'%Y-%m-%d %H:%i')"+key+",";
+                                fields+="date_format("+entity+"."+key+",'%Y-%m-%d %H:%i')"+entity+"_"+key+",";
                                 param="UNIX_TIMESTAMP('"+param+"')";
                             }
                             if(param!=null)
                                 where += "and " + entity + "." + key + "= "+param+" ";
                         } else {
                             if (type.equals("number")) {
-                                fields+=entity+"."+key+",";
+                                fields+=entity+"."+key+" as "+entity+"_"+key+",";
                                 param = request.getParameter(key + "UpSearch");
                                 if(param!=null)
                                     where += "and " + entity + "." + key + "<= "+param+" ";
@@ -135,7 +135,7 @@ public class Field {
                                 if(param!=null)
                                     where += "and " + entity + "." + key + ">= "+param+" ";
                             } else if (type.equals("datetime")) {
-                                fields+="date_format("+entity+"."+key+",'%Y-%m-%d %H:%i')"+key+",";
+                                fields+="date_format("+entity+"."+key+",'%Y-%m-%d %H:%i')"+entity+"_"+key+",";
                                 param = request.getParameter(key + "UpSearch");
                                 if(param!=null) {
                                     param = "UNIX_TIMESTAMP('" + param + "')";

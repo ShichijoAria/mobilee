@@ -1,4 +1,9 @@
 package edu.xhu.mobilee.dao;
 
-public class ManufacturerDao {
+import edu.xhu.mobilee.entity.ManufacturerEntity;
+
+public interface ManufacturerDao {
+
+    ManufacturerEntity findManufacturerById(long id);
+
 }
