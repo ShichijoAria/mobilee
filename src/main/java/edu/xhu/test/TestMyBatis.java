@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;  
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +54,13 @@ public class TestMyBatis {
     public void test2(){
         ManufacturerEntity manufacturerEntity=manufacturerDao.findManufacturerById(1);
         System.out.println(1);
+    }
+
+    @Test
+    public void test3(){
+        ArrayList<String> arrayList=new ArrayList<String>();
+        System.out.println(arrayList);
+        System.out.println(manufacturerDao.deleteManufacturer(arrayList));
     }
 
 }  

@@ -13,5 +13,5 @@ public interface UserDao {
 
     int updateUserById(UserEntity userEntity);
 
-    void deleteUser(List<String> id);
+    int deleteUser(List<String> id);
 }

@@ -4,7 +4,7 @@
 
 <mapper namespace="edu.xhu.mobilee.dao.ManufacturerDao">
 
-    <select id="findManufacturerById" resultMap="manufacturerResult">
+    <select id="findManufacturerById" parameterType="long" resultMap="manufacturerResult">
         SELECT
           m.id  AS m_id,
           m.name  AS  m_name,
@@ -14,6 +14,23 @@
         from t_manufacturer m join t_admin a on m.author = a.id
         where m.id = #{id}
     </select>
+
+    <update id="updateManufacturerById" parameterType="ManufacturerEntity">
+        UPDATE t_manufacturer
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="address != null">address=#{password},</if>
+            <if test="author != null">author=#{author},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteManufacturer" parameterType="list">
+        DELETE FROM t_manufacturer WHERE id IN
+        <foreach collection="list" item="ids"  open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
 
     <resultMap type="ManufacturerEntity" id="manufacturerResult">
         <id property="id" column="m_id" />
