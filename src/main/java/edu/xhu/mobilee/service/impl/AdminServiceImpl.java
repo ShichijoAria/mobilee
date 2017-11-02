@@ -16,20 +16,9 @@ public class AdminServiceImpl implements AdminService{
     @Autowired
     private AdminDao adminDao;
 
-    @Autowired
-    private ProcedureDao procedureDao;
-
     //登陆用户密码校验
     public AdminEntity findAdminById(long id) {
         return adminDao.findAdminById(id);
-    }
-
-    @Override
-    public Map<String,Object> selectAdmin(Map<String, Object> paramMap) {
-        Map<String,Object> map=new HashMap<String, Object>();
-        map.put("list",procedureDao.pagedQuery(paramMap));
-        map.put("msg","success");
-        return map;
     }
 
     @Override

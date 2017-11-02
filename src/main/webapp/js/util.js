@@ -1,5 +1,11 @@
 "use strict"
 
+//表单序列化排空
+function serializeNotNull(serStr){
+    return serStr.split("&").filter(function(str){return !str.endsWith("=")}).join("&");
+}
+
+
 //semantic-ui 表单验证ajax实现
 function showError(arr) {
     $('.ui.error.message').css("display","none");
@@ -25,12 +31,14 @@ function getInfo(module,id) {
                 if(data.msg=="success"){
                     var entity=data.entity;
                     for(var i in entity){
-                        var choose="input[name='"+i+"']";
+                        var choose="#modal input[name='"+i+"']";
                         $(choose).val(entity[i]);
+                        if(entity[i]!=null&&typeof(entity[i])=="object")
+                            $(choose).val(entity[i].id);
                         if($(choose).attr('date')=="false"||$(choose).attr('date')=="true")
-                            $(choose).val(new Date(entity[i]).format('yyyy-MM-dd'));
+                            $(choose).val(new Date(entity[i]).format('yyyy/MM/dd'));
                         if($(choose).attr('datetime')=="false"||$(choose).attr('datetime')=="true")
-                            $(choose).val(new Date(entity[i]).format('yyyy-MM-dd hh:mm'));
+                            $(choose).val(new Date(entity[i]).format('yyyy/MM/dd hh:mm'));
                         var choose="select[name='"+i+"']";
                         var opt="[data-value='"+entity[i]+"']";
                         $(choose).parent().dropdown('set selected', entity[i])
@@ -66,20 +74,9 @@ function showToast(html) {
 * sequence 正序倒序
 * */
 function getInfoList(module,arr,page,where,order,sequence) {
-    var url="/mobilee/"+module+"/list?page="+page;
+    var url="/mobilee/"+module+"/list?page="+page+"&";
     if (where){
-        var inputs=$('.ui.grid.stackable.segment.three.column.vertical.container input');
-        var selects=$('.ui.grid.stackable.segment.three.column.vertical.container select');
-        for(var i in inputs){
-            if(inputs[i].value!=undefined&&inputs[i].value!='') {
-                url += "&"+inputs[i].name +'='+ inputs[i].value;
-            }
-        }
-        for(var i in selects){
-            if(selects[i].value!=undefined&&selects[i].value!='') {
-                url += "&"+selects[i].name +'='+ selects[i].value;
-            }
-        }
+        url+=$('#searchForm').serialize();
     }
     if(order!=null||order!=undefined){
         url+="&orderBy="+order;
@@ -87,10 +84,7 @@ function getInfoList(module,arr,page,where,order,sequence) {
     if(sequence!=null||sequence!=undefined) {
         url += "&sequence=" + sequence;
     }
-    $.post(url,
-        {
-
-        },
+    $.post(url, {},
         function (data, status) {
             $('form').removeClass('loading');
             if (status != "success") {

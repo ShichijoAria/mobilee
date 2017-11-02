@@ -2,11 +2,11 @@
 <root>
     <render title="网站用户" extra="Website User" icon="user" namespace="user"/>
     <properties>
-        <property key="id" value="用户编号" type="number" head="true" show="true" edit="false" range="false" class="long"/>
-        <property key="name" value="用户姓名" type="text" head="true" show="true" edit="true"  range="false"  class="String"/>
-        <property key="gender" value="用户性别" type="select" head="true" show="true" edit="false"  range="false"  class="long">
-            <enum key="1" value="男"/>
-            <enum key="2" value="女"/>
+        <property key="id" foreign="false" value="用户编号" type="number" head="true" show="true" edit="false" range="false" class="long"/>
+        <property key="name" foreign="false" value="用户姓名" type="text" head="true" show="true" edit="true"  range="false"  class="String"/>
+        <property key="gender" foreign="false" value="用户性别" type="select" head="true" show="true" edit="false"  range="false"  class="long">
+            <enum key="1" foreign="false" value="男"/>
+            <enum key="2" foreign="false" value="女"/>
         </property>
         <property key="created" value="入站时间" type="datetime" head="true" show="true" edit="false"  range="true"  class="Date"/>
         <property key="password" value="用户密码" type="text" head="false" show="true" edit="false"  range="false"  class="String"/>

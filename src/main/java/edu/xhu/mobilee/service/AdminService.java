@@ -8,7 +8,5 @@ public interface AdminService {
 
     AdminEntity findAdminById(long id);
 
-    Map<String,Object> selectAdmin(Map<String, Object> paramMap);
-
     int updateAdminById(AdminEntity adminEntity);
 }

@@ -32,13 +32,17 @@
         </foreach>
     </delete>
 
+    <insert id="insertManufacturer" parameterType="ManufacturerEntity">
+        INSERT INTO t_manufacturer (name, address, author,created) VALUES (#{name},#{address},#{author.id},current_timestamp)
+    </insert>
+
     <resultMap type="ManufacturerEntity" id="manufacturerResult">
         <id property="id" column="m_id" />
         <result property="name" column="m_name" />
         <result property="address" column="m_address" />
         <association property="author" resultMap="authorResult"/>
     </resultMap>
-    
+
     <resultMap id="authorResult" type="AdminEntity">
         <id property="id" column="a_id" />
         <result property="name" column="a_name" />

@@ -2,7 +2,9 @@ package edu.xhu.mobilee.controller;
 
 import edu.xhu.mobilee.entity.AdminEntity;
 import edu.xhu.mobilee.service.AdminService;
+import edu.xhu.mobilee.service.ProcedureService;
 import edu.xhu.mobilee.util.Field;
+import edu.xhu.mobilee.util.Proper;
 import edu.xhu.mobilee.util.Upload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +27,9 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private ProcedureService procedureService;
 
     @RequestMapping(value = "welcome",method = RequestMethod.GET)
     public String welcome(){
@@ -75,16 +81,39 @@ public class AdminController {
     @RequestMapping(value = "view",method = RequestMethod.GET)
     public ModelAndView view(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("fields", Field.textField("admin"));
-        modelAndView.setViewName("template");
+        modelAndView.setViewName("admin");
         return modelAndView;
     }
 
     @RequestMapping(value = "list",method = RequestMethod.POST)
     @ResponseBody
-    public Map list( HttpServletRequest request){
+    public Map list(@RequestParam(value = "orderBy",required = false,defaultValue = "admin_id") String orderBy,
+                    @RequestParam(value = "sequence",required = false) String sequence,
+                    @RequestParam(value = "page",required = false) long pageIndex,AdminEntity adminEntity) {
+        Map<String, Object> paramMap=new HashMap<String,Object>();
         Map dataMap = new HashMap<String, Object>();
-        dataMap = adminService.selectAdmin(Field.getParamMap("admin",request));
+        String where="";
+        pageIndex=pageIndex>0?pageIndex:1;
+        if(sequence!=null&&sequence.trim().length()>0)
+            sequence="DESC";
+        else
+            sequence="ASC";
+        paramMap.put("tables","t_admin admin");
+        paramMap.put("pageIndex",pageIndex);
+        paramMap.put("fields", "admin.id admin_id," +
+                "admin.name admin_name");
+        if(adminEntity!=null) {
+            if (adminEntity.getName() != null)
+                where += "and adminEntity.name like '%" + adminEntity.getName() + "%'";
+            if (adminEntity.getId() >0 )
+                where += "and admin.id = " + adminEntity.getId();
+        }
+        if (where.length()>3)
+            where=where.substring(3);
+        paramMap.put("where",where);
+        paramMap.put("orderBy",orderBy+" "+sequence);
+        paramMap.put("pageSize", Proper.pageSize());
+        dataMap = procedureService.pagedQuery(paramMap);
         return dataMap;
     }
 
@@ -117,7 +146,7 @@ public class AdminController {
 
     @RequestMapping(value = "upload", method = RequestMethod.POST)
     @ResponseBody
-    public Map upload(HttpServletRequest request, @RequestParam("file") MultipartFile file, @RequestParam("fileId") long id) {
+    public Map upload(HttpServletRequest request, @RequestParam("headPortrait") MultipartFile file, @RequestParam("id") long id) {
         Map dataMap = new HashMap<String, Object>();
         String msg="";
         msg=Upload.uploadJpg(file,request,id,"admin");

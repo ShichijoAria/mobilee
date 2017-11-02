@@ -37,13 +37,13 @@
             <if test="name != null">name=#{name},</if>
             <if test="password != null">password=#{password},</if>
             <if test="gender != null">gender=#{gender},</if>
-            <if test="created != null">created=#{created}</if>
-            <if test="birthday != null">birthday=#{birthday}</if>
-            <if test="phone != null">phone=#{phone}</if>
-            <if test="email != null">email=#{email}</if>
-            <if test="edition != null">edition=#{edition}</if>
+            <if test="created != null">created=#{created},</if>
+            <if test="birthday != null">birthday=#{birthday},</if>
+            <if test="phone != null">phone=#{phone},</if>
+            <if test="email != null">email=#{email},</if>
+            <if test="edition != null">edition=edition+1</if>
         </set>
-        WHERE id = #{id}
+        WHERE id = #{id} AND edition=#{edition}
     </update>
 
     <delete id="deleteUser" parameterType="list">

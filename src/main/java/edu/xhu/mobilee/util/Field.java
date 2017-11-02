@@ -38,6 +38,7 @@ public class Field {
                     String type=property.attributeValue("type");
                     String range=property.attributeValue("range");
                     String edit=property.attributeValue("edit");
+                    String foreign=property.attributeValue("foreign");
                     map.put("value",value);
                     map.put("type",type);
                     map.put("range",range);
@@ -120,7 +121,7 @@ public class Field {
                             if (type.equals("number")) {
                                 /*预留*/
                             } else if (type.equals("datetime")) {
-                                fields+="date_format("+entity+"."+key+",'%Y-%m-%d %H:%i')"+entity+"_"+key+",";
+                                fields+="date_format("+entity+"."+key+",'%Y/%m/%d %H:%i')"+entity+"_"+key+",";
                                 param="UNIX_TIMESTAMP('"+param+"')";
                             }
                             if(param!=null)
@@ -135,7 +136,7 @@ public class Field {
                                 if(param!=null)
                                     where += "and " + entity + "." + key + ">= "+param+" ";
                             } else if (type.equals("datetime")) {
-                                fields+="date_format("+entity+"."+key+",'%Y-%m-%d %H:%i')"+entity+"_"+key+",";
+                                fields+="date_format("+entity+"."+key+",'%Y/%m/%d %H:%i')"+entity+"_"+key+",";
                                 param = request.getParameter(key + "UpSearch");
                                 if(param!=null) {
                                     param = "UNIX_TIMESTAMP('" + param + "')";

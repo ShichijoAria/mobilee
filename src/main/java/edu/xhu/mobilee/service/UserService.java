@@ -9,8 +9,6 @@ public interface UserService {
 
     UserEntity findUserById(long id);
 
-    Map<String,Object> selectUser(Map<String, Object> paramMap);
-
     int updateUserById(UserEntity userEntity);
 
     void deleteUser(List<String> id);

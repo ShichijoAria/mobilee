@@ -2,9 +2,9 @@
 <root>
     <render title="管理人员" extra="Admin User" icon="user" namespace="admin"/>
     <properties>
-        <property key="id" value="管理员编号" type="number" head="true" show="true" edit="false" range="false" class="long"/>
-        <property key="name" value="管理员姓名" type="text" head="true" show="true" edit="true"  range="false"  class="String"/>
-        <property key="headPortrait" value="管理员头像" type="img" head="false" show="true" edit="false"  range="false"  class="String"/>
+        <property key="id" foreign="false" value="管理员编号" type="number" head="true" show="true" edit="false" range="false" class="long"/>
+        <property key="name" foreign="false" value="管理员姓名" type="text" head="true" show="true" edit="true"  range="false"  class="String"/>
+        <property key="headPortrait" foreign="false" value="管理员头像" type="img" head="false" show="true" edit="false"  range="false"  class="String"/>
     </properties>
     <grant>
         <update>false</update>

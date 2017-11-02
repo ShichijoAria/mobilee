@@ -44,6 +44,20 @@
         <property name="resolveLazily" value="true"></property>
     </bean>
 
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <ref bean="dateConvert"/>
+            </set>
+        </property>
+    </bean>
+
+    <!-- 自定义日期转换规则 -->
+    <bean id="dateConvert" class="edu.xhu.mobilee.util.DateConvert"/>
+
+
 <!--    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <props>

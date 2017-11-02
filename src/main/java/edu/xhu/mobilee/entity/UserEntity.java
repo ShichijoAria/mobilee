@@ -12,7 +12,7 @@ public class UserEntity {
     private String phone;
     private String email;
     private String name;
-    private Long edition;
+    private int edition;
 
     public UserEntity() {
     }
@@ -81,11 +81,11 @@ public class UserEntity {
         this.name = name;
     }
 
-    public Long getEdition() {
+    public int getEdition() {
         return edition;
     }
 
-    public void setEdition(Long edition) {
+    public void setEdition(int edition) {
         this.edition = edition;
     }
 

@@ -6,16 +6,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>学生信息系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
-    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-    <meta http-equiv="description" content="This is my page">
     <meta charset="UTF-8">
-    <title>学生信息系统</title>
+
     <script src="<%=path%>/dist/jquery.min.js"></script>
     <script src="<%=path%>/dist/jquery.form.js"></script>
     <script src="<%=path%>/dist/semantic.min.js"></script>
@@ -94,7 +93,7 @@
                 <div class="left menu">
                     <div class="item"><c:if test="${requestScope.fields.insert=='true'}">
                         <div class="ui primary button" id="new" style="margin-right: 5px">新建</div></c:if><c:if test="${requestScope.fields.delete=='true'}">
-                        <div class="ui red button" id="delete">删除</div></c:if>
+                        <div class="ui red button" id="delete">删除</div>/c:if>
                     </div>
                 </div>
                 <div class="right menu">
@@ -140,7 +139,7 @@
         详细信息
     </div>
     <div class="image content">
-        <div class="ui stackable  form three column grid" id="modal" style="width: 100%">
+        <form class="ui stackable  form three column grid" id="modal" style="width: 100%">
             <c:forEach items="${requestScope.fields.show}" var="showMap" >
                 <c:if test="${showMap.value.type=='img'}">
                     <div class="row">
@@ -154,7 +153,7 @@
                     <div class="field column">
                         <label>${showMap.value.value}</label>
                         <c:if test="${showMap.value.type=='select'}">
-                            <select  class="ui dropdown <c:if test="${showMap.value.edit=='false'}">disabled</c:if>" name="${showMap.key}">
+                            <select  class="ui dropdown <c:if test="${showMap.value.edit=='false'}">disabled</c:if>" name="<c:if test="${showMap.foreign=='false'}">${showMap.key}</c:if><c:if test="${showMap.foreign!='false'}">${showMap.foreign}</c:if> ">
                                 <option value="">&nbsp;</option>
                                 <c:forEach items="${showMap.value.opt}" var="opt" >
                                     <option value="${opt.key}">${opt.value}</option>
@@ -162,15 +161,15 @@
                             </select>
                         </c:if>
                         <c:if test="${showMap.value.type=='text'||showMap.value.type=='number'}">
-                            <input <c:if test="${showMap.value.edit=='false'}">readonly=""</c:if> type="${showMap.value.type}" name="${showMap.key}">
+                            <input <c:if test="${showMap.value.edit=='false'}">readonly=""</c:if> type="${showMap.value.type}" <c:if test="${showMap.foreign=='false'}">${showMap.key}</c:if><c:if test="${showMap.foreign!='false'}">${showMap.foreign}</c:if> ">
                         </c:if>
                         <c:if test="${showMap.value.type=='datetime'||showMap.value.type=='date'}">
-                            <input <c:if test="${showMap.value.edit=='false'}">readonly="" ${showMap.value.type}="false"</c:if> <c:if test="${showMap.value.edit!='false'}">${showMap.value.type}="true"</c:if>  name="${showMap.key}">
+                            <input <c:if test="${showMap.value.edit=='false'}">readonly="" ${showMap.value.type}="false"</c:if> <c:if test="${showMap.value.edit!='false'}">${showMap.value.type}="true"</c:if>  <c:if test="${showMap.foreign=='false'}">${showMap.key}</c:if><c:if test="${showMap.foreign!='false'}">${showMap.foreign}</c:if> ">
                         </c:if>
                     </div>
                 </c:if>
             </c:forEach>
-        </div>
+        </form>
     </div>
     <div class="actions">
         <div class="ui black deny button">
@@ -181,7 +180,49 @@
             <i class="checkmark icon"></i>
         </div></c:if>
     </div>
-</div>
+</div><c:if test="${requestScope.fields.insert=='true'}">
+
+<%--模态框 新建信息--%>
+<div class="ui myNew modal">
+    <div class="header">
+        详细信息
+    </div>
+    <div class="image content">
+        <form class="ui stackable  form three column grid" id="newModal" style="width: 100%">
+            <c:forEach items="${requestScope.fields.show}" var="showMap" >
+                <c:if test="${showMap.value.type!='img'}">
+                    <div class="field column">
+                        <label>${showMap.value.value}</label>
+                        <c:if test="${showMap.value.type=='select'}">
+                            <select  class="ui dropdown" <c:if test="${showMap.foreign=='false'}">${showMap.key}</c:if><c:if test="${showMap.foreign!='false'}">${showMap.foreign}</c:if> >
+                                <option value="">&nbsp;</option>
+                                <c:forEach items="${showMap.value.opt}" var="opt" >
+                                    <option value="${opt.key}">${opt.value}</option>
+                                </c:forEach>
+                            </select>
+                        </c:if>
+                        <c:if test="${showMap.value.type=='text'||showMap.value.type=='number'}">
+                            <input  type="${showMap.value.type}" <c:if test="${showMap.foreign=='false'}">${showMap.key}</c:if><c:if test="${showMap.foreign!='false'}">${showMap.foreign}</c:if> >
+                        </c:if>
+                        <c:if test="${showMap.value.type=='datetime'||showMap.value.type=='date'}">
+                            <input  ${showMap.value.type}="true" <c:if test="${showMap.foreign=='false'}">${showMap.key}</c:if><c:if test="${showMap.foreign!='false'}">${showMap.foreign}</c:if> >
+                        </c:if>
+                    </div>
+                </c:if>
+            </c:forEach>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            关闭
+        </div>
+        <div class="ui positive right labeled icon button" id="insertEntity">
+            保存
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div></c:if>
+
 
 <%--模态框 反馈信息--%>
 <div class="ui small modal">
@@ -204,7 +245,6 @@
     <input type="file" name="file" id="file" style="display: none" onchange="myUpload()">
     <input type="number" name="fileId" id="fileId" style="display: none">
 </form>
-</body>
 <script>
     "use strict"
 
@@ -225,7 +265,7 @@
     getInfoList(viewName,arr,1,false,null,null);
 
     $('#delete').click(function () {
-        var myCheck=$(".pusher input[name='item'][type='checkbox']");
+        var myCheck=$(".pusher #modal input[name='item'][type='checkbox']");
         var deleteArr=[];
         for(i in myCheck){
             if(myCheck[i].checked){
@@ -241,7 +281,6 @@
                         if (data.msg == "success") {
                             showToast("<i class='remove circle icon'></i>删除成功")
                             getInfoList(viewName,arr,currentPage,true,orderBy,sequence);
-                            getInfoList(viewName, arr, currentPage, currentUrl,sequence);
                         } else {
 
                         }
@@ -251,8 +290,8 @@
     });
 
     $('#lookFor').click(function () {
-        orderBy="";
-        sequence="";
+        orderBy=null;
+        sequence;
         getInfoList(viewName,arr,1,true,orderBy,sequence);
         $('th').children('i').attr("class","icon sort")
     });
@@ -267,11 +306,28 @@
             {
                 id:$(".field.column [name='id']").val()
                 <c:forEach items="${requestScope.fields.show}" var="editMap" varStatus="stat" >
-                    <c:if test="${editMap.value.edit=='true'}">
-                        ,${editMap.key}:$(".field.column [name='${editMap.key}']").val()
-                    </c:if>
-                </c:forEach>
-            },
+                <c:if test="${editMap.value.edit=='true'}">
+                ,${editMap.key}:$(".field.column [name='${editMap.key}']").val()
+        </c:if>
+        </c:forEach>
+    },
+        function (data, status) {
+            if (status != "success") {
+                showToast("<i class='warning icon'></i>连接服务器失败！");
+            }else {
+                if(data.msg=="success"){
+                    showToast("<i class='archive icon'></i>保存成功");
+                    getInfoList(viewName, arr, currentPage,true,orderBy,sequence);
+                }else {
+                    showToast("<i class='remove circle outline icon'></i>"+data.msg);
+                }
+            }
+        });
+    });
+
+    $('#insertEntity').click(function () {
+        $('#modal').addClass('loading');
+        $.post("/mobilee/"+viewName+"/add?"+$("#newModal").serialize(),{},
             function(data, status) {
                 if (status != "success") {
                     showToast("<i class='warning icon'></i>连接服务器失败！");
@@ -284,6 +340,13 @@
                     }
                 }
             });
+    })
+
+
+
+
+    $('#new').click(function () {
+        $('.ui.myNew.modal').modal('show')
     })
 
     //排序图标变化
@@ -328,6 +391,15 @@
 
     //模态框
     $('.ui.first.modal').modal({
+        onDeny    : function(){
+            if($('#modal').hasClass('loading'))
+                return false;
+        },
+        onApprove : function() {
+            return false;
+        }
+    }) .modal('setting', 'closable', false)
+    $('.ui.myNew.modal').modal({
         onDeny    : function(){
             if($('#modal').hasClass('loading'))
                 return false;
@@ -383,9 +455,8 @@
         })
     }
 
-
     function myUpload() {
-        $('#fileId').val($("input[name='id']").val());
+        $('#fileId').val($("#modal input[name='id']").val());
         $('#modal').addClass('loading');
         var formData = new FormData($( "#upFile" )[0]);
         $.ajax({
@@ -400,7 +471,7 @@
                 if(data.msg=="success"){
                     $('#modal').removeClass('loading');
                     showToast("<i class='upload icon'></i>上传成功");
-                    $('#myPicture').attr('src',"../upload/"+viewName+"/"+$("input[name='id']").val()+".jpg?"+Math.random())
+                    $('#myPicture').attr('src',"../upload/"+viewName+"/"+$("#modal input[name='id']").val()+".jpg?"+Math.random())
                 }else {
                     $('#modal').removeClass('loading');
                     showToast("<i class='remove circle outline icon'></i>"+data.msg);
@@ -414,4 +485,6 @@
         });
     }
 </script>
+</body>
+
 </html>

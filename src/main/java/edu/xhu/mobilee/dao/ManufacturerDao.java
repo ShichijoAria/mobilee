@@ -11,4 +11,6 @@ public interface ManufacturerDao {
     int updateManufacturerById(ManufacturerEntity manufacturerEntity);
 
     int deleteManufacturer(List<String> id);
+
+    int insertManufacturer(ManufacturerEntity manufacturerEntity);
 }
