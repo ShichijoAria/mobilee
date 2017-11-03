@@ -1,14 +1,12 @@
 package edu.xhu.mobilee.controller;
 
 import edu.xhu.mobilee.entity.AdminEntity;
-import edu.xhu.mobilee.entity.ManufacturerEntity;
-import edu.xhu.mobilee.service.ManufacturerService;
+import edu.xhu.mobilee.entity.SaleEntity;
 import edu.xhu.mobilee.service.ProcedureService;
-import edu.xhu.mobilee.util.Field;
+import edu.xhu.mobilee.service.SaleService;
 import edu.xhu.mobilee.util.Proper;
 import edu.xhu.mobilee.util.Upload;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,18 +16,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-@RequestMapping("manufacturer")
-@Controller
-public class ManufacturerController {
-
+public class SaleController {
     @Autowired
-    private ManufacturerService manufacturerService;
+    private SaleService saleService;
 
     @Autowired
     private ProcedureService procedureService;
@@ -37,15 +31,15 @@ public class ManufacturerController {
     @RequestMapping(value = "view",method = RequestMethod.GET)
     public ModelAndView view(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("manufacturer");
+        modelAndView.setViewName("sale");
         return modelAndView;
     }
 
     @RequestMapping(value = "list",method = RequestMethod.POST)
     @ResponseBody
-    public Map list(@RequestParam(value = "orderBy",required = false,defaultValue = "manufacturer_id") String orderBy,
+    public Map list(@RequestParam(value = "orderBy",required = false,defaultValue = "sale_id") String orderBy,
                     @RequestParam(value = "sequence",required = false) String sequence,
-                    @RequestParam(value = "page",required = false) long pageIndex,ManufacturerEntity manufacturerEntity) {
+                    @RequestParam(value = "page",required = false) long pageIndex, SaleEntity saleEntity) {
         Map<String, Object> paramMap=new HashMap<String,Object>();
         Map dataMap = new HashMap<String, Object>();
         String where="";
@@ -54,20 +48,20 @@ public class ManufacturerController {
             sequence="DESC";
         else
             sequence="ASC";
-        paramMap.put("tables","t_manufacturer manufacturer,t_admin admin");
+        paramMap.put("tables","t_sale sale,t_admin admin");
         paramMap.put("pageIndex",pageIndex);
-        paramMap.put("fields", "manufacturer.id manufacturer_id," +
-                "manufacturer.name manufacturer_name," +
-                "admin.name manufacturer_author");
-        where+="and manufacturer.author=admin.id ";
-        if(manufacturerEntity!=null) {
-            if (manufacturerEntity.getName() != null)
-                where += "and manufacturer.name like '%" + manufacturerEntity.getName() + "%'";
-            if (manufacturerEntity.getId() >0 )
-                where += "and manufacturer.id = " + manufacturerEntity.getId();
-            if(manufacturerEntity.getAuthor()!=null) {
-                if (manufacturerEntity.getAuthor().getName() != null)
-                    where += "and admin.name like '%" + manufacturerEntity.getAuthor().getName() + "%'";
+        paramMap.put("fields", "sale.id sale_id," +
+                "sale.name sale_name," +
+                "admin.name sale_author");
+        where+="and sale.author=admin.id ";
+        if(saleEntity!=null) {
+            if (saleEntity.getName() != null)
+                where += "and sale.name like '%" + saleEntity.getName() + "%'";
+            if (saleEntity.getId() >0 )
+                where += "and sale.id = " + saleEntity.getId();
+            if(saleEntity.getAuthor()!=null) {
+                if (saleEntity.getAuthor().getName() != null)
+                    where += "and admin.name like '%" + saleEntity.getAuthor().getName() + "%'";
             }
         }
         if (where.length()>3)
@@ -84,7 +78,7 @@ public class ManufacturerController {
     public Map info(@RequestParam(value = "id") long id){
         Map dataMap = new HashMap<String, Object>();
         if(id>0) {
-            ManufacturerEntity temp=manufacturerService.findManufacturerById(id);
+            SaleEntity temp= saleService.findSaleById(id);
             dataMap.put("entity", temp);
             dataMap.put("msg","success");
         }else {
@@ -95,11 +89,11 @@ public class ManufacturerController {
 
     @RequestMapping(value = "save",method = RequestMethod.POST)
     @ResponseBody
-    public Map save(HttpServletRequest request,ManufacturerEntity manufacturerEntity,
-                    @RequestParam(value = "id") long id,@RequestParam(value = "edition") long edition){
+    public Map save(HttpServletRequest request, SaleEntity saleEntity,
+                    @RequestParam(value = "id") long id, @RequestParam(value = "edition") long edition){
         Map dataMap = new HashMap<String, Object>();
         String msg="非法的数据";
-        manufacturerService.updateManufacturerById(manufacturerEntity);
+        saleService.updateSaleById(saleEntity);
         msg="success";
         dataMap.put("msg",msg);
         return dataMap;
@@ -113,21 +107,21 @@ public class ManufacturerController {
         Map dataMap = new HashMap<String, Object>();
         String msg="success";
         dataMap.put("msg",msg);
-        manufacturerService.deleteManufacturer(arrayList);
+        saleService.deleteSale(arrayList);
         return dataMap;
     }
 
     @RequestMapping(value = "add",method = RequestMethod.POST)
     @ResponseBody
-    public Map add(ManufacturerEntity manufacturerEntity, HttpSession session){
+    public Map add(SaleEntity saleEntity, HttpSession session){
         Map dataMap = new HashMap<String, Object>();
         String msg="非法的数据";
-        if(manufacturerEntity !=null) {
+        if(saleEntity !=null) {
             AdminEntity adminEntity=new AdminEntity();
             adminEntity.setId((long)session.getAttribute("USER_ID"));
-            manufacturerEntity.setAuthor(adminEntity);
-            if (manufacturerService.insertManufacturer(manufacturerEntity) > 0) {
-                dataMap.put("id",manufacturerEntity.getId());
+            saleEntity.setAuthor(adminEntity);
+            if (saleService.insertSale(saleEntity) > 0) {
+                dataMap.put("id",saleEntity.getId());
                 msg = "success";
             }
         }
@@ -140,9 +134,8 @@ public class ManufacturerController {
     public Map upload(HttpServletRequest request, @RequestParam("headPortrait") MultipartFile file, @RequestParam("id") long id) {
         Map dataMap = new HashMap<String, Object>();
         String msg="";
-        msg= Upload.uploadJpg(file,request,id,"manufacturer");
+        msg= Upload.uploadJpg(file,request,id,"sale");
         dataMap.put("msg",msg);
         return dataMap;
     }
-
 }

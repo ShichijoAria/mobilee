@@ -7,7 +7,6 @@ import java.util.Map;
 
 public interface ManufacturerService {
 
-
     ManufacturerEntity findManufacturerById(long id);
 
     int updateManufacturerById(ManufacturerEntity manufacturerEntity);

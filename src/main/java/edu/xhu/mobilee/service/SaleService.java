@@ -1,10 +1,10 @@
-package edu.xhu.mobilee.dao;
+package edu.xhu.mobilee.service;
 
 import edu.xhu.mobilee.entity.SaleEntity;
 
 import java.util.List;
 
-public interface SaleDao {
+public interface SaleService {
 
     SaleEntity findSaleById(long id);
 
@@ -13,5 +13,4 @@ public interface SaleDao {
     int deleteSale(List<String> id);
 
     int insertSale(SaleEntity saleEntity);
-
 }

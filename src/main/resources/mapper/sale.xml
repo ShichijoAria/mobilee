@@ -1,6 +1,54 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-</beans>
+<mapper namespace="edu.xhu.mobilee.dao.SaleDao">
+
+    <select id="findSaleById" parameterType="long" resultMap="manufacturerResult">
+        SELECT
+        m.id  AS m_id,
+        m.name  AS  m_name,
+        m.address AS m_address,
+        m.created AS m_created,
+        m.edition AS m_edition,
+        a.id AS a_id,
+        a.name AS a_name
+        from t_manufacturer m join t_admin a on m.author = a.id
+        where m.id = #{id}
+    </select>
+
+    <update id="updateSaleById" parameterType="ManufacturerEntity">
+        UPDATE t_sale
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="address != null">address=#{password},</if>
+            <if test="author != null">author=#{author},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteSale" parameterType="list">
+        DELETE FROM t_sale WHERE id IN
+        <foreach collection="list" item="ids"  open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <insert id="insertSale" parameterType="ManufacturerEntity" keyProperty="id">
+        INSERT INTO t_sale (name, address, author,created) VALUES (#{name},#{address},#{author.id},current_timestamp)
+    </insert>
+
+    <resultMap type="SaleEntity" id="saleResult">
+        <id property="id" column="s_id" />
+        <result property="name" column="s_name" />
+        <result property="address" column="s_address" />
+        <association property="author" resultMap="authorResult"/>
+    </resultMap>
+
+    <resultMap id="authorResult" type="AdminEntity">
+        <id property="id" column="a_id" />
+        <result property="name" column="a_name" />
+        <result property="password" column="a_password" />
+    </resultMap>
+
+</mapper>
