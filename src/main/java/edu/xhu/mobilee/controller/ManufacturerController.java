@@ -127,6 +127,7 @@ public class ManufacturerController {
             adminEntity.setId((long)session.getAttribute("USER_ID"));
             manufacturerEntity.setAuthor(adminEntity);
             if (manufacturerService.insertManufacturer(manufacturerEntity) > 0) {
+                dataMap.put("id",manufacturerEntity.getId());
                 msg = "success";
             }
         }
@@ -136,7 +137,7 @@ public class ManufacturerController {
 
     @RequestMapping(value = "upload", method = RequestMethod.POST)
     @ResponseBody
-    public Map upload(HttpServletRequest request, @RequestParam("file") MultipartFile file, @RequestParam("fileId") long id) {
+    public Map upload(HttpServletRequest request, @RequestParam("headPortrait") MultipartFile file, @RequestParam("id") long id) {
         Map dataMap = new HashMap<String, Object>();
         String msg="";
         msg= Upload.uploadJpg(file,request,id,"manufacturer");

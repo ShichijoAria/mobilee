@@ -2,7 +2,7 @@ package edu.xhu.mobilee.entity;
 
 import java.sql.Timestamp;
 
-public class ManufacturerEntity {
+public class SaleEntity {
     private long id;
     private String name;
     private String address;

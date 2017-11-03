@@ -31,17 +31,12 @@ function getInfo(module,id) {
                 if(data.msg=="success"){
                     var entity=data.entity;
                     for(var i in entity){
-                        var choose="#modal input[name='"+i+"']";
-                        $(choose).val(entity[i]);
-                        if(entity[i]!=null&&typeof(entity[i])=="object")
-                            $(choose).val(entity[i].id);
-                        if($(choose).attr('date')=="false"||$(choose).attr('date')=="true")
-                            $(choose).val(new Date(entity[i]).format('yyyy/MM/dd'));
-                        if($(choose).attr('datetime')=="false"||$(choose).attr('datetime')=="true")
-                            $(choose).val(new Date(entity[i]).format('yyyy/MM/dd hh:mm'));
-                        var choose="select[name='"+i+"']";
-                        var opt="[data-value='"+entity[i]+"']";
-                        $(choose).parent().dropdown('set selected', entity[i])
+                        jsonToForm(i,entity[i])
+                        if(entity[i]!=null&&typeof(entity[i])=="object") {
+                            for(var j in entity[i]) {
+                                jsonToForm(i+'.'+j,entity[i][j])
+                            }
+                        }
                     }
                     $('#myPicture').attr('src',"../upload/"+module+"/"+entity.id+".jpg?"+Math.random())
                     $('.ui.first.modal')
@@ -206,3 +201,15 @@ Date.prototype.format = function(format) {
     return format;
 }
 
+
+function jsonToForm(key,value) {
+    var choose="#modal input[name='"+key+"']";
+    $(choose).val(value);
+    if($(choose).attr('date')=="false"||$(choose).attr('date')=="true")
+        $(choose).val(new Date(value).format('yyyy/MM/dd'));
+    if($(choose).attr('datetime')=="false"||$(choose).attr('datetime')=="true")
+        $(choose).val(new Date(value).format('yyyy/MM/dd hh:mm'));
+    var choose="select[name='"+i+"']";
+    var opt="[data-value='"+value+"']";
+    $(choose).parent().dropdown('set selected', value)
+}

@@ -143,6 +143,10 @@
                 <input type="text" name="name">
             </div>
             <div class="field column">
+                <label>厂商地址</label>
+                <input type="text" name="address">
+            </div>
+            <div class="field column">
                 <label>录入时间</label>
                 <input type="text" date="false" readonly name="created">
             </div>
@@ -293,6 +297,8 @@
                 }else {
                     if(data.msg=="success"){
                         showToast("<i class='archive icon'></i>保存成功");
+                        $('.ui.myNew.modal').modal('hide')
+                        getInfo(viewName,data.id)
                         getInfoList(viewName, arr, currentPage,true,orderBy,sequence);
                     }else {
                         showToast("<i class='remove circle outline icon'></i>"+data.msg);

@@ -9,6 +9,8 @@
           m.id  AS m_id,
           m.name  AS  m_name,
           m.address AS m_address,
+          m.created AS m_created,
+          m.edition AS m_edition,
           a.id AS a_id,
           a.name AS a_name
         from t_manufacturer m join t_admin a on m.author = a.id
@@ -32,7 +34,7 @@
         </foreach>
     </delete>
 
-    <insert id="insertManufacturer" parameterType="ManufacturerEntity">
+    <insert id="insertManufacturer" parameterType="ManufacturerEntity" keyProperty="id">
         INSERT INTO t_manufacturer (name, address, author,created) VALUES (#{name},#{address},#{author.id},current_timestamp)
     </insert>
 

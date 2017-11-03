@@ -414,6 +414,48 @@
             }
         });
     }
+
+    function getInfo(module,id) {
+        $('form').addClass('loading');
+        $.post("/mobilee/"+module+"/info?id="+id,
+            {
+
+            },
+            function (data, status) {
+                $('form').removeClass('loading');
+                if (status != "success") {
+                    //showError(["无法连接服务器"]);
+                }else {
+                    if(data.msg=="success"){
+                        var entity=data.entity;
+                        for(var i in entity){
+                            var choose="#modal input[name='"+i+"']";
+                            $(choose).val(entity[i]);
+                            if(entity[i]!=null&&typeof(entity[i])=="object")
+                                $(choose).val(entity[i].id);
+                            if($(choose).attr('date')=="false"||$(choose).attr('date')=="true")
+                                $(choose).val(new Date(entity[i]).format('yyyy/MM/dd'));
+                            if($(choose).attr('datetime')=="false"||$(choose).attr('datetime')=="true")
+                                $(choose).val(new Date(entity[i]).format('yyyy/MM/dd hh:mm'));
+                            var choose="select[name='"+i+"']";
+                            var opt="[data-value='"+entity[i]+"']";
+                            $(choose).parent().dropdown('set selected', entity[i])
+                        }
+                        $('#myPicture').attr('src',"../upload/"+module+"/"+entity.id+".jpg?"+Math.random())
+                        $('.ui.first.modal')
+                            .modal('show')
+                        ;
+                        $('.ui.medium.bordered.circular.image')
+                            .popup()
+                        ;
+                        changeSize();
+                    }else {
+
+                    }
+                }
+            });
+    }
+
 </script>
 </body>
 </html>
