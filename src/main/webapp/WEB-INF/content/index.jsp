@@ -86,7 +86,7 @@
                     <i class="dropdown icon"></i>
                 </a>
                 <div class="content">
-                    <p><a id="CourseQuery" class="child" href="javascript:void(0)">手机信息</a></p>
+                    <p><a id="mobilePhone" class="child" href="javascript:void(0)">手机信息</a></p>
                     <p><a id="manufacturer" class="child" href="javascript:void(0)">出品厂商</a></p>
                     <p><a id="sale" class="child" href="javascript:void(0)">手机卖家</a></p>
                 </div>

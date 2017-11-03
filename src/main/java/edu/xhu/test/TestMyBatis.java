@@ -2,7 +2,9 @@ package edu.xhu.test;
 
 import javax.annotation.Resource;
 
+import com.alibaba.fastjson.JSON;
 import edu.xhu.mobilee.dao.ManufacturerDao;
+import edu.xhu.mobilee.dao.OptionDao;
 import edu.xhu.mobilee.dao.ProcedureDao;
 import edu.xhu.mobilee.dao.UserDao;
 import edu.xhu.mobilee.entity.ManufacturerEntity;
@@ -27,7 +29,9 @@ public class TestMyBatis {
     private ProcedureDao procedureDao = null;
     @Resource
     private ManufacturerDao manufacturerDao = null;
-  
+    @Resource
+    private OptionDao optionDao;
+
 //  @Before  
 //  public void before() {  
 //      ac = new ClassPathXmlApplicationContext("applicationContext.xml");  
@@ -61,6 +65,11 @@ public class TestMyBatis {
         ArrayList<String> arrayList=new ArrayList<String>();
         System.out.println(arrayList);
         System.out.println(manufacturerDao.deleteManufacturer(arrayList));
+    }
+
+    @Test
+    public void test4(){
+        System.out.println(JSON.toJSON(optionDao.getManufacturer()));
     }
 
 }  

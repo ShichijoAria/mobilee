@@ -1,8 +1,10 @@
 package edu.xhu.mobilee.service;
 
 import edu.xhu.mobilee.entity.AdminEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
+
 
 public interface AdminService {
 

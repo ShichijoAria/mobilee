@@ -6,9 +6,11 @@ import edu.xhu.mobilee.entity.AdminEntity;
 import edu.xhu.mobilee.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{

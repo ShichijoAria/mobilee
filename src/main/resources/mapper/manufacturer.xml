@@ -22,7 +22,6 @@
         <set>
             <if test="name != null">name=#{name},</if>
             <if test="address != null">address=#{password},</if>
-            <if test="author != null">author=#{author},</if>
         </set>
         WHERE id = #{id}
     </update>

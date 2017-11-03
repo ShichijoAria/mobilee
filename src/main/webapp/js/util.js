@@ -214,7 +214,17 @@ function jsonToForm(key,value) {
         $(choose).val(new Date(value).format('yyyy/MM/dd'));
     if($(choose).attr('datetime')=="false"||$(choose).attr('datetime')=="true")
         $(choose).val(new Date(value).format('yyyy/MM/dd hh:mm'));
-    var choose="select[name='"+i+"']";
+    choose="select[name='"+i+"']";
     var opt="[data-value='"+value+"']";
     $(choose).parent().dropdown('set selected', value)
+
+    if(value!=null&&typeof(value)=='object'){
+        for(var jsonI in value){
+            choose="select[name='"+key+"."+jsonI+"']";
+            var opt="[data-value='"+value+"']";
+            $(choose).parent().dropdown('set selected', value[jsonI]);
+        }
+    }
+
 }
+

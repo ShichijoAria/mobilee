@@ -1,4 +1,6 @@
-
+.ui.labeled.input{
+    width: 100%!important;
+}
 .long.arrow.icon{
     color: white;
     margin-left: 5px!important;

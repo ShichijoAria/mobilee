@@ -107,7 +107,7 @@ public class UserController {
         Map dataMap = new HashMap<String, Object>();
         String msg="非法的数据";
         if(userService.updateUserById(userEntity)>0);
-            msg="保存失败";
+            msg="success";
         dataMap.put("msg",msg);
         return dataMap;
     }

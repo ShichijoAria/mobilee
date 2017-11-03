@@ -17,6 +17,7 @@ public class MobilePhoneEntity {
     private float height;
     private int pixel;
     private int cameraPixel;
+    private int edition;
     private AdminEntity author;
     private ManufacturerEntity manufacturer;
 
@@ -130,6 +131,14 @@ public class MobilePhoneEntity {
 
     public void setCameraPixel(int cameraPixel) {
         this.cameraPixel = cameraPixel;
+    }
+
+    public int getEdition() {
+        return edition;
+    }
+
+    public void setEdition(int edition) {
+        this.edition = edition;
     }
 
     public AdminEntity getAuthor() {

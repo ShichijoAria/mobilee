@@ -24,18 +24,32 @@
         a.id AS a_id,
         a.name AS a_name,
         ma.id AS ma_id,
-        ma.name AS maa_name
+        ma.name AS ma_name
         from t_mobile_phone mo JOIN t_admin a ON mo.author = a.id JOIN t_manufacturer ma ON ma.id=mo.manufacturer
         where mo.id = #{id}
     </select>
 
     <update id="updateMobilePhoneById" parameterType="MobilePhoneEntity">
-        UPDATE t_manufacturer
+        UPDATE t_mobile_phone
         <set>
             <if test="name != null">name=#{name},</if>
-            <if test="address != null">address=#{password},</if>
+            <if test="cpu != null">cpu=#{cpu},</if>
+            <if test="memory != null">memory=#{memory},</if>
+            <if test="storage != null">storage=#{storage},</if>
+            <if test="price != null">price=#{price},</if>
+            <if test="listTime != null">list_time=#{listTime},</if>
+            <if test="size != null">size=#{size},</if>
+            <if test="width != null">width=#{width},</if>
+            <if test="pixel != null">pixel=#{pixel},</if>
+            <if test="cameraPixel != null">camera_pixel=#{cameraPixel},</if>
+            <if test="height != null">height=#{height},</if>
+            <if test="manufacturer!=null">
+              <if test="manufacturer.id != null">manufacturer=#{manufacturer.id},</if>
+            </if>
+            <if test="length != null">length=#{length},</if>
+            <if test="edition != null">edition=edition+1,</if>
         </set>
-        WHERE id = #{id}
+        WHERE id = #{id} AND edition=#{edition}
     </update>
 
     <delete id="deleteMobilePhone" parameterType="list">
@@ -46,9 +60,32 @@
     </delete>
 
     <insert id="insertMobilePhone" parameterType="MobilePhoneEntity" keyProperty="id">
-        INSERT INTO t_mobile_phone (name, cpu, memory,storage,price,created,list_time,size,width,height,pixel,camera_pixel,author,manufacturer
-        ) VALUES (#{name}, #{cpu}, #{memory},#{storage},#{price},current_timestamp,#{list_time},#{size},#{width},#{height},#{pixel},#{camera_pixel}
-        ,#{author.id},#{manufacturer.id})
+        INSERT INTO t_mobile_phone (name,
+                                    cpu,
+                                    memory,
+                                    storage,
+                                    price,
+                                    created,
+                                    list_time,
+                                    size,width,
+                                    height,
+                                    pixel,
+                                    camera_pixel,
+                                    author,
+                                    manufacturer
+                                ) VALUES (#{name},
+                                    #{cpu},
+                                    #{memory},
+                                    #{storage},
+                                    #{price},
+                                    current_timestamp,
+                                    #{list_time},#{size},
+                                    #{width},
+                                    #{height},
+                                    #{pixel},
+                                    #{camera_pixel},
+                                    #{author.id},
+                                    #{manufacturer.id})
     </insert>
 
     <resultMap type="MobilePhoneEntity" id="mobilePhoneResult">
@@ -64,6 +101,7 @@
         <result property="width" column="mo_width" />
         <result property="height" column="mo_height" />
         <result property="pixel" column="mo_pixel" />
+        <result property="edition" column="mo_edition" />
         <result property="cameraPixel" column="mo_camera_pixel" />
         <association property="author" resultMap="authorResult"/>
         <association property="manufacturer" resultMap="manufacturerResult"/>
