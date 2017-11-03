@@ -47,22 +47,6 @@
                         <input type="text" name="author.name">
                     </div>
                 </div>
-                <div class="column">
-                    <div class="ui black basic label">
-                        入站时间
-                    </div>
-                    <div class="ui input">
-                        <input type="text" datetime="true" name="createdStart">
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="ui black basic label">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </div>
-                    <div class="ui input">
-                        <input type="text" datetime="true" name="createdEnd">
-                    </div>
-                </div>
             </form>
         </div>
         <div style="text-align: center;width:100%;padding-top: 5%">
@@ -75,7 +59,7 @@
         <h2 class="ui header">
             <i class="cubes alternate icon"></i>
             <div class="content">出品厂商</div>
-            <div class="sub header">Manufafturer</div>
+            <div class="sub header">Manufacturer</div>
         </h2>
         <div  id="menu">
             <div class="ui small menu">

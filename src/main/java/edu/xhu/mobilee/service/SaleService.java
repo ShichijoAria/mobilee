@@ -12,5 +12,5 @@ public interface SaleService {
 
     int deleteSale(List<String> id);
 
-    int insertSale(SaleEntity saleEntity);
+    long insertSale(SaleEntity saleEntity);
 }

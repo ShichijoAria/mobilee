@@ -12,5 +12,5 @@ public interface ManufacturerDao {
 
     int deleteManufacturer(List<String> id);
 
-    int insertManufacturer(ManufacturerEntity manufacturerEntity);
+    long insertManufacturer(ManufacturerEntity manufacturerEntity);
 }

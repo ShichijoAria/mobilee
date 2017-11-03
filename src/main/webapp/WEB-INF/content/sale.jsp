@@ -25,7 +25,7 @@
             <form id="searchForm" class="ui grid stackable segment three column vertical container">
                 <div class="column">
                     <div class="ui black basic label">
-                        厂商编号
+                        卖家编号
                     </div>
                     <div class="ui input">
                         <input type="number" name="id">
@@ -33,7 +33,7 @@
                 </div>
                 <div class="column">
                     <div class="ui black basic label">
-                        厂商名称
+                        卖家名称
                     </div>
                     <div class="ui input">
                         <input type="text" name="name">
@@ -47,22 +47,6 @@
                         <input type="text" name="author.name">
                     </div>
                 </div>
-                <div class="column">
-                    <div class="ui black basic label">
-                        入站时间
-                    </div>
-                    <div class="ui input">
-                        <input type="text" datetime="true" name="createdStart">
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="ui black basic label">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </div>
-                    <div class="ui input">
-                        <input type="text" datetime="true" name="createdEnd">
-                    </div>
-                </div>
             </form>
         </div>
         <div style="text-align: center;width:100%;padding-top: 5%">
@@ -73,9 +57,9 @@
 
     <div class="pusher" style="height: 100%">
         <h2 class="ui header">
-            <i class="cubes alternate icon"></i>
-            <div class="content">出品厂商</div>
-            <div class="sub header">Manufafturer</div>
+            <i class="shop alternate icon"></i>
+            <div class="content">手机卖家</div>
+            <div class="sub header">Sale</div>
         </h2>
         <div  id="menu">
             <div class="ui small menu">
@@ -103,9 +87,9 @@
                             <input type="checkbox" name="switch" id="checkAll"><label></label>
                         </div>
                     </th>
-                    <th id="manufacturer_id"/><i class="icon sort"></i>厂商编号</th>
-                    <th id="manufacturer_name"/><i class="icon sort"></i>厂商名称</th>
-                    <th id="manufacturer_author"/><i class="icon sort"></i>录入作者</th>
+                    <th id="sale_id"/><i class="icon sort"></i>卖家编号</th>
+                    <th id="sale_name"/><i class="icon sort"></i>卖家名称</th>
+                    <th id="sale_author"/><i class="icon sort"></i>录入作者</th>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -135,15 +119,15 @@
                 </div>
             </div>
             <div class="field column">
-                <label>厂商编号</label>
+                <label>卖家编号</label>
                 <input type="number" name="id">
             </div>
             <div class="field column">
-                <label>厂商名称</label>
+                <label>卖家名称</label>
                 <input type="text" name="name">
             </div>
             <div class="field column">
-                <label>厂商地址</label>
+                <label>卖家地址</label>
                 <input type="text" name="address">
             </div>
             <div class="field column">
@@ -177,11 +161,11 @@
     <div class="image content">
         <form class="ui stackable  form three column grid" id="newModal" style="width: 100%">
             <div class="field column">
-                <label>厂商名称</label>
+                <label>卖家名称</label>
                 <input  type="text" name="name" />
             </div>
             <div class="field column">
-                <label>厂商地址</label>
+                <label>卖家地址</label>
                 <input  type="text" name="address" />
             </div>
         </form>
@@ -225,7 +209,7 @@
     //排序字段
     var orderBy=null;
 
-    var viewName='manufacturer';
+    var viewName='sale';
     //table head初始化
     var arr=[];
     for(var i=1;i<$('th').length;i++){
@@ -389,10 +373,10 @@
         var list=data.list;
         var html='';
         for(var i in list) {
-            var head = "<tr id='" +list[i].manufacturer_id+"' class='center aligned'>\n" +
+            var head = "<tr id='" +list[i].sale_id+"' class='center aligned'>\n" +
                 "    <td>\n" +
                 "    <div class='ui checkbox'>\n" +
-                "    <input type='checkbox' name='item' value='"+list[i].manufacturer_id+"'><label></label>\n" +
+                "    <input type='checkbox' name='item' value='"+list[i].sale_id+"'><label></label>\n" +
                 "    </div>\n" +
                 "    </td>";
             var body="";

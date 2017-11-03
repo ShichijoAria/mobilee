@@ -4,20 +4,20 @@
 
 <mapper namespace="edu.xhu.mobilee.dao.SaleDao">
 
-    <select id="findSaleById" parameterType="long" resultMap="manufacturerResult">
+    <select id="findSaleById" parameterType="long" resultMap="saleResult">
         SELECT
-        m.id  AS m_id,
-        m.name  AS  m_name,
-        m.address AS m_address,
-        m.created AS m_created,
-        m.edition AS m_edition,
+        s.id  AS s_id,
+        s.name  AS  s_name,
+        s.address AS s_address,
+        s.created AS s_created,
+        s.edition AS s_edition,
         a.id AS a_id,
         a.name AS a_name
-        from t_manufacturer m join t_admin a on m.author = a.id
-        where m.id = #{id}
+        from t_sale s join t_admin a on s.author = a.id
+        where s.id = #{id}
     </select>
 
-    <update id="updateSaleById" parameterType="ManufacturerEntity">
+    <update id="updateSaleById" parameterType="SaleEntity">
         UPDATE t_sale
         <set>
             <if test="name != null">name=#{name},</if>
@@ -34,7 +34,7 @@
         </foreach>
     </delete>
 
-    <insert id="insertSale" parameterType="ManufacturerEntity" keyProperty="id">
+    <insert id="insertSale" parameterType="SaleEntity" keyProperty="id">
         INSERT INTO t_sale (name, address, author,created) VALUES (#{name},#{address},#{author.id},current_timestamp)
     </insert>
 

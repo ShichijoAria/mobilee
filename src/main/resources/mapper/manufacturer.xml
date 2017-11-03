@@ -6,11 +6,11 @@
 
     <select id="findManufacturerById" parameterType="long" resultMap="manufacturerResult">
         SELECT
-          m.id  AS m_id,
-          m.name  AS  m_name,
-          m.address AS m_address,
-          m.created AS m_created,
-          m.edition AS m_edition,
+          m.id  AS ma_id,
+          m.name  AS  ma_name,
+          m.address AS ma_address,
+          m.created AS ma_created,
+          m.edition AS ma_edition,
           a.id AS a_id,
           a.name AS a_name
         from t_manufacturer m join t_admin a on m.author = a.id
@@ -39,9 +39,11 @@
     </insert>
 
     <resultMap type="ManufacturerEntity" id="manufacturerResult">
-        <id property="id" column="m_id" />
-        <result property="name" column="m_name" />
-        <result property="address" column="m_address" />
+        <id property="id" column="ma_id" />
+        <result property="name" column="ma_name" />
+        <result property="address" column="ma_address" />
+        <result property="created" column="ma_created" />
+        <result property="edition" column="ma_edition" />
         <association property="author" resultMap="authorResult"/>
     </resultMap>
 

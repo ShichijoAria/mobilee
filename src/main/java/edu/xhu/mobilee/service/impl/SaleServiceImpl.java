@@ -4,9 +4,11 @@ import edu.xhu.mobilee.dao.SaleDao;
 import edu.xhu.mobilee.entity.SaleEntity;
 import edu.xhu.mobilee.service.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service("saleService")
 public class SaleServiceImpl implements SaleService{
 
     @Autowired
@@ -28,7 +30,7 @@ public class SaleServiceImpl implements SaleService{
     }
 
     @Override
-    public int insertSale(SaleEntity saleEntity) {
+    public long insertSale(SaleEntity saleEntity) {
         return saleDao.insertSale(saleEntity);
     }
 }

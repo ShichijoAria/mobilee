@@ -32,7 +32,7 @@ public class ManufacturerServiceImpl implements ManufacturerService{
     }
 
     @Override
-    public int insertManufacturer(ManufacturerEntity manufacturerEntity) {
+    public long insertManufacturer(ManufacturerEntity manufacturerEntity) {
         return manufacturerDao.insertManufacturer(manufacturerEntity);
     }
 }

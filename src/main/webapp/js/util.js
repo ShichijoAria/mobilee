@@ -1,5 +1,10 @@
 "use strict"
 
+//通用功能初始化
+function init() {
+
+}
+
 //表单序列化排空
 function serializeNotNull(serStr){
     return serStr.split("&").filter(function(str){return !str.endsWith("=")}).join("&");
@@ -71,7 +76,7 @@ function showToast(html) {
 function getInfoList(module,arr,page,where,order,sequence) {
     var url="/mobilee/"+module+"/list?page="+page+"&";
     if (where){
-        url+=$('#searchForm').serialize();
+        url+=serializeNotNull($('#searchForm').serialize());
     }
     if(order!=null||order!=undefined){
         url+="&orderBy="+order;

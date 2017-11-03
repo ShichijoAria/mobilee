@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.xhu.mobilee.dao.MobilePhoneDao">
+
+    <select id="findMobilePhoneById" parameterType="long" resultMap="mobilePhoneResult">
+        SELECT
+        mo.id  AS mo_id,
+        mo.name  AS  mo_name,
+        mo.cpu AS mo_cpu,
+        mo.memory AS mo_memory,
+        mo.storage AS mo_storage,
+        mo.price AS mo_price,
+        mo.created AS mo_created,
+        mo.list_time AS mo_list_time,
+        mo.size AS mo_size,
+        mo.width AS mo_width,
+        mo.height AS mo_height,
+        mo.length AS mo_length,
+        mo.pixel AS mo_pixel,
+        mo.camera_pixel AS mo_camera_pixel,
+        mo.edition AS mo_edition,
+        a.id AS a_id,
+        a.name AS a_name,
+        ma.id AS ma_id,
+        ma.name AS maa_name
+        from t_mobile_phone mo JOIN t_admin a ON mo.author = a.id JOIN t_manufacturer ma ON ma.id=mo.manufacturer
+        where mo.id = #{id}
+    </select>
+
+    <update id="updateMobilePhoneById" parameterType="MobilePhoneEntity">
+        UPDATE t_manufacturer
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="address != null">address=#{password},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteMobilePhone" parameterType="list">
+        DELETE FROM t_mobile_phone WHERE id IN
+        <foreach collection="list" item="ids"  open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <insert id="insertMobilePhone" parameterType="MobilePhoneEntity" keyProperty="id">
+        INSERT INTO t_mobile_phone (name, cpu, memory,storage,price,created,list_time,size,width,height,pixel,camera_pixel,author,manufacturer
+        ) VALUES (#{name}, #{cpu}, #{memory},#{storage},#{price},current_timestamp,#{list_time},#{size},#{width},#{height},#{pixel},#{camera_pixel}
+        ,#{author.id},#{manufacturer.id})
+    </insert>
+
+    <resultMap type="MobilePhoneEntity" id="mobilePhoneResult">
+        <id property="id" column="mo_id" />
+        <result property="name" column="mo_name" />
+        <result property="cpu" column="mo_cpu" />
+        <result property="memory" column="mo_memory" />
+        <result property="storage" column="mo_storage" />
+        <result property="price" column="mo_price" />
+        <result property="created" column="mo_created" />
+        <result property="listTime" column="mo_list_time" />
+        <result property="size" column="mo_size" />
+        <result property="width" column="mo_width" />
+        <result property="height" column="mo_height" />
+        <result property="pixel" column="mo_pixel" />
+        <result property="cameraPixel" column="mo_camera_pixel" />
+        <association property="author" resultMap="authorResult"/>
+        <association property="manufacturer" resultMap="manufacturerResult"/>
+    </resultMap>
+
+    <resultMap id="authorResult" type="AdminEntity">
+        <id property="id" column="a_id" />
+        <result property="name" column="a_name" />
+        <result property="password" column="a_password" />
+    </resultMap>
+
+    <resultMap type="ManufacturerEntity" id="manufacturerResult">
+        <id property="id" column="ma_id" />
+        <result property="name" column="ma_name" />
+        <result property="address" column="ma_address" />
+        <result property="created" column="ma_created" />
+        <result property="edition" column="ma_edition" />
+        <association property="author" resultMap="authorResult"/>
+    </resultMap>
+
+</mapper>
