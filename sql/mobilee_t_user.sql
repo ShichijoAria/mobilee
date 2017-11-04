@@ -1,23 +1,11 @@
-CREATE TABLE mobilee.t_user
-(
-    id bigint(20) PRIMARY KEY NOT NULL,
-    name varchar(18) DEFAULT '阿卡林' NOT NULL,
-    password varchar(18) DEFAULT '123456' NOT NULL,
-    gender tinyint(4) DEFAULT '1' COMMENT '1男2女',
-    created timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    birthday timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    phone varchar(13),
-    email varchar(18),
-    edition int(11) DEFAULT '0'
-);
-INSERT INTO mobilee.t_user (id, name, password, gender, created, birthday, phone, email, edition) VALUES (1, '李哥', '123456', 1, '2017-10-29 16:58:35', '2017-10-28 17:15:46', null, null, 0);
-INSERT INTO mobilee.t_user (id, name, password, gender, created, birthday, phone, email, edition) VALUES (2, '阿卡林', '123456', 1, '2017-10-29 16:46:32', '2017-10-28 17:16:04', null, null, 0);
-INSERT INTO mobilee.t_user (id, name, password, gender, created, birthday, phone, email, edition) VALUES (3, '阿卡林', '123456', 1, '2017-10-29 16:46:32', '2017-10-28 17:16:04', null, null, 0);
-INSERT INTO mobilee.t_user (id, name, password, gender, created, birthday, phone, email, edition) VALUES (4, '阿卡林', '123456', 1, '2017-10-29 16:46:32', '2017-10-28 17:16:04', null, null, 0);
-INSERT INTO mobilee.t_user (id, name, password, gender, created, birthday, phone, email, edition) VALUES (5, '阿卡林', '123456', 1, '2017-10-29 16:46:32', '2017-10-28 17:16:04', null, null, 0);
-INSERT INTO mobilee.t_user (id, name, password, gender, created, birthday, phone, email, edition) VALUES (6, '阿卡林', '123456', 1, '2017-10-29 16:46:32', '2017-10-28 17:16:04', null, null, 0);
-INSERT INTO mobilee.t_user (id, name, password, gender, created, birthday, phone, email, edition) VALUES (7, '阿卡林', '123456', 1, '2017-10-29 16:46:32', '2017-10-28 17:16:04', null, null, 0);
-INSERT INTO mobilee.t_user (id, name, password, gender, created, birthday, phone, email, edition) VALUES (8, '阿卡林', '123456', 1, '2017-10-29 16:46:32', '2017-10-28 17:16:04', null, null, 0);
-INSERT INTO mobilee.t_user (id, name, password, gender, created, birthday, phone, email, edition) VALUES (9, '阿卡林', '123456', 1, '2017-10-29 20:09:17', '2017-10-29 20:09:17', null, null, 0);
-INSERT INTO mobilee.t_user (id, name, password, gender, created, birthday, phone, email, edition) VALUES (10, '阿卡林', '123456', 1, '2017-10-29 20:09:17', '2017-10-29 20:09:17', null, null, 0);
-INSERT INTO mobilee.t_user (id, name, password, gender, created, birthday, phone, email, edition) VALUES (11, '阿卡林', '123456', 1, '2017-10-29 20:09:17', '2017-10-29 20:09:17', null, null, 0);
+UPDATE mobilee.t_user SET name = '李哥', password = '123456', gender = 1, created = '2017-11-01 17:35:00', birthday = '2017-10-31 00:00:00', phone = null, email = null, edition = 5 WHERE id = 1;
+UPDATE mobilee.t_user SET name = '夜吹', password = '123456', gender = 1, created = '2017-11-01 17:35:00', birthday = '2017-10-31 00:00:00', phone = null, email = null, edition = 2 WHERE id = 2;
+UPDATE mobilee.t_user SET name = '阿卡', password = '123456', gender = 1, created = '2017-11-01 17:35:00', birthday = '2017-10-31 00:00:00', phone = null, email = null, edition = 2 WHERE id = 3;
+UPDATE mobilee.t_user SET name = '卡', password = '123456', gender = 1, created = '2017-11-01 17:35:21', birthday = '2017-10-31 18:18:00', phone = null, email = null, edition = 1 WHERE id = 4;
+UPDATE mobilee.t_user SET name = '阿卡林', password = '123456', gender = 1, created = '2017-11-01 17:35:21', birthday = '2017-10-31 18:18:00', phone = null, email = null, edition = 1 WHERE id = 5;
+UPDATE mobilee.t_user SET name = '小智', password = '123456', gender = 1, created = '2017-11-01 17:35:00', birthday = '2017-10-31 00:00:00', phone = null, email = null, edition = 3 WHERE id = 6;
+UPDATE mobilee.t_user SET name = '阿卡林', password = '123456', gender = 1, created = '2017-11-01 17:35:21', birthday = '2017-10-31 18:18:00', phone = null, email = null, edition = 1 WHERE id = 7;
+UPDATE mobilee.t_user SET name = '狗贼', password = '123456', gender = 1, created = '2017-11-01 17:35:21', birthday = '2017-10-31 18:18:00', phone = null, email = null, edition = 1 WHERE id = 8;
+UPDATE mobilee.t_user SET name = '涛妹', password = '123456', gender = 1, created = '2017-11-01 17:35:00', birthday = '2017-10-31 00:00:00', phone = null, email = null, edition = 2 WHERE id = 9;
+UPDATE mobilee.t_user SET name = '小漠', password = '123456', gender = 1, created = '2017-11-02 21:58:00', birthday = '2017-11-02 00:00:00', phone = null, email = null, edition = 1 WHERE id = 10;
+UPDATE mobilee.t_user SET name = '阿卡林', password = '123456', gender = 1, created = '2017-11-02 21:59:24', birthday = '2017-11-02 21:59:24', phone = null, email = null, edition = 0 WHERE id = 12;

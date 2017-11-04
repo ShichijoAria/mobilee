@@ -1,0 +1,1 @@
+UPDATE mobilee.t_comment SET content = '垃圾手机', created = '2017-11-04 19:18:46', author = 1, mobile_phone = 1, storey = 0 WHERE id = 1;
