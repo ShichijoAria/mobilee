@@ -137,9 +137,9 @@ public class AdminController {
         Map dataMap = new HashMap<String, Object>();
         String msg="非法的数据";
         if(id==(long)session.getAttribute("USER_ID")&&adminService.updateAdminById(adminEntity)>0)
-            session.setAttribute("USER_NAME", adminEntity.getName());
-            session.setAttribute("USER_PASSWORD", adminEntity.getPassword());
-        msg="success";
+            msg="success";
+        else
+            msg="保存失败";
         dataMap.put("msg",msg);
         return dataMap;
     }

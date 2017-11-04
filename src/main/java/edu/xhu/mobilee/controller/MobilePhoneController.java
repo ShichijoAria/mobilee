@@ -102,8 +102,10 @@ public class MobilePhoneController {
                     @RequestParam(value = "id") long id, @RequestParam(value = "edition") long edition){
         Map dataMap = new HashMap<String, Object>();
         String msg="非法的数据";
-        if(mobilePhoneService.updateMobilePhoneById(mobilePhoneEntity)>0);
+        if(mobilePhoneService.updateMobilePhoneById(mobilePhoneEntity)>0)
             msg="success";
+        else
+            msg="保存失败";
         dataMap.put("msg",msg);
         return dataMap;
     }

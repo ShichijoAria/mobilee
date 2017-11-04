@@ -104,8 +104,10 @@ public class UserController {
     public Map save(UserEntity userEntity,@RequestParam("id") long id,@RequestParam("edition") long edition){
         Map dataMap = new HashMap<String, Object>();
         String msg="非法的数据";
-        if(userService.updateUserById(userEntity)>0);
+        if(userService.updateUserById(userEntity)>0)
             msg="success";
+        else
+            msg="保存失败";
         dataMap.put("msg",msg);
         return dataMap;
     }

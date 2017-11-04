@@ -96,8 +96,10 @@ public class SaleController {
                     @RequestParam(value = "id") long id, @RequestParam(value = "edition") long edition){
         Map dataMap = new HashMap<String, Object>();
         String msg="非法的数据";
-        saleService.updateSaleById(saleEntity);
-        msg="success";
+        if(saleService.updateSaleById(saleEntity)>0)
+            msg="success";
+        else
+            msg="保存失败";
         dataMap.put("msg",msg);
         return dataMap;
     }
