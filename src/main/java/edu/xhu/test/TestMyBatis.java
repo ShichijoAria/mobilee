@@ -4,9 +4,12 @@ import javax.annotation.Resource;
 
 import com.alibaba.fastjson.JSON;
 import edu.xhu.mobilee.dao.*;
+import edu.xhu.mobilee.entity.AdminEntity;
 import edu.xhu.mobilee.entity.CollectionEntity;
 import edu.xhu.mobilee.entity.ManufacturerEntity;
+import edu.xhu.mobilee.entity.MobilePhoneEntity;
 import edu.xhu.mobilee.service.CollectionService;
+import edu.xhu.mobilee.service.MobilePhoneService;
 import org.apache.log4j.Logger;
 import org.junit.Test;  
 import org.junit.runner.RunWith;
@@ -34,6 +37,8 @@ public class TestMyBatis {
     private CollectionDao collectionDao;
     @Resource
     private CollectionService collectionService;
+    @Resource
+    private MobilePhoneService mobilePhoneService;
 
 //  @Before  
 //  public void before() {  
@@ -84,6 +89,18 @@ public class TestMyBatis {
     public void test6(){
         CollectionEntity collectionEntity=collectionService.findCollectionById(1);
         System.out.println(collectionEntity);
+    }
+
+    @Test
+    public void test7(){
+        MobilePhoneEntity mobilePhoneEntity=new MobilePhoneEntity();
+        AdminEntity adminEntity=new AdminEntity();
+        adminEntity.setId(1);
+        ManufacturerEntity manufacturerEntity=new ManufacturerEntity();
+        manufacturerEntity.setId(1);
+        mobilePhoneEntity.setAuthor(adminEntity);
+        mobilePhoneEntity.setManufacturer(manufacturerEntity);
+        System.out.println(mobilePhoneService.insertMobilePhone(mobilePhoneEntity));
     }
 
 }  

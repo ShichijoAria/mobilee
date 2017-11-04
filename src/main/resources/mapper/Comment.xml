@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.xhu.mobilee.dao.CommentDao">
+
+    <select id="findCommentById" parameterType="long" resultMap="commentResult">
+      SELECT com.id com_id,com.content com_content,com.created com_created,com.storey com_storey,u.name u_name,mo.name mo_name
+      FROM t_mobile_phone mo,t_comment com,t_user u
+        WHERE com.author=u.id AND com.mobile_phone=mo.id AND com.id=#{id}
+    </select>
+
+    <delete id="deleteComment" parameterType="list">
+        DELETE FROM t_comment WHERE id IN
+        <foreach collection="list" item="ids"  open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <select id="insertComment" parameterType="CommentEntity" resultType="long">
+        <![CDATA[
+            {
+            call p_insert_comment(#{content},#{mobilePhone.id},#{author.id})
+            }
+        ]]>
+    </select>
+
+    <resultMap type="CommentEntity" id="commentResult">
+        <id property="id" column="com_id" />
+        <result property="content" column="com_content" />
+        <result property="created" column="com_created" />
+        <result property="storey" column="com_storey" />
+        <association property="mobilePhone" resultMap="mobilePhoneResult"/>
+        <association property="author" resultMap="userResult"/>
+    </resultMap>
+
+    <resultMap type="UserEntity" id="userResult">
+        <id property="id" column="u_id" />
+        <result property="name" column="u_name" />
+    </resultMap>
+
+    <resultMap type="MobilePhoneEntity" id="mobilePhoneResult">
+        <id property="id" column="mo_id" />
+        <result property="name" column="mo_name" />
+    </resultMap>
+
+</mapper>

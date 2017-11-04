@@ -59,26 +59,12 @@
         </foreach>
     </delete>
 
-    <insert id="insertMobilePhone" parameterType="MobilePhoneEntity" keyProperty="id">
-        INSERT INTO t_mobile_phone (name,
-                                    cpu,
-                                    memory,
-                                    storage,
-                                    price,
-                                    created,
-                                    list_time,
-                                    size,width,
-                                    height,
-                                    pixel,
-                                    camera_pixel,
-                                    author,
-                                    manufacturer
-                                ) VALUES (#{name},
-                                    #{cpu},
+    <select id="insertMobilePhone" parameterType="MobilePhoneEntity" resultType="long">
+        <![CDATA[
+        {call p_insert_mobile_phone(#{name},#{cpu},
                                     #{memory},
                                     #{storage},
                                     #{price},
-                                    current_timestamp,
                                     #{listTime},#{size},
                                     #{width},
                                     #{height},
@@ -86,7 +72,9 @@
                                     #{cameraPixel},
                                     #{author.id},
                                     #{manufacturer.id})
-    </insert>
+        }
+        ]]>
+    </select>
 
     <resultMap type="MobilePhoneEntity" id="mobilePhoneResult">
         <id property="id" column="mo_id" />
