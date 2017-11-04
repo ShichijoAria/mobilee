@@ -1,7 +1,9 @@
 package edu.xhu.mobilee.controller;
 
+import com.alibaba.fastjson.JSON;
+import edu.xhu.mobilee.entity.AdminEntity;
 import edu.xhu.mobilee.entity.SellEntity;
-import edu.xhu.mobilee.entity.UserEntity;
+import edu.xhu.mobilee.service.OptionService;
 import edu.xhu.mobilee.service.ProcedureService;
 import edu.xhu.mobilee.service.SellService;
 import edu.xhu.mobilee.util.Proper;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.sql.Timestamp;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,10 +28,14 @@ public class SellController {
     private SellService sellService;
     @Autowired
     private ProcedureService procedureService;
+    @Autowired
+    private OptionService optionService;
 
     @RequestMapping(value = "view",method = RequestMethod.GET)
     public ModelAndView view(){
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("sale", JSON.toJSON(optionService.getSale()));
+        modelAndView.addObject("mobilePhone", JSON.toJSON(optionService.getMobilePhone()));
         modelAndView.setViewName("sell");
         return modelAndView;
     }
@@ -36,8 +44,8 @@ public class SellController {
     @ResponseBody
     public Map list(@RequestParam(value = "orderBy",required = false,defaultValue = "sell_id") String orderBy,
                     @RequestParam(value = "sequence",required = false) String sequence,
-                    @RequestParam(value = "priceStart",required = false)long priceStart,
-                    @RequestParam(value = "priceEnd",required = false)long priceEnd,
+                    @RequestParam(value = "priceStart",required = false,defaultValue = "0")long priceStart,
+                    @RequestParam(value = "priceEnd",required = false,defaultValue = "0")long priceEnd,
                     @RequestParam(value = "page",required = false) long pageIndex, SellEntity sellEntity) {
         Map<String, Object> paramMap=new HashMap<String,Object>();
         Map dataMap = new HashMap<String, Object>();
@@ -54,7 +62,7 @@ public class SellController {
                 "mobile_phone.name mobile_phone_name," +
                 "sale.name sale_name," +
                 "admin.name admin_name ");
-        where+="sell.mobile_phone=mobile_phone.id and sell.author=admin.id and sell.sale=sale.id";
+        where+="sell.mobile_phone=mobile_phone.id and sell.author=admin.id and sell.sale=sale.id ";
         if(priceStart>0)
             where += "and sell.price >= "+priceStart+" ";
         if(priceEnd>0)
@@ -105,6 +113,36 @@ public class SellController {
             msg="success";
         else
             msg="保存失败或无信息更新";
+        dataMap.put("msg",msg);
+        return dataMap;
+    }
+
+    @RequestMapping(value = "delete",method = RequestMethod.POST)
+    @ResponseBody
+    public Map delete(@RequestParam(value = "deleteArr") String arr){
+        String []list=arr.split(",");
+        ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(list));
+        Map dataMap = new HashMap<String, Object>();
+        String msg="success";
+        dataMap.put("msg",msg);
+        sellService.deleteSell(arrayList);
+        return dataMap;
+    }
+
+    @RequestMapping(value = "add",method = RequestMethod.POST)
+    @ResponseBody
+    public Map add(SellEntity sellEntity, HttpSession session){
+        Map dataMap = new HashMap<String, Object>();
+        String msg="非法的数据";
+        if(sellEntity !=null) {
+            AdminEntity adminEntity=new AdminEntity();
+            adminEntity.setId((long)session.getAttribute("USER_ID"));
+            sellEntity.setAuthor(adminEntity);
+            if (sellService.insertSell(sellEntity) > 0) {
+                dataMap.put("id",sellEntity.getId());
+                msg = "success";
+            }
+        }
         dataMap.put("msg",msg);
         return dataMap;
     }

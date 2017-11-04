@@ -25,7 +25,7 @@
             <form id="searchForm" class="ui grid stackable segment three column vertical container">
                 <div class="column">
                     <div class="ui black basic label">
-                        厂商编号
+                        销售编号
                     </div>
                     <div class="ui input">
                         <input type="number" name="id">
@@ -33,10 +33,18 @@
                 </div>
                 <div class="column">
                     <div class="ui black basic label">
-                        厂商名称
+                        卖家名称
                     </div>
                     <div class="ui input">
-                        <input type="text" name="name">
+                        <input type="text" name="sale.name">
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="ui black basic label">
+                        手机名称
+                    </div>
+                    <div class="ui input">
+                        <input type="text" name="mobilePhone.name">
                     </div>
                 </div>
                 <div class="column">
@@ -45,6 +53,22 @@
                     </div>
                     <div class="ui input">
                         <input type="text" name="author.name">
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="ui black basic label">
+                        销售价格
+                    </div>
+                    <div class="ui input">
+                        <input type="number" name="priceStart">
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="ui black basic label">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div class="ui input">
+                        <input type="number" name="priceEnd">
                     </div>
                 </div>
             </form>
@@ -57,9 +81,9 @@
 
     <div class="pusher" style="height: 100%">
         <h2 class="ui header">
-            <i class="cubes alternate icon"></i>
-            <div class="content">出品厂商</div>
-            <div class="sub header">Manufacturer</div>
+            <i class="shopping bag alternate icon"></i>
+            <div class="content">销售信息</div>
+            <div class="sub header">Sell Information</div>
         </h2>
         <div  id="menu">
             <div class="ui small menu">
@@ -87,9 +111,11 @@
                             <input type="checkbox" name="switch" id="checkAll"><label></label>
                         </div>
                     </th>
-                    <th id="manufacturer_id"/><i class="icon sort"></i>厂商编号</th>
-                    <th id="manufacturer_name"/><i class="icon sort"></i>厂商名称</th>
-                    <th id="manufacturer_author"/><i class="icon sort"></i>录入作者</th>
+                    <th id="sell_id"/><i class="icon sort"></i>销售编号</th>
+                    <th id="sale_name"/><i class="icon sort"></i>卖家名称</th>
+                    <th id="mobile_phone_name"/><i class="icon sort"></i>手机名称</th>
+                    <th id="admin_name"/><i class="icon sort"></i>录入作者</th>
+                    <th id="sell_price"/><i class="icon sort"></i>销售价格</th>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -112,23 +138,25 @@
     </div>
     <div class="image content">
         <form class="ui stackable  form three column grid" id="modal" style="width: 100%">
-            <div class="row">
-                <div class="field column">
-                    <label>头像</label>
-                    <img class="ui medium bordered  circular image" data-position="right center" data-title='点击更改图片' onerror="javascript:this.src='../upload/timg.jpg'" src="" id="myPicture" />
-                </div>
+            <div class="field column">
+                <label>销售编号</label>
+                <input type="number" readonly name="id">
             </div>
             <div class="field column">
-                <label>厂商编号</label>
-                <input type="number" name="id">
+                <label>手机名称</label>
+                <select class="ui search selection dropdown" name="mobilePhone.id">
+                    <option value="0">&nbsp;</option>
+                </select>
             </div>
             <div class="field column">
-                <label>厂商名称</label>
-                <input type="text" name="name">
+                <label>卖家名称</label>
+                <select class="ui search selection dropdown" name="sale.id">
+                    <option value="0">&nbsp;</option>
+                </select>
             </div>
             <div class="field column">
-                <label>厂商地址</label>
-                <input type="text" name="address">
+                <label>销售价格</label>
+                <input type="number" name="price">
             </div>
             <div class="field column">
                 <label>录入时间</label>
@@ -139,7 +167,6 @@
                 <input type="text" readonly name="author.name" readonly=>
             </div>
             <input type="text" style="display: none" name="edition">
-            <input type="file" id="file" name="headPortrait" style="display: none" onchange="myUpload()">
         </form>
     </div>
     <div class="actions">
@@ -161,12 +188,20 @@
     <div class="image content">
         <form class="ui stackable  form three column grid" id="newModal" style="width: 100%">
             <div class="field column">
-                <label>厂商名称</label>
-                <input  type="text" name="name" />
+                <label>手机名称</label>
+                <select class="ui search selection dropdown" name="mobilePhone.id">
+                    <option value="0">&nbsp;</option>
+                </select>
             </div>
             <div class="field column">
-                <label>厂商地址</label>
-                <input  type="text" name="address" />
+                <label>卖家名称</label>
+                <select class="ui search selection dropdown" name="sale.id">
+                    <option value="0">&nbsp;</option>
+                </select>
+            </div>
+            <div class="field column">
+                <label>销售价格</label>
+                <input type="number" name="price">
             </div>
         </form>
     </div>
@@ -209,7 +244,26 @@
     //排序字段
     var orderBy=null;
 
-    var viewName='manufacturer';
+    var sale=${requestScope.sale};
+    var mobilePhone=${requestScope.mobilePhone};
+
+    $("select[name='mobilePhone.id']").append(function () {
+        var optionsHtml="";
+        for(var i in mobilePhone){
+            optionsHtml+="<option value='"+mobilePhone[i].key+"'>"+mobilePhone[i].value+"</option>"
+        }
+        return optionsHtml;
+    })
+
+    $("select[name='sale.id']").append(function () {
+        var optionsHtml="";
+        for(var i in sale){
+            optionsHtml+="<option value='"+sale[i].key+"'>"+sale[i].value+"</option>"
+        }
+        return optionsHtml;
+    })
+
+    var viewName='sell';
     //table head初始化
     var arr=[];
     for(var i=1;i<$('th').length;i++){
@@ -373,10 +427,10 @@
         var list=data.list;
         var html='';
         for(var i in list) {
-            var head = "<tr id='" +list[i].manufacturer_id+"' class='center aligned'>\n" +
+            var head = "<tr id='" +list[i].sell_id+"' class='center aligned'>\n" +
                 "    <td>\n" +
                 "    <div class='ui checkbox'>\n" +
-                "    <input type='checkbox' name='item' value='"+list[i].manufacturer_id+"'><label></label>\n" +
+                "    <input type='checkbox' name='item' value='"+list[i].sell_id+"'><label></label>\n" +
                 "    </div>\n" +
                 "    </td>";
             var body="";

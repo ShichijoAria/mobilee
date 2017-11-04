@@ -13,8 +13,12 @@
         SELECT id,name FROM t_manufacturer
     </select>
 
-    <select id="getUser" resultMap="option">
-        SELECT id,name FROM t_user
+    <select id="getSale" resultMap="option">
+        SELECT id,name FROM t_sale
+    </select>
+
+    <select id="getMobilePhone" resultMap="option">
+        SELECT id,name FROM t_mobile_phone
     </select>
 
     <select id="getAdmin" resultMap="option">

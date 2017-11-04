@@ -9,6 +9,7 @@ public class SellEntity {
     private AdminEntity author;
     private MobilePhoneEntity mobilePhone;
     private SaleEntity sale;
+    private int edition;
 
     public long getId() {
         return id;
@@ -56,5 +57,13 @@ public class SellEntity {
 
     public void setSale(SaleEntity sale) {
         this.sale = sale;
+    }
+
+    public int getEdition() {
+        return edition;
+    }
+
+    public void setEdition(int edition) {
+        this.edition = edition;
     }
 }
