@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: shichijoaria
-  Date: 17-11-1
-  Time: 下午1:04
+  Date: 17-11-4
+  Time: 下午8:24
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -25,7 +25,7 @@
             <form id="searchForm" class="ui grid stackable segment three column vertical container">
                 <div class="column">
                     <div class="ui black basic label">
-                        用户编号
+                        操作编号
                     </div>
                     <div class="ui input">
                         <input type="number" name="id">
@@ -33,38 +33,28 @@
                 </div>
                 <div class="column">
                     <div class="ui black basic label">
-                        用户姓名
+                        管理员姓名
                     </div>
                     <div class="ui input">
-                        <input type="text" name="name">
+                        <input type="text" name="admin.name">
                     </div>
                 </div>
-                <div class="column">
-                    <div class="ui black basic label">
-                            用户性别
+                <div class="row">
+                    <div class="column">
+                        <div class="ui black basic label">
+                            入站时间
+                        </div>
+                        <div class="ui input">
+                            <input type="text" datetime="true" name="createdStart">
+                        </div>
                     </div>
-                    <div class="ui input">
-                        <select class="ui dropdown" name="gender">
-                            <option value="0">&nbsp;</option>
-                            <option value="1">男</option>
-                            <option value="2">女</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="ui black basic label">
-                        入站时间
-                    </div>
-                    <div class="ui input">
-                        <input type="text" readonly datetime="true" name="createdStart">
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="ui black basic label">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </div>
-                    <div class="ui input">
-                        <input type="text" readonly datetime="true" name="createdEnd">
+                    <div class="column">
+                        <div class="ui black basic label">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="ui input">
+                            <input type="text" datetime="true" name="createdEnd">
+                        </div>
                     </div>
                 </div>
             </form>
@@ -77,17 +67,12 @@
 
     <div class="pusher" style="height: 100%">
         <h2 class="ui header">
-            <i class="user alternate icon"></i>
-            <div class="content">网站用户</div>
-            <div class="sub header">Web User</div>
+            <i class="spy alternate icon"></i>
+            <div class="content">收藏信息</div>
+            <div class="sub header">Comment Management</div>
         </h2>
         <div  id="menu">
             <div class="ui small menu">
-                <div class="left menu">
-                    <div class="item">
-                        <div class="ui red button" id="delete">删除</div>
-                    </div>
-                </div>
                 <div class="right menu">
                     <div class="item">
                         <div id="search" class="ui teal icon button">
@@ -100,17 +85,16 @@
         <div class="ui loading segment"  id="segment">
             <table class="very selectable small celled large unstackable compact ui single line table">
                 <thead>
-                    <tr class="center aligned">
-                        <th class="one wide">
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="switch" id="checkAll"><label></label>
-                            </div>
-                        </th>
-                        <th id="user_id"/><i class="icon sort"></i>用户编号</th>
-                        <th id="user_name"/><i class="icon sort"></i>用户姓名</th>
-                        <th id="user_gender"/><i class="icon sort"></i>用户性别</th>
-                        <th id="user_created"/><i class="icon sort"></i>入站时间</th>
-                    </tr>
+                <tr class="center aligned">
+                    <th class="one wide">
+                        <div class="ui checkbox">
+                            <input type="checkbox" name="switch" id="checkAll"><label></label>
+                        </div>
+                    </th>
+                    <th id="operate_id"/><i class="icon sort"></i>收藏编号</th>
+                    <th id="admin_name"/><i class="icon sort"></i>用户姓名</th>
+                    <th id="operate_created"/><i class="icon sort"></i>操作时间</th>
+                </tr>
                 </thead>
                 <tbody></tbody>
             </table>
@@ -118,7 +102,7 @@
         <div  id="foot" style="text-align: center">
             <div class="ui compact pagination menu" id="pagination">
                 <div class='disabled item'>
-                ...
+                    ...
                 </div>
             </div>
         </div>
@@ -132,60 +116,39 @@
     </div>
     <div class="image content">
         <form class="ui stackable  form three column grid" id="modal" style="width: 100%">
-            <div class="row">
-                <div class="field column">
-                    <label>用户头像</label>
-                    <img class="ui medium bordered  circular image" data-position="right center" data-title='点击更改图片' onerror="javascript:this.src='../upload/timg.jpg'" src="" id="myPicture" />
-                </div>
-            </div>
             <div class="field column">
-                <label>用户编号</label>
+                <label>操作编号</label>
                 <input type="number" name="id">
             </div>
             <div class="field column">
                 <label>用户姓名</label>
-                <input type="text" name="name">
+                <input type="text" readonly name="author.name">
             </div>
             <div class="field column">
-                <label>用户密码</label>
-                <input type="password" name="password">
+                <label>手机名称</label>
+                <input type="text" readonly name="mobilePhone.name">
             </div>
             <div class="field column">
-                <label>用户性别</label>
-                <select  class="ui dropdown" name="gender">
-                    <option value="">&nbsp;</option>
-                    <option value="1">男</option>
-                    <option value="2">女</option>
-                </select>
-            </div>
-            <div class="field column">
-                <label>入站时间</label>
+                <label>评论时间</label>
                 <input type="text" datetime="false" readonly name="created">
             </div>
             <div class="field column">
-                <label>出生日期</label>
-                <input type="text" date="false" readonly name="birthday">
+                <label>评论楼层</label>
+                <input type="text"readonly name="storey">
             </div>
-            <div class="field column">
-                <label>手机号码</label>
-                <input type="text" readonly name="phone">
-            </div>
-            <div class="field column">
-                <label>电子邮箱</label>
-                <input type="email" readonly name="email">
+            <div class="row">
+                <div class="field column">
+                    <label>备注</label>
+                    <textarea class="myTextarea" rows="3" readonly name="remark"></textarea>
+                </div>
             </div>
             <input type="text" style="display: none" name="edition">
-            <input type="file" id="file" name="headPortrait" style="display: none" onchange="myUpload()">
         </form>
     </div>
     <div class="actions">
         <div class="ui black deny button">
             关闭
-        </div><c:if test="${requestScope.fields.update=='true'}">
-        <div class="ui positive right labeled icon button" id="saveEntity">
-            保存
-            <i class="checkmark icon"></i>
-        </div></c:if>
+        </div>
     </div>
 </div>
 
@@ -217,7 +180,7 @@
     //排序字段
     var orderBy="";
 
-    var viewName='user';
+    var viewName='operate';
     //table head初始化
     var arr=[];
     for(var i=1;i<$('th').length;i++){
@@ -251,6 +214,10 @@
         }
     });
 
+    $('#myPicture').click(function () {
+        document.getElementById('file').click();
+    })
+
     $('#lookFor').click(function () {
         orderBy="";
         sequence="";
@@ -266,23 +233,19 @@
     $('#saveEntity').click(function () {
         $('#modal').addClass('loading');
         $.post("/mobilee/"+viewName+"/save?"+serializeNotNull($('#modal').serialize()),
-        function (data, status) {
-            if (status != "success") {
-                showToast("<i class='warning icon'></i>连接服务器失败！");
-            }else {
-                if(data.msg=="success"){
-                    showToast("<i class='archive icon'></i>保存成功");
-                    getInfoList(viewName, arr, currentPage,true,orderBy,sequence);
+            function (data, status) {
+                if (status != "success") {
+                    showToast("<i class='warning icon'></i>连接服务器失败！");
                 }else {
-                    showToast("<i class='remove circle outline icon'></i>"+data.msg);
+                    if(data.msg=="success"){
+                        showToast("<i class='archive icon'></i>保存成功");
+                        getInfoList(viewName, arr, currentPage,true,orderBy,sequence);
+                    }else {
+                        showToast("<i class='remove circle outline icon'></i>"+data.msg);
+                    }
                 }
-            }
-        });
+            });
     });
-
-    $('#myPicture').click(function () {
-        document.getElementById('file').click();
-    })
 
     $('#new').click(function () {
         $('.ui.myNew.modal').modal('show')
@@ -362,10 +325,10 @@
         var list=data.list;
         var html='';
         for(var i in list) {
-            var head = "<tr id='" +list[i].user_id+"' class='center aligned'>\n" +
+            var head = "<tr id='" +list[i].operate_id+"' class='center aligned'>\n" +
                 "    <td>\n" +
                 "    <div class='ui checkbox'>\n" +
-                "    <input type='checkbox' name='item' value='"+list[i].user_id+"'><label></label>\n" +
+                "    <input type='checkbox' name='item' value='"+list[i].operate_id+"'><label></label>\n" +
                 "    </div>\n" +
                 "    </td>";
             var body="";
@@ -414,48 +377,6 @@
             }
         });
     }
-
-    function getInfo(module,id) {
-        $('form').addClass('loading');
-        $.post("/mobilee/"+module+"/info?id="+id,
-            {
-
-            },
-            function (data, status) {
-                $('form').removeClass('loading');
-                if (status != "success") {
-                    //showError(["无法连接服务器"]);
-                }else {
-                    if(data.msg=="success"){
-                        var entity=data.entity;
-                        for(var i in entity){
-                            var choose="#modal input[name='"+i+"']";
-                            $(choose).val(entity[i]);
-                            if(entity[i]!=null&&typeof(entity[i])=="object")
-                                $(choose).val(entity[i].id);
-                            if($(choose).attr('date')=="false"||$(choose).attr('date')=="true")
-                                $(choose).val(new Date(entity[i]).format('yyyy/MM/dd'));
-                            if($(choose).attr('datetime')=="false"||$(choose).attr('datetime')=="true")
-                                $(choose).val(new Date(entity[i]).format('yyyy/MM/dd hh:mm'));
-                            var choose="select[name='"+i+"']";
-                            var opt="[data-value='"+entity[i]+"']";
-                            $(choose).parent().dropdown('set selected', entity[i])
-                        }
-                        $('#myPicture').attr('src',"../upload/"+module+"/"+entity.id+".jpg?"+Math.random())
-                        $('.ui.first.modal')
-                            .modal('show')
-                        ;
-                        $('.ui.medium.bordered.circular.image')
-                            .popup()
-                        ;
-                        changeSize();
-                    }else {
-
-                    }
-                }
-            });
-    }
-
 </script>
 </body>
 </html>

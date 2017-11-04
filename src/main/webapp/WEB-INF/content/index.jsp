@@ -110,7 +110,7 @@
                     <i class="dropdown icon"></i>
                 </a>
                 <div class="content">
-                    <p><a id="" class="child" href="javascript:void(0)">评论管理</a></p>
+                    <p><a id="operate" class="child" href="javascript:void(0)">评论管理</a></p>
                 </div>
             </div>
         </div>
