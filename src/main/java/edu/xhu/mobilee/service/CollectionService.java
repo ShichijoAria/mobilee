@@ -1,8 +1,8 @@
-package edu.xhu.mobilee.dao;
+package edu.xhu.mobilee.service;
 
 import edu.xhu.mobilee.entity.CollectionEntity;
 
-public interface CollectionDao {
+public interface CollectionService {
 
     CollectionEntity findCollectionById(long id);
 

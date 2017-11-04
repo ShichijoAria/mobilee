@@ -91,6 +91,16 @@
                     <p><a id="sale" class="child" href="javascript:void(0)">手机卖家</a></p>
                 </div>
             </div>
+            <div class="item acc">
+                <a class="title" style="color:#AEB7C2;">
+                    <i class="icon newspaper"></i>
+                    统计信息
+                    <i class="dropdown icon"></i>
+                </a>
+                <div class="content">
+                    <p><a id="collection" class="child" href="javascript:void(0)">收藏信息</a></p>
+                </div>
+            </div>
         </div>
         <div class="pusher" style="height: 100%">
             <div class="ui segment" style="height: 100%">

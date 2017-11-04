@@ -35,22 +35,24 @@ function getInfo(module,id) {
             }else {
                 if(data.msg=="success"){
                     var entity=data.entity;
-                    for(var i in entity){
-                        jsonToForm(i,entity[i])
-                        if(entity[i]!=null&&typeof(entity[i])=="object") {
-                            for(var j in entity[i]) {
-                                jsonToForm(i+'.'+j,entity[i][j])
+                    if(entity!=null) {
+                        for (var i in entity) {
+                            jsonToForm(i, entity[i])
+                            if (entity[i] != null && typeof(entity[i]) == "object") {
+                                for (var j in entity[i]) {
+                                    jsonToForm(i + '.' + j, entity[i][j])
+                                }
                             }
                         }
+                        $('#myPicture').attr('src', "../upload/" + module + "/" + entity.id + ".jpg?" + Math.random())
+                        $('.ui.first.modal')
+                            .modal('show')
+                        ;
+                        $('.ui.medium.bordered.circular.image')
+                            .popup()
+                        ;
+                        changeSize();
                     }
-                    $('#myPicture').attr('src',"../upload/"+module+"/"+entity.id+".jpg?"+Math.random())
-                    $('.ui.first.modal')
-                        .modal('show')
-                    ;
-                    $('.ui.medium.bordered.circular.image')
-                        .popup()
-                    ;
-                    changeSize();
                 }else {
 
                 }

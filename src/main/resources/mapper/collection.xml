@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.xhu.mobilee.dao.CollectionDao">
+
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <select id="findCollectionById" parameterType="long" resultMap="collectionResult">
+        <!-- 具体的sql -->
+        SELECT c.id c_id,mo.name mo_name,u.name u_name,c.created c_created FROM t_collection c JOIN t_mobile_phone mo ON mo.id=c.mobile_phone JOIN t_user u ON u.id=c.user
+        WHERE c.id = #{id} AND c.user=u.id AND mo.id=c.mobile_phone
+    </select>
+
+    <resultMap type="CollectionEntity" id="collectionResult">
+        <id property="id" column="c_id" />
+        <result property="created" column="c_created" />
+        <association property="mobilePhone" resultMap="mobilePhoneResult"/>
+        <association property="user" resultMap="userResult"/>
+    </resultMap>
+
+    <resultMap id="userResult" type="UserEntity">
+        <id property="id" column="u_id" />
+        <result property="name" column="u_name" />
+    </resultMap>
+
+    <resultMap id="mobilePhoneResult" type="MobilePhoneEntity">
+        <id property="id" column="mo_id" />
+        <result property="name" column="mo_name" />
+    </resultMap>
+
+</mapper>

@@ -1,10 +1,12 @@
 package edu.xhu.mobilee.entity;
 
-//收藏
+import java.sql.Timestamp;
+
 public class CollectionEntity {
     private long id;
-    private ManufacturerEntity manufacturerEntity;
-    private UserEntity userEntity;
+    private MobilePhoneEntity mobilePhone;
+    private UserEntity user;
+    private Timestamp created;
 
     public long getId() {
         return id;
@@ -14,19 +16,27 @@ public class CollectionEntity {
         this.id = id;
     }
 
-    public ManufacturerEntity getManufacturerEntity() {
-        return manufacturerEntity;
+    public MobilePhoneEntity getMobilePhone() {
+        return mobilePhone;
     }
 
-    public void setManufacturerEntity(ManufacturerEntity manufacturerEntity) {
-        this.manufacturerEntity = manufacturerEntity;
+    public void setMobilePhone(MobilePhoneEntity mobilePhone) {
+        this.mobilePhone = mobilePhone;
     }
 
-    public UserEntity getUserEntity() {
-        return userEntity;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public Timestamp getCreated() {
+        return created;
+    }
+
+    public void setCreated(Timestamp created) {
+        this.created = created;
     }
 }

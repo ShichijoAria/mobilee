@@ -3,11 +3,10 @@ package edu.xhu.test;
 import javax.annotation.Resource;
 
 import com.alibaba.fastjson.JSON;
-import edu.xhu.mobilee.dao.ManufacturerDao;
-import edu.xhu.mobilee.dao.OptionDao;
-import edu.xhu.mobilee.dao.ProcedureDao;
-import edu.xhu.mobilee.dao.UserDao;
+import edu.xhu.mobilee.dao.*;
+import edu.xhu.mobilee.entity.CollectionEntity;
 import edu.xhu.mobilee.entity.ManufacturerEntity;
+import edu.xhu.mobilee.service.CollectionService;
 import org.apache.log4j.Logger;
 import org.junit.Test;  
 import org.junit.runner.RunWith;
@@ -31,6 +30,10 @@ public class TestMyBatis {
     private ManufacturerDao manufacturerDao = null;
     @Resource
     private OptionDao optionDao;
+    @Resource
+    private CollectionDao collectionDao;
+    @Resource
+    private CollectionService collectionService;
 
 //  @Before  
 //  public void before() {  
@@ -57,7 +60,7 @@ public class TestMyBatis {
     @Test
     public void test2(){
         ManufacturerEntity manufacturerEntity=manufacturerDao.findManufacturerById(1);
-        System.out.println(1);
+        System.out.println(manufacturerEntity);
     }
 
     @Test
@@ -70,6 +73,17 @@ public class TestMyBatis {
     @Test
     public void test4(){
         System.out.println(JSON.toJSON(optionDao.getManufacturer()));
+    }
+
+    @Test
+    public void test5(){
+        System.out.println(collectionDao.findCollectionById(1));
+    }
+
+    @Test
+    public void test6(){
+        CollectionEntity collectionEntity=collectionService.findCollectionById(1);
+        System.out.println(collectionEntity);
     }
 
 }  
