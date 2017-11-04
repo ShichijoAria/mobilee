@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -101,6 +102,12 @@ public class TestMyBatis {
         mobilePhoneEntity.setAuthor(adminEntity);
         mobilePhoneEntity.setManufacturer(manufacturerEntity);
         System.out.println(mobilePhoneService.insertMobilePhone(mobilePhoneEntity));
+    }
+
+    @Test
+    public void test8(){
+        List list= mobilePhoneService.selectMobile();
+        System.out.println(1);
     }
 
 }  

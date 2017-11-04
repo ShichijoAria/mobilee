@@ -4,6 +4,13 @@
 
 <mapper namespace="edu.xhu.mobilee.dao.MobilePhoneDao">
 
+    <select id="selectMobile" resultType="HashMap">
+        SELECT mo.id,mo.name,mo.price,
+            (SELECT count(*) FROM t_comment com WHERE com.mobile_phone=mo.id) comment,
+            (SELECT count(*) FROM t_collection col WHERE col.mobile_phone=mo.id) collection
+        FROM t_mobile_phone mo;
+    </select>
+
     <select id="findMobilePhoneById" parameterType="long" resultMap="mobilePhoneResult">
         SELECT
         mo.id  AS mo_id,

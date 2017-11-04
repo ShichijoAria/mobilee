@@ -33,4 +33,9 @@ public class MobilePhoneServiceImpl implements MobilePhoneService{
     public long insertMobilePhone(MobilePhoneEntity mobilePhoneEntity) {
         return mobilePhoneDao.insertMobilePhone(mobilePhoneEntity);
     }
+
+    @Override
+    public List<Object> selectMobile() {
+        return mobilePhoneDao.selectMobile();
+    }
 }

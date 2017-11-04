@@ -1,1 +1,0 @@
-UPDATE mobilee.t_sell SET price = 0, mobile_phone = 1, sale = 1, author = 1, created = '2017-11-04 14:55:33', edtion = 0 WHERE id = 1;

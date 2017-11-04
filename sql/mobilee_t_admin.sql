@@ -1,1 +1,0 @@
-UPDATE mobilee.t_admin SET name = '龙傲天', password = '123456' WHERE id = 1;

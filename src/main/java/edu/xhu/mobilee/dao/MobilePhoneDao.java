@@ -14,4 +14,6 @@ public interface MobilePhoneDao {
 
     long insertMobilePhone(MobilePhoneEntity mobilePhoneEntity);
 
+    List<Object> selectMobile();
+
 }
