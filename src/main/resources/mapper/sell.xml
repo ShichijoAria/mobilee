@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.xhu.mobilee.dao.SellDao">
+
+    <select id="findSellById" resultMap="sellResult">
+        SELECT se.id se_id,se.price se_price,se.created se_created, mo.id mo_id,sa.id sa_id,a.id a_id
+        FROM t_sell se, t_mobile_phone mo,t_sale sa,t_admin a
+        WHERE mo.id=se.mobile_phone AND a.id=se.author AND sa.id=se.sale AND se.id=#{id}
+    </select>
+
+    <update id="updateSellById" parameterType="SellEntity">
+        UPDATE t_sell
+        <set>
+            <if test="price != null">price=#{price},</if>
+            <if test="mobilePhone != null">
+                <if test="mobilePhone.id != null">mobile_phone=#{mobilePhone.id},</if>
+            </if>
+            <if test="sale != null">
+                <if test="sale.id != null">sale=#{sale.id},</if>
+            </if>
+        </set>
+    </update>
+
+    <delete id="deleteSell" parameterType="list">
+        DELETE FROM t_sell WHERE id IN
+        <foreach collection="list" item="ids"  open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <insert id="insertSell" parameterType="SellEntity" keyProperty="id">
+        INSERT INTO t_sell (price, mobile_phone, sale, author)
+        VALUES (#{price},#{mobilePhone.id},#{sale.id},#{author.id})
+    </insert>
+
+    <resultMap type="SellEntity" id="sellResult">
+        <id property="id" column="se_id" />
+        <result property="price" column="se_price" />
+        <result property="created" column="se_created" />
+        <association property="mobilePhone" resultMap="mobilePhoneResult"/>
+        <association property="sale" resultMap="saleResult"/>
+        <association property="author" resultMap="adminResult"/>
+    </resultMap>
+
+    <resultMap type="MobilePhoneEntity" id="mobilePhoneResult">
+        <id property="id" column="mo_id" />
+        <result property="name" column="mo_name" />
+    </resultMap>
+
+    <resultMap type="SaleEntity" id="saleResult">
+        <id property="id" column="sa_id" />
+        <result property="name" column="sa_name" />
+    </resultMap>
+
+    <resultMap type="AdminEntity" id="adminResult">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+    </resultMap>
+
+
+</mapper>

@@ -8,12 +8,17 @@
         <id property="key" column="id" />
         <result property="value" column="name" />
     </resultMap>
-    <!-- 目的：为dao接口方法提供sql语句配置 -->
+
     <select id="getManufacturer" resultMap="option">
-        <!-- 具体的sql -->
         SELECT id,name FROM t_manufacturer
     </select>
 
+    <select id="getUser" resultMap="option">
+        SELECT id,name FROM t_user
+    </select>
 
+    <select id="getAdmin" resultMap="option">
+        SELECT id,name FROM t_admin
+    </select>
 
 </mapper>

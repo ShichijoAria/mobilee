@@ -26,10 +26,8 @@ import java.util.Map;
 @RequestMapping("user")
 @Controller
 public class UserController {
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private ProcedureService procedureService;
 

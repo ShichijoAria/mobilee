@@ -94,11 +94,12 @@
             <div class="item acc">
                 <a class="title" style="color:#AEB7C2;">
                     <i class="icon newspaper"></i>
-                    统计信息
+                    关系管理
                     <i class="dropdown icon"></i>
                 </a>
                 <div class="content">
                     <p><a id="collection" class="child" href="javascript:void(0)">收藏信息</a></p>
+                    <p><a id="sell" class="child" href="javascript:void(0)">销售信息</a></p>
                 </div>
             </div>
         </div>
