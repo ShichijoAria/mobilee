@@ -9,6 +9,13 @@
         FROM t_operate o JOIN t_user u ON u.id=o.user JOIN t_admin a ON a.id=o.admin WHERE o.id=#{id}
     </select>
 
+    <insert id="insertOperate" parameterType="list">
+        INSERT INTO t_operate(admin, user) VALUES
+        <foreach collection="list" item="operate"  open="(" separator="," close=")">
+            #{operate.admin}
+        </foreach>
+    </insert>
+
     <resultMap id="operateResult" type="OperateEntity">
         <id property="id" column="o_id" />
         <result property="created" column="o_created" />
