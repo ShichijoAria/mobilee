@@ -79,11 +79,11 @@
                                     #{storage},
                                     #{price},
                                     current_timestamp,
-                                    #{list_time},#{size},
+                                    #{listTime},#{size},
                                     #{width},
                                     #{height},
                                     #{pixel},
-                                    #{camera_pixel},
+                                    #{cameraPixel},
                                     #{author.id},
                                     #{manufacturer.id})
     </insert>
