@@ -139,7 +139,7 @@ public class AdminController {
         if(id==(long)session.getAttribute("USER_ID")&&adminService.updateAdminById(adminEntity)>0)
             msg="success";
         else
-            msg="保存失败";
+            msg="保存失败或无信息更新";
         dataMap.put("msg",msg);
         return dataMap;
     }

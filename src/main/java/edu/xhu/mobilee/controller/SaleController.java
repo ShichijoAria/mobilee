@@ -99,7 +99,7 @@ public class SaleController {
         if(saleService.updateSaleById(saleEntity)>0)
             msg="success";
         else
-            msg="保存失败";
+            msg="保存失败或无信息更新";
         dataMap.put("msg",msg);
         return dataMap;
     }
