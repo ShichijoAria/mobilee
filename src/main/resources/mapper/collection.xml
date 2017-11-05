@@ -11,6 +11,14 @@
         WHERE c.id = #{id} AND c.user=u.id AND mo.id=c.mobile_phone
     </select>
 
+    <insert id="insertCollection" parameterType="CollectionEntity" keyProperty="long">
+        INSERT INTO t_collection(mobile_phone, user) VALUES (#{mobilePhone.id},#{user.id})
+    </insert>
+
+    <select id="isCollected" parameterType="CollectionEntity" resultType="long">
+        SELECT count(*) FROM t_collection WHERE mobile_phone=#{mobilePhone.id} AND user=#{user.id}
+    </select>
+
     <resultMap type="CollectionEntity" id="collectionResult">
         <id property="id" column="c_id" />
         <result property="created" column="c_created" />

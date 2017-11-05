@@ -16,4 +16,6 @@ public interface MobilePhoneDao {
 
     List<Object> selectMobile();
 
+    MobilePhoneEntity findMobilePhoneForTouristById(long id);
+
 }

@@ -27,7 +27,7 @@
 </head>
 <body>
 
-<div class="ui fixed inverted menu">
+<div class="ui fixed inverted  menu">
     <div class="ui container">
         <a href="#" class="header item">
             <i class="myLogo mobile icon"></i>
@@ -40,7 +40,18 @@
                 <i class="inverted circular search link icon"></i>
             </div>
         </div>
-    </div>
+    </div><c:if test="${sessionScope.TOURIST_ID==null}">
+    <a class="ui item right floated" href="<%=path%>/tourist/welcome">登录</a></c:if><c:if test="${sessionScope.TOURIST_ID!=null}">
+    <div class="menu right">
+        <div class="ui dropdown fluid item">
+            <img class="ui avatar image" src="<%=path%>/upload/admin/${sessionScope.TOURIST_ID}.jpg?a" onerror="javascript:this.src='<%=path%>/upload/timg.jpg'">
+            <span id="userName">${sessionScope.TOURIST_NAME}</span>
+            <div class="menu">
+                <a class="item" modal="personalInformation"><i class="icon setting"></i> 个人信息</a>
+                <a class="item" href="<%=path%>/tourist/loginOut"><i class="icon sign out"></i> 注销</a>
+            </div>
+        </div>
+    </div></c:if>
 </div>
 
 <div class="ui main container">
@@ -61,12 +72,13 @@
         <div class="sixteen wide column">
             <div class="ui raised segment four column grid"><c:forEach var="bean" items="${requestScope.mobilePhone}">
                 <div class="column">
-                    <div class="ui card">
+                    <div class="ui card" mobile_phone_id="${bean.id}">
                         <div class="image">
                             <img class="ui fluid image" src='<%=path%>/upload/mobilePhone/${bean.id}.jpg' onerror="javascript:this.src='<%=path%>/upload/mobilePhone/timg.jpg'">
                         </div>
                         <div class="ui floating red tag label">￥${bean.price}</div>
                         <div class="content">
+                            <div class="header" style="text-align: center">${bean.name}</div>
                             <span class="right floated">
                               <i class="heart outline like icon"></i>
                               ${bean.collection} 喜欢
@@ -132,8 +144,12 @@
 
     alterSize();
 
+    $('.ui.dropdown')
+        .dropdown()
+    ;/*下拉菜单初始化*/
+
     $('.ui.card').click(function () {
-        window.open("http://www.baidu.com");
+        window.open("<%=path%>/tourist/detail?id="+$(this).attr("mobile_phone_id"));
     })
     
     $('.item').hover(function () {

@@ -10,4 +10,5 @@ public interface CommentService {
     int deleteComment(List<String> id);
 
     long insertComment(CommentEntity commentEntity);
+
 }

@@ -6,4 +6,7 @@ public interface CollectionDao {
 
     CollectionEntity findCollectionById(long id);
 
+    long insertCollection(CollectionEntity collectionEntity);
+
+    long isCollected(CollectionEntity collectionEntity);
 }

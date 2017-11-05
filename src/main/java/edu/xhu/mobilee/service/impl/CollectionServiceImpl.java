@@ -15,4 +15,9 @@ public class CollectionServiceImpl implements CollectionService{
     public CollectionEntity findCollectionById(long id) {
         return collectionDao.findCollectionById(id);
     }
+
+    @Override
+    public long insertCollection(CollectionEntity collectionEntity) {
+        return collectionDao.insertCollection(collectionEntity);
+    }
 }

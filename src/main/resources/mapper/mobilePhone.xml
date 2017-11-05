@@ -11,6 +11,28 @@
         FROM t_mobile_phone mo;
     </select>
 
+    <select id="findMobilePhoneForTouristById" parameterType="long" resultMap="mobilePhoneResult">
+        SELECT
+            mo.id  AS mo_id,
+            mo.name  AS  mo_name,
+            mo.cpu AS mo_cpu,
+            mo.memory AS mo_memory,
+            mo.storage AS mo_storage,
+            mo.price AS mo_price,
+            mo.created AS mo_created,
+            mo.list_time AS mo_list_time,
+            mo.size AS mo_size,
+            mo.width AS mo_width,
+            mo.height AS mo_height,
+            mo.length AS mo_length,
+            mo.pixel AS mo_pixel,
+            mo.camera_pixel AS mo_camera_pixel,
+            mo.edition AS mo_edition,
+            ma.name AS ma_name
+        from t_mobile_phone mo JOIN t_manufacturer ma ON ma.id=mo.manufacturer
+        where mo.id = #{id}
+    </select>
+
     <select id="findMobilePhoneById" parameterType="long" resultMap="mobilePhoneResult">
         SELECT
         mo.id  AS mo_id,

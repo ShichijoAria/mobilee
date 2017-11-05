@@ -4,6 +4,10 @@
 
 <mapper namespace="edu.xhu.mobilee.dao.SaleDao">
 
+    <select id="selectSaleByMobilePhoneId" parameterType="long" resultType="HashMap">
+        SELECT sa.id,sa.name,sa.address,se.price FROM t_sale sa JOIN t_sell se ON se.sale=sa.id JOIN t_mobile_phone mo ON mo.id=se.mobile_phone AND mo.id=#{id} LIMIT 0,10;
+    </select>
+
     <select id="findSaleById" parameterType="long" resultMap="saleResult">
         SELECT
         s.id  AS s_id,

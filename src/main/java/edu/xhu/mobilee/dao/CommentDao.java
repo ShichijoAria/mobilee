@@ -10,4 +10,6 @@ public interface CommentDao {
     int deleteComment(List<String> id);
 
     long insertComment(CommentEntity commentEntity);
+
+    List<CommentEntity> selectCommentByMobilePhoneId(long id);
 }
