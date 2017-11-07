@@ -2,6 +2,7 @@ package edu.xhu.mobilee.dao;
 
 import edu.xhu.mobilee.entity.MobilePhoneEntity;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface MobilePhoneDao {
@@ -18,4 +19,5 @@ public interface MobilePhoneDao {
 
     MobilePhoneEntity findMobilePhoneForTouristById(long id);
 
+    List<HashMap> selectNewMobilePhone();
 }

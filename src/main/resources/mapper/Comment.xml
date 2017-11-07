@@ -5,9 +5,9 @@
 <mapper namespace="edu.xhu.mobilee.dao.CommentDao">
 
     <select id="selectCommentByMobilePhoneId" parameterType="long" resultType="HashMap">
-        SELECT com.storey com_storey,com.content com_content,u.name u_name,com.created,com.content
+        SELECT com.storey,com.content,u.name,com.created,com.content,u.id
         FROM t_comment com join t_user u ON com.author=u.id
-        WHERE com.mobile_phone=#{id} ORDER BY com_storey DESC
+        WHERE com.mobile_phone=#{id} ORDER BY storey DESC
     </select>
 
     <select id="findCommentById" parameterType="long" resultMap="commentResult">

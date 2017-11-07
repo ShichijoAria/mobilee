@@ -17,7 +17,7 @@ public class CollectionServiceImpl implements CollectionService{
     }
 
     @Override
-    public long insertCollection(CollectionEntity collectionEntity) {
-        return collectionDao.insertCollection(collectionEntity);
+    public long targetCollection(CollectionEntity collectionEntity) {
+        return collectionDao.targetCollection(collectionEntity);
     }
 }

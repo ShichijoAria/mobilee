@@ -106,8 +106,7 @@ public class TestMyBatis {
 
     @Test
     public void test8(){
-        List list= mobilePhoneService.selectMobile();
-        System.out.println(1);
+
     }
 
 }  

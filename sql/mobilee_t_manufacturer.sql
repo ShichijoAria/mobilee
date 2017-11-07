@@ -1,11 +1,11 @@
 CREATE TABLE mobilee.t_manufacturer
 (
-    id bigint(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    name varchar(18) DEFAULT '无名' NOT NULL,
-    address varchar(200),
-    author bigint(20) NOT NULL,
-    created timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    edition int(11) DEFAULT '0' NOT NULL,
+    id bigint(20) PRIMARY KEY NOT NULL COMMENT '主键' AUTO_INCREMENT,
+    name varchar(18) DEFAULT '无名' NOT NULL COMMENT '姓名',
+    address varchar(200) COMMENT '地址',
+    author bigint(20) NOT NULL COMMENT '作者',
+    created timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    edition int(11) DEFAULT '0' NOT NULL COMMENT '文档版本',
     CONSTRAINT t_manufacturer_t_admin_id_fk FOREIGN KEY (author) REFERENCES t_admin (id) ON UPDATE CASCADE
 );
 CREATE INDEX t_manufacturer_t_admin_id_fk ON mobilee.t_manufacturer (author);

@@ -43,4 +43,13 @@ public class TouristServiceImpl implements TouristService{
         map.put("sale",saleDao.selectSaleByMobilePhoneId(id));
         return map;
     }
+
+    @Transactional
+    @Override
+    public Map<String, Object> getMobilePhoneIndex() {
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("mobilePhone",mobilePhoneDao.selectMobile());
+        map.put("newMobilePhone",mobilePhoneDao.selectNewMobilePhone());
+        return map;
+    }
 }

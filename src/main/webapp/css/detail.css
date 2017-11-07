@@ -4,3 +4,10 @@ td.five.wide{
 div.row{
     margin-top: 15px;
 }
+.userName{
+    color: #6d757a;
+    font-weight: bolder;
+}
+.commentInfo{
+    color: #99a2aa;
+}

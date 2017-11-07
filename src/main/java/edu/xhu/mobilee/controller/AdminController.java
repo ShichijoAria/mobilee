@@ -73,6 +73,17 @@ public class AdminController {
         return dataMap;
     }
 
+    @RequestMapping("cancel")
+    @ResponseBody
+    public Map cancel(HttpSession session){
+        Map dataMap = new HashMap<String, Object>();
+        session.removeAttribute("USER_ID");
+        session.removeAttribute("USER_NAME");
+        session.removeAttribute("USER_PASSWORD");
+        dataMap.put("msg","success");
+        return dataMap;
+    }
+
     @RequestMapping(value = "index",method = RequestMethod.GET)
     public String index(){
         return "index";

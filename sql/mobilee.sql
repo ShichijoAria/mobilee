@@ -1,21 +1,22 @@
 create table t_admin
 (
-    id bigint auto_increment
+    id bigint auto_increment comment '主键'
         primary key,
-    name varchar(18) default '阿卡林' null,
-    password varchar(18) default '123456' null
+    name varchar(18) default '阿卡林' null comment '姓名',
+    password varchar(18) default '123456' null comment '密码'
 )
     comment '管理员'
 ;
 
 create table t_collection
 (
-    id bigint auto_increment
+    id bigint auto_increment comment '主键'
         primary key,
-    mobile_phone bigint not null,
-    user bigint not null,
-    created timestamp default CURRENT_TIMESTAMP not null
+    mobile_phone bigint not null comment '手机',
+    user bigint not null comment '用户',
+    created timestamp default CURRENT_TIMESTAMP not null comment '创建时间'
 )
+    comment '收藏'
 ;
 
 create index t_collection_t_mobile_phone_id_fk
@@ -28,14 +29,15 @@ create index t_collection_t_user_id_fk
 
 create table t_comment
 (
-    id bigint auto_increment
+    id bigint auto_increment comment '主键'
         primary key,
-    content varchar(200) default '' not null,
-    created timestamp default CURRENT_TIMESTAMP not null,
-    author bigint default '0' not null,
-    mobile_phone bigint default '0' not null,
-    storey int default '0' not null
+    content varchar(200) default '' not null comment '评论',
+    created timestamp default CURRENT_TIMESTAMP not null comment '创建时间',
+    author bigint default '0' not null comment '作者',
+    mobile_phone bigint default '0' not null comment '手机',
+    storey int default '0' not null comment '楼层'
 )
+    comment '评论'
 ;
 
 create index t_comment_t_mobile_phone_id_fk
@@ -48,13 +50,13 @@ create index t_comment_t_user_id_fk
 
 create table t_manufacturer
 (
-    id bigint auto_increment
+    id bigint auto_increment comment '主键'
         primary key,
-    name varchar(18) default '无名' not null,
-    address varchar(200) null,
-    author bigint not null,
-    created timestamp default CURRENT_TIMESTAMP not null,
-    edition int default '0' not null,
+    name varchar(18) default '无名' not null comment '姓名',
+    address varchar(200) null comment '地址',
+    author bigint not null comment '作者',
+    created timestamp default CURRENT_TIMESTAMP not null comment '创建时间',
+    edition int default '0' not null comment '文档版本',
     constraint t_manufacturer_t_admin_id_fk
     foreign key (author) references t_admin (id)
         on update cascade
@@ -68,24 +70,24 @@ create index t_manufacturer_t_admin_id_fk
 
 create table t_mobile_phone
 (
-    id bigint auto_increment
+    id bigint auto_increment comment '主键'
         primary key,
-    name varchar(18) default '山寨机' not null,
-    cpu varchar(18) default '未知型号' not null,
-    memory int default '0' not null,
-    storage int default '0' not null,
-    price float default '0' not null,
-    created timestamp default CURRENT_TIMESTAMP not null,
-    list_time timestamp default CURRENT_TIMESTAMP not null,
-    size float default '4' not null,
-    width float default '1' null,
-    pixel int default '0' null,
-    camera_pixel int default '0' null,
-    height float default '1' null,
-    author bigint not null,
-    manufacturer bigint not null,
-    length int default '0' not null,
-    edition int default '0' not null,
+    name varchar(18) default '山寨机' not null comment '姓名',
+    cpu varchar(18) default '未知型号' not null comment 'cpu型号',
+    memory int default '0' not null comment '运行内存',
+    storage int default '0' not null comment '存储空间',
+    price float default '0' not null comment '价格',
+    created timestamp default CURRENT_TIMESTAMP not null comment '创建时间',
+    list_time timestamp default CURRENT_TIMESTAMP not null comment '开售时间',
+    size float default '4' not null comment '屏幕尺寸',
+    width float default '1' null comment '手机宽度',
+    pixel int default '0' null comment '手机像素',
+    camera_pixel int default '0' null comment '相机像素',
+    height float default '1' null comment '手机高度',
+    author bigint not null comment '录入人',
+    manufacturer bigint not null comment '厂商',
+    length int default '0' not null comment '手机长度',
+    edition int default '0' not null comment '文档版本',
     constraint t_mobile_phone_t_admin_id_fk
     foreign key (author) references t_admin (id)
         on update cascade,
@@ -93,6 +95,7 @@ create table t_mobile_phone
     foreign key (manufacturer) references t_manufacturer (id)
         on update cascade
 )
+    comment '手机'
 ;
 
 create index t_mobile_phone_t_admin_id_fk
@@ -117,16 +120,17 @@ foreign key (mobile_phone) references t_mobile_phone (id)
 
 create table t_operate
 (
-    id bigint auto_increment
+    id bigint auto_increment comment '主键'
         primary key,
-    created timestamp default CURRENT_TIMESTAMP not null,
-    remark varchar(200) default '暂无详情' not null,
-    admin bigint not null,
-    user bigint not null,
+    created timestamp default CURRENT_TIMESTAMP not null comment '创建时间',
+    remark varchar(200) default '暂无详情' not null comment '备注',
+    admin bigint not null comment '管理员',
+    user bigint not null comment '用户',
     constraint t_operate_t_admin_id_fk
     foreign key (admin) references t_admin (id)
         on update cascade on delete cascade
 )
+    comment '操作记录'
 ;
 
 create index t_operate_t_admin_id_fk
@@ -139,17 +143,18 @@ create index t_operate_t_user_id_fk
 
 create table t_sale
 (
-    id bigint auto_increment
+    id bigint auto_increment comment '主键'
         primary key,
-    name varchar(18) default '无名' not null,
-    address varchar(200) null,
-    edition int default '0' not null,
-    created timestamp default CURRENT_TIMESTAMP not null,
-    author bigint not null,
+    name varchar(18) default '无名' not null comment '姓名',
+    address varchar(200) null comment '地址',
+    edition int default '0' not null comment '文档版本',
+    created timestamp default CURRENT_TIMESTAMP not null comment '创建时间',
+    author bigint not null comment '作者',
     constraint t_sale_t_admin_id_fk
     foreign key (author) references t_admin (id)
         on update cascade
 )
+    comment '商家'
 ;
 
 create index t_sale_t_admin_id_fk
@@ -158,14 +163,14 @@ create index t_sale_t_admin_id_fk
 
 create table t_sell
 (
-    id bigint auto_increment
+    id bigint auto_increment comment '主键'
         primary key,
-    price float default '0' not null,
-    mobile_phone bigint default '0' not null,
-    sale bigint default '0' not null,
-    author bigint default '0' not null,
-    created timestamp default CURRENT_TIMESTAMP null,
-    edtion int default '0' not null,
+    price float default '0' not null comment '销售价格',
+    mobile_phone bigint default '0' not null comment '手机',
+    sale bigint default '0' not null comment '商家',
+    author bigint default '0' not null comment '作者',
+    created timestamp default CURRENT_TIMESTAMP not null comment '创建时间',
+    edtion int default '0' not null comment '文档版本',
     constraint t_sell_t_mobile_phone_id_fk
     foreign key (mobile_phone) references t_mobile_phone (id)
         on update cascade on delete cascade,
@@ -176,6 +181,7 @@ create table t_sell
     foreign key (author) references t_admin (id)
         on update cascade on delete cascade
 )
+    comment '销售'
 ;
 
 create index t_sell_t_admin_id_fk
@@ -192,14 +198,15 @@ create index t_sell_t_sale_id_fk
 
 create table t_storey_count
 (
-    id bigint auto_increment
+    id bigint auto_increment comment '主键'
         primary key,
-    count int default '0' not null,
-    mobile_phone bigint not null,
+    count int default '0' not null comment '楼层数',
+    mobile_phone bigint not null comment '手机',
     constraint t_storey_count_t_mobile_phone_id_fk
     foreign key (mobile_phone) references t_mobile_phone (id)
         on update cascade on delete cascade
 )
+    comment '楼层记录'
 ;
 
 create index t_storey_count_t_mobile_phone_id_fk
@@ -208,17 +215,18 @@ create index t_storey_count_t_mobile_phone_id_fk
 
 create table t_user
 (
-    id bigint not null
+    id bigint not null comment '主键'
         primary key,
-    name varchar(18) default '阿卡林' not null,
-    password varchar(18) default '123456' not null,
+    name varchar(18) default '阿卡林' not null comment '姓名',
+    password varchar(18) default '123456' not null comment '密码',
     gender tinyint default '1' null comment '1男2女',
-    created timestamp default CURRENT_TIMESTAMP not null,
-    birthday timestamp default CURRENT_TIMESTAMP not null,
-    phone varchar(13) null,
-    email varchar(18) null,
-    edition int default '0' not null
+    created timestamp default CURRENT_TIMESTAMP not null comment '创建时间',
+    birthday timestamp default CURRENT_TIMESTAMP not null comment '生日',
+    phone varchar(13) null comment '手机',
+    email varchar(18) null comment '邮箱',
+    edition int default '0' not null comment '文档版本'
 )
+    comment '用户'
 ;
 
 alter table t_collection

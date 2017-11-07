@@ -105,15 +105,15 @@
             </div>
             <div class="field column">
                 <label>管理员编号</label>
-                <input type="number" name="id">
+                <input type="number" readonly name="id">
             </div>
             <div class="field column">
                 <label>管理员姓名</label>
-                <input type="text" name="name">
+                <input type="text" readonly name="name">
             </div>
             <div class="field column">
                 <label>管理元密码</label>
-                <input type="password" name="password">
+                <input type="password" readonly name="password">
             </div>
             <input type="text" style="display: none" name="edition">
             <input type="file" id="file" name="headPortrait" style="display: none" onchange="myUpload()">
@@ -122,11 +122,7 @@
     <div class="actions">
         <div class="ui black deny button">
             关闭
-        </div><c:if test="${requestScope.fields.update=='true'}">
-        <div class="ui positive right labeled icon button" id="saveEntity">
-            保存
-            <i class="checkmark icon"></i>
-        </div></c:if>
+        </div>
     </div>
 </div>
 

@@ -23,3 +23,14 @@ body {
 .ui.card:hover{
     cursor:pointer!important;
 }
+.personal{
+    font-size: 16px;
+}
+
+.ui.bordered.avatar.image{
+    border-radius: 5000rem!important;
+}
+
+.ui.centered.medium.image{
+    margin: 2rem 1rem 2rem 1rem;
+}

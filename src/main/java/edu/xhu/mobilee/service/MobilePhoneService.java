@@ -12,6 +12,4 @@ public interface MobilePhoneService {
     int deleteMobilePhone(List<String> id);
 
     long insertMobilePhone(MobilePhoneEntity mobilePhoneEntity);
-
-    List<Object> selectMobile();
 }

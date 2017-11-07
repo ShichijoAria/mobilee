@@ -24,7 +24,6 @@
 
     <!-- Site Properties -->
     <title>手百网</title>
-
     <script src="<%=path%>/dist/jquery.min.js"></script>
     <script src="<%=path%>/dist/semantic.min.js"></script>
     <script src="<%=path%>/js/active.js"></script>
@@ -43,7 +42,7 @@
             <i class="myLogo mobile icon"></i>
             手百网
         </a>
-        <a href="#" class="item">主页</a>
+        <a href="<%=path%>/tourist/index" class="item">主页</a>
         <div class="ui item right">
             <div class="ui icon input">
                 <input type="text" placeholder="搜索...">
@@ -143,27 +142,49 @@
                         <div class="row">
                             <h3 class="ui header">评论</h3>
                         </div>
-                        <div class="ui comments" style="width: 100%"><c:forEach items="${requestScope.detail.comment}" var="bean">
-                            <div class="comment">
-                                <a class="avatar">
-                                    <img src='<%=path%>/upload/mobilePhone/${bean.id}.jpg' onerror="javascript:this.src='<%=path%>/upload/user/timg.jpg'">
-                                </a>
-                                <div class="content">
-                                    <a class="author">${bean.name}</a>
-                                    <div class="metadata">
-                                        <div class="date">${bean.created}</div>
-                                    </div>
-                                    <div class="text">
-                                        ${bean.content}
-                                    </div>
+                        <div class="ui comments" style="width: 100%;"><c:forEach items="${requestScope.detail.comment}" var="bean">
+                            <div class="comment ui grid">
+                                <div class="user-face two wide column">
+                                    <a href="javascript:void(0);">
+                                        <img class="ui bordered avatar image" src='<%=path%>/upload/user/${bean.id}.jpg' onerror="javascript:this.src='<%=path%>/upload/user/timg.jpg'">
+                                    </a>
                                 </div>
-                            </div></c:forEach>
+                                <div class="con fourteen wide column">
+                                    <div class="user">
+                                        <a href="javascript:void(0);" class="userName">${bean.name}</a>
+                                        <a href="javascript:void(0);">
+                                            <i class="level l4"></i>
+                                        </a>
+                                    </div>
+                                    <p class="text">${bean.content}</p>
+                                    <div class="commentInfo ui grid">
+                                        <span class="floor two wide column">#${bean.storey}</span>
+                                        <span class="time six wide column">2017-09-11 22:14</span>
+                                        <span class="like one wide column">
+                                            <i class="icon thumbs outline up"></i>
+                                            <span></span>
+                                        </span>
+                                        <span class="hate one wide column">
+                                           <i class="icon thumbs outline down"></i>
+                                        </span>
+                                    </div>
+                                    <div class="reply-box">
+
+                                    </div>
+                                    <div class="paging-box">
+
+                                    </div>
+
+                                    <div class="ui divider"></div>
+                                </div>
+                            </div>
+                            </c:forEach>
                             <form id="comment" class="ui reply form">
                                 <div class="field">
-                                    <textarea name="content"></textarea>
+                                    <textarea name="content" <c:if test="${sessionScope.TOURIST_ID==null}"> readonly placeholder="请先登录才能进行评论。" </c:if>></textarea>
                                     <input name='mobilePhone.id' value="${requestScope.detail.mobilePhone.id}" style="display:none" />
                                 </div>
-                                <div class="ui primary labeled icon button" id="submit">
+                                <div class="ui primary<c:if test="${sessionScope.TOURIST_ID==null}"> disabled</c:if> labeled icon button" id="submit">
                                     <i class="icon edit"></i>评论
                                 </div>
                             </form>
@@ -183,10 +204,10 @@
                         <div class="row">
                             <div class="ui items"><c:forEach items="${requestScope.detail.sale}" var="bean">
                                 <div class="item">
-                                    <div class="ui tiny image">
-                                        <img class="ui large avatar image"  src="<%=path%>/upload/sale/${bean.id}.jpg" onerror="javascript:this.src='<%=path%>/upload/timg.jpg'">
+                                    <div class="ui mini image">
+                                        <img class="ui large avatar bordered image"  src="<%=path%>/upload/sale/${bean.id}.jpg" onerror="javascript:this.src='<%=path%>/upload/timg.jpg'">
                                     </div>
-                                    <div class="content">
+                                    <div class="content" style="width: 100%">
                                         <a class="header">${bean.name}</a>
                                         <div class="meta">
                                             <span style="color: red">￥${bean.price}</span></div>
@@ -198,8 +219,9 @@
                                             ${bean.address}
                                     </div>
                                 </div>
+                                <div class="ui divider"></div></c:forEach>
                             </div>
-                        </div></c:forEach>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -255,6 +277,8 @@
 </body>
 <script>
 
+    $('.ui.dropdown').dropdown()
+
     $('#submit').click(function(){
         $.post("<%=path%>/tourist/add?"+serializeNotNull($('#comment').serialize()),
             function (data, status) {
@@ -287,11 +311,12 @@
 
     alterSize();
 
-    window.onload=alterSize();
+    window.onresize=alterSize();
 
     function alterSize(){
         $('.ui.fluid.image').outerHeight(5/4*$('.ui.fluid.image').outerWidth());
-
+        $('.comment .ui.avatar.image').outerHeight($('.comment .ui.avatar.image').outerWidth());
+        $('.ui.mini.image .ui.avatar.image').outerHeight($('.ui.mini.image .ui.avatar.image').outerWidth());
     }
 </script>
 </html>

@@ -131,6 +131,10 @@
                 <input type="text" name="address">
             </div>
             <div class="field column">
+                <label>联系电话</label>
+                <input type="tel" name="phone">
+            </div>
+            <div class="field column">
                 <label>录入时间</label>
                 <input type="text" date="false" readonly name="created">
             </div>
@@ -167,6 +171,10 @@
             <div class="field column">
                 <label>卖家地址</label>
                 <input  type="text" name="address" />
+            </div>
+            <div class="field column">
+                <label>联系电话</label>
+                <input type="tel" name="phone">
             </div>
         </form>
     </div>

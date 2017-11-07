@@ -1,14 +1,14 @@
 CREATE TABLE mobilee.t_user
 (
-    id bigint(20) PRIMARY KEY NOT NULL,
-    name varchar(18) DEFAULT '阿卡林' NOT NULL,
-    password varchar(18) DEFAULT '123456' NOT NULL,
+    id bigint(20) PRIMARY KEY NOT NULL COMMENT '主键',
+    name varchar(18) DEFAULT '阿卡林' NOT NULL COMMENT '姓名',
+    password varchar(18) DEFAULT '123456' NOT NULL COMMENT '密码',
     gender tinyint(4) DEFAULT '1' COMMENT '1男2女',
-    created timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    birthday timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    phone varchar(13),
-    email varchar(18),
-    edition int(11) DEFAULT '0' NOT NULL
+    created timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    birthday timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '生日',
+    phone varchar(13) COMMENT '手机',
+    email varchar(18) COMMENT '邮箱',
+    edition int(11) DEFAULT '0' NOT NULL COMMENT '文档版本'
 );
 INSERT INTO mobilee.t_user (id, name, password, gender, created, birthday, phone, email, edition) VALUES (1, '李哥', '123456', 1, '2017-11-01 17:35:00', '2017-10-31 00:00:00', null, null, 5);
 INSERT INTO mobilee.t_user (id, name, password, gender, created, birthday, phone, email, edition) VALUES (2, '夜吹', '123456', 1, '2017-11-01 17:35:00', '2017-10-31 00:00:00', null, null, 2);

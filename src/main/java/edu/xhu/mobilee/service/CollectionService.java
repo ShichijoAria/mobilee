@@ -6,5 +6,5 @@ public interface CollectionService {
 
     CollectionEntity findCollectionById(long id);
 
-    long insertCollection(CollectionEntity collectionEntity);
+    long targetCollection(CollectionEntity collectionEntity);
 }

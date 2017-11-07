@@ -34,8 +34,4 @@ public class MobilePhoneServiceImpl implements MobilePhoneService{
         return mobilePhoneDao.insertMobilePhone(mobilePhoneEntity);
     }
 
-    @Override
-    public List<Object> selectMobile() {
-        return mobilePhoneDao.selectMobile();
-    }
 }

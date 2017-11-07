@@ -19,7 +19,6 @@
 
     <script src="<%=path%>/dist/jquery.min.js"></script>
     <script src="<%=path%>/dist/semantic.min.js"></script>
-    <script src="<%=path%>/js/active.js"></script>
     <link rel="stylesheet" type="text/css" href="<%=path%>/dist/semantic.css">
     <link rel="stylesheet" href="<%=path%>/css/general.css">
     <link rel="stylesheet" href="<%=path%>/css/tourist.css">
@@ -33,7 +32,7 @@
             <i class="myLogo mobile icon"></i>
             手百网
         </a>
-        <a href="#" class="item">主页</a>
+        <a href="<%=path%>/tourist/index" class="item">主页</a>
         <div class="ui item right">
             <div class="ui icon input">
                 <input type="text" placeholder="搜索...">
@@ -42,8 +41,8 @@
         </div>
     </div><c:if test="${sessionScope.TOURIST_ID==null}">
     <a class="ui item right floated" href="<%=path%>/tourist/welcome">登录</a></c:if><c:if test="${sessionScope.TOURIST_ID!=null}">
-    <div class="menu right">
-        <div class="ui dropdown fluid item">
+    <div class="menu right" id="personal">
+        <div class="ui dropdown item">
             <img class="ui avatar image" src="<%=path%>/upload/admin/${sessionScope.TOURIST_ID}.jpg?a" onerror="javascript:this.src='<%=path%>/upload/timg.jpg'">
             <span id="userName">${sessionScope.TOURIST_NAME}</span>
             <div class="menu">
@@ -65,12 +64,17 @@
                 <div class="content">
                     <p>最新：</p>
                 </div>
-            </div>
+            </div><c:forEach var="bean" items="${requestScope.data.newMobilePhone}">
+            <div class="item">
+                <div class="content">
+                    <a href="<%=path%>/tourist/detail?id=${bean.id}">${bean.name}</a>
+                </div>
+            </div></c:forEach>
         </div>
     </div>
     <div class="ui grid">
         <div class="sixteen wide column">
-            <div class="ui raised segment four column grid"><c:forEach var="bean" items="${requestScope.mobilePhone}">
+            <div class="ui raised segment four column grid"><c:forEach var="bean" items="${requestScope.data.mobilePhone}">
                 <div class="column">
                     <div class="ui card" mobile_phone_id="${bean.id}">
                         <div class="image">
@@ -92,7 +96,6 @@
         </div>
     </div>
 </div>
-
 <div class="ui inverted vertical footer segment">
     <div class="ui center aligned container">
         <div class="ui stackable inverted divided grid">
@@ -139,8 +142,6 @@
 </div>
 </body>
 <script>
-    var phoneList=['小米6','iphone X','魅族 pro6'];
-    var firmList=['小米','苹果','魅族'];
 
     alterSize();
 
@@ -151,16 +152,6 @@
     $('.ui.card').click(function () {
         window.open("<%=path%>/tourist/detail?id="+$(this).attr("mobile_phone_id"));
     })
-    
-    $('.item').hover(function () {
-        if ($(this).attr("id")=='phone')
-            changeList(phoneList);
-        else
-            changeList(firmList)
-        $(this).addClass('active');
-        $(this).siblings().removeClass('active');
-        }
-    );
 
     function changeList(list) {
         var htmlList=list.map(getEle)

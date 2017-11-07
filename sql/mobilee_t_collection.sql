@@ -1,9 +1,9 @@
 CREATE TABLE mobilee.t_collection
 (
-    id bigint(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    mobile_phone bigint(20) NOT NULL,
-    user bigint(20) NOT NULL,
-    created timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    id bigint(20) PRIMARY KEY NOT NULL COMMENT '主键' AUTO_INCREMENT,
+    mobile_phone bigint(20) NOT NULL COMMENT '手机',
+    user bigint(20) NOT NULL COMMENT '用户',
+    created timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
     CONSTRAINT t_collection_t_mobile_phone_id_fk FOREIGN KEY (mobile_phone) REFERENCES t_mobile_phone (id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT t_collection_t_user_id_fk FOREIGN KEY (user) REFERENCES t_user (id) ON DELETE CASCADE ON UPDATE CASCADE
 );

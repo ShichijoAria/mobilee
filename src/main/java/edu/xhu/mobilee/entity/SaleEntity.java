@@ -9,6 +9,7 @@ public class SaleEntity {
     private Timestamp created;
     private int edition;
     private AdminEntity author;
+    private String phone;
 
     public long getId() {
         return id;
@@ -56,5 +57,13 @@ public class SaleEntity {
 
     public void setAuthor(AdminEntity author) {
         this.author = author;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

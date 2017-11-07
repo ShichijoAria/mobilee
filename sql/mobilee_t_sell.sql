@@ -1,12 +1,12 @@
 CREATE TABLE mobilee.t_sell
 (
-    id bigint(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    price float DEFAULT '0' NOT NULL,
-    mobile_phone bigint(20) DEFAULT '0' NOT NULL,
-    sale bigint(20) DEFAULT '0' NOT NULL,
-    author bigint(20) DEFAULT '0' NOT NULL,
-    created timestamp DEFAULT CURRENT_TIMESTAMP,
-    edtion int(11) DEFAULT '0' NOT NULL,
+    id bigint(20) PRIMARY KEY NOT NULL COMMENT '主键' AUTO_INCREMENT,
+    price float DEFAULT '0' NOT NULL COMMENT '销售价格',
+    mobile_phone bigint(20) DEFAULT '0' NOT NULL COMMENT '手机',
+    sale bigint(20) DEFAULT '0' NOT NULL COMMENT '商家',
+    author bigint(20) DEFAULT '0' NOT NULL COMMENT '作者',
+    created timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    edtion int(11) DEFAULT '0' NOT NULL COMMENT '文档版本',
     CONSTRAINT t_sell_t_mobile_phone_id_fk FOREIGN KEY (mobile_phone) REFERENCES t_mobile_phone (id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT t_sell_t_sale_id_fk FOREIGN KEY (sale) REFERENCES t_sale (id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT t_sell_t_admin_id_fk FOREIGN KEY (author) REFERENCES t_admin (id) ON DELETE CASCADE ON UPDATE CASCADE

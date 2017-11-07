@@ -92,10 +92,13 @@ public class SaleController {
 
     @RequestMapping(value = "save",method = RequestMethod.POST)
     @ResponseBody
-    public Map save(HttpServletRequest request, SaleEntity saleEntity,
+    public Map save(HttpServletRequest request, SaleEntity saleEntity,HttpSession session,
                     @RequestParam(value = "id") long id, @RequestParam(value = "edition") long edition){
         Map dataMap = new HashMap<String, Object>();
         String msg="非法的数据";
+        AdminEntity author=new AdminEntity();
+        author.setId((Long) session.getAttribute("USER_ID"));
+        saleEntity.setAuthor(author);
         if(saleService.updateSaleById(saleEntity)>0)
             msg="success";
         else

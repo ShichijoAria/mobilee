@@ -5,7 +5,7 @@
 <mapper namespace="edu.xhu.mobilee.dao.SaleDao">
 
     <select id="selectSaleByMobilePhoneId" parameterType="long" resultType="HashMap">
-        SELECT sa.id,sa.name,sa.address,se.price FROM t_sale sa JOIN t_sell se ON se.sale=sa.id JOIN t_mobile_phone mo ON mo.id=se.mobile_phone AND mo.id=#{id} LIMIT 0,10;
+        SELECT sa.id,sa.name,sa.address,se.price,sa.phone FROM t_sale sa JOIN t_sell se ON se.sale=sa.id JOIN t_mobile_phone mo ON mo.id=se.mobile_phone AND mo.id=#{id} LIMIT 0,10;
     </select>
 
     <select id="findSaleById" parameterType="long" resultMap="saleResult">
@@ -15,6 +15,7 @@
         s.address AS s_address,
         s.created AS s_created,
         s.edition AS s_edition,
+        s.phone AS s_phone,
         a.id AS a_id,
         a.name AS a_name
         from t_sale s join t_admin a on s.author = a.id
@@ -25,10 +26,11 @@
         UPDATE t_sale
         <set>
             <if test="name != null">name=#{name},</if>
-            <if test="address != null">address=#{password},</if>
-            <if test="author != null">author=#{author},</if>
+            <if test="address != null">address=#{address},</if>
+            <if test="phone != null">author=#{phone},</if>
+            <if test="edition != null"> edition=edition+1,</if>
         </set>
-        WHERE id = #{id}
+        WHERE id = #{id} AND edition=#{edition}
     </update>
 
     <delete id="deleteSale" parameterType="list">
@@ -39,12 +41,15 @@
     </delete>
 
     <insert id="insertSale" parameterType="SaleEntity" keyProperty="id">
-        INSERT INTO t_sale (name, address, author,created) VALUES (#{name},#{address},#{author.id},current_timestamp)
+        INSERT INTO t_sale (name, address, author) VALUES (#{name},#{address},#{author.id})
     </insert>
 
     <resultMap type="SaleEntity" id="saleResult">
         <id property="id" column="s_id" />
         <result property="name" column="s_name" />
+        <result property="created" column="s_created" />
+        <result property="edition" column="s_edition" />
+        <result property="phone" column="s_phone" />
         <result property="address" column="s_address" />
         <association property="author" resultMap="authorResult"/>
     </resultMap>
@@ -52,7 +57,6 @@
     <resultMap id="authorResult" type="AdminEntity">
         <id property="id" column="a_id" />
         <result property="name" column="a_name" />
-        <result property="password" column="a_password" />
     </resultMap>
 
 </mapper>

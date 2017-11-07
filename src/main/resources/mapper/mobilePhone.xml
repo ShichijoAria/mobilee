@@ -4,6 +4,10 @@
 
 <mapper namespace="edu.xhu.mobilee.dao.MobilePhoneDao">
 
+    <select id="selectNewMobilePhone" parameterType="long" resultType="HashMap">
+        SELECT id,name FROM t_mobile_phone ORDER BY id DESC LIMIT 0, 10
+    </select>
+
     <select id="selectMobile" resultType="HashMap">
         SELECT mo.id,mo.name,mo.price,
             (SELECT count(*) FROM t_comment com WHERE com.mobile_phone=mo.id) comment,

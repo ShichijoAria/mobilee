@@ -1,11 +1,11 @@
 CREATE TABLE mobilee.t_comment
 (
-    id bigint(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    content varchar(200) DEFAULT '' NOT NULL,
-    created timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    author bigint(20) DEFAULT '0' NOT NULL,
-    mobile_phone bigint(20) DEFAULT '0' NOT NULL,
-    storey int(11) DEFAULT '0' NOT NULL,
+    id bigint(20) PRIMARY KEY NOT NULL COMMENT '主键' AUTO_INCREMENT,
+    content varchar(200) DEFAULT '' NOT NULL COMMENT '评论',
+    created timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    author bigint(20) DEFAULT '0' NOT NULL COMMENT '作者',
+    mobile_phone bigint(20) DEFAULT '0' NOT NULL COMMENT '手机',
+    storey int(11) DEFAULT '0' NOT NULL COMMENT '楼层',
     CONSTRAINT t_comment_t_user_id_fk FOREIGN KEY (author) REFERENCES t_user (id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT t_comment_t_mobile_phone_id_fk FOREIGN KEY (mobile_phone) REFERENCES t_mobile_phone (id) ON DELETE CASCADE ON UPDATE CASCADE
 );

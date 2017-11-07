@@ -68,10 +68,21 @@ public class TouristController {
         return dataMap;
     }
 
+    @RequestMapping("cancel")
+    @ResponseBody
+    public Map cancel(HttpSession session){
+        Map dataMap = new HashMap<String, Object>();
+        session.removeAttribute("TOURIST_ID");
+        session.removeAttribute("TOURIST_NAME");
+        session.removeAttribute("TOURIST_PASSWORD");
+        dataMap.put("msg","success");
+        return dataMap;
+    }
+
     @RequestMapping("index")
     public ModelAndView index(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("mobilePhone",mobilePhoneService.selectMobile());
+        modelAndView.addObject("data",touristService.getMobilePhoneIndex());
         modelAndView.setViewName("tourist");
         return modelAndView;
     }
@@ -114,7 +125,7 @@ public class TouristController {
         mobilePhoneEntity.setId(id);
         collectionEntity.setMobilePhone(mobilePhoneEntity);
         String msg="非法的数据";
-        if(collectionService.insertCollection(collectionEntity)>0)
+        if(collectionService.targetCollection(collectionEntity)>0)
             msg="success";
         dataMap.put("msg",msg);
         return dataMap;
