@@ -2,7 +2,23 @@
 
 //通用功能初始化
 function init() {
-
+    $('#saveEntity').click(function () {
+        $('#modal').addClass('loading');
+        $.post("/mobilee/"+viewName+"/save?"+serializeNotNull($('#modal').serialize()),
+            function (data, status) {
+                if (status != "success") {
+                    showToast("<i class='warning icon'></i>连接服务器失败！");
+                }else {
+                    if(data.msg=="success"){
+                        showToast("<i class='archive icon'></i>保存成功");
+                        getInfoList(viewName, arr, currentPage,true,orderBy,sequence);
+                        $("input[name='edition']").val(Number($("input[name='edition']").val())+1);
+                    }else {
+                        showToast("<i class='remove circle outline icon'></i>"+data.msg);
+                    }
+                }
+            });
+    });
 }
 
 //表单序列化排空
@@ -233,6 +249,5 @@ function jsonToForm(key,value) {
             $(choose).parent().dropdown('set selected', value[jsonI]);
         }
     }
-
 }
 

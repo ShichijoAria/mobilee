@@ -1,4 +1,5 @@
 <%--
+<%--
   Created by IntelliJ IDEA.
   User: shichijoaria
   Date: 17-11-2
@@ -255,22 +256,7 @@
         $('#searchForm select').dropdown('set selected', "0");
     });
 
-    $('#saveEntity').click(function () {
-        $('#modal').addClass('loading');
-        $.post("/mobilee/"+viewName+"/save?"+serializeNotNull($('#modal').serialize()),
-            function (data, status) {
-                if (status != "success") {
-                    showToast("<i class='warning icon'></i>连接服务器失败！");
-                }else {
-                    if(data.msg=="success"){
-                        showToast("<i class='archive icon'></i>保存成功");
-                        getInfoList(viewName, arr, currentPage,true,orderBy,sequence);
-                    }else {
-                        showToast("<i class='remove circle outline icon'></i>"+data.msg);
-                    }
-                }
-            });
-    });
+    init();
 
     $('#insertEntity').click(function () {
         $('#modal').addClass('loading');

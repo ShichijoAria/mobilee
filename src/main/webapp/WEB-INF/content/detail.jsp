@@ -64,20 +64,20 @@
 </div>
 
 <div class="ui main container">
-    <div class="ui stacked segment attached">
+    <div class="ui segment attached">
         <div class="ui horizontal divided list" id="myList">
             <div class="item">
                 <div class="content">
-                    <h1 class="ui header">详细信息</h1>
+                    <h1 class="ui header">${requestScope.detail.mobilePhone.name}</h1>
                 </div>
             </div>
         </div>
     </div>
     <div class="ui grid">
         <div class="sixteen wide column">
-            <div class="ui grid">
+            <div class="ui grid" id="context">
                 <div class="eleven wide column">
-                    <div class="ui raised segment">
+                    <div class="ui vertical segment">
                             <div class="ui grid">
                                 <div class="seven wide column">
                                     <img class="ui centered medium image" src='<%=path%>/upload/mobilePhone/${requestScope.detail.mobilePhone.id}.jpg' onerror="javascript:this.src='<%=path%>/upload/mobilePhone/timg.jpg'">
@@ -85,11 +85,13 @@
                                 <div class="nine wide column">
                                     <div class="row">
                                         <h2 class="ui header">
-                                            <div class="content">
-                                                ${requestScope.detail.mobilePhone.name}
-                                                <div class="sub header">参考价格:<span style="color: red">￥${requestScope.detail.mobilePhone.price}</span></div>
+                                            <div class="content" style="width: 100%">
+                                                <span class="right floated meta">
+                                                    <i class="heart <c:if test="${requestScope.detail.isCollected>0}">red</c:if> like icon"></i>
+                                                    喜欢
+                                                </span>
+                                                <div class="sub header">参考报价:<span style="color: red">￥${requestScope.detail.mobilePhone.price}</span></div>
                                             </div>
-                                            <span class="right floated"><i class="heart <c:if test="${requestScope.detail.isCollected>0}">red</c:if> like icon"></i>喜欢</span>
                                         </h2>
                                     </div>
                                     <div class="row">
@@ -138,7 +140,7 @@
                                 </div>
                             </div>
                     </div>
-                    <div class="ui raised segment">
+                    <div class="ui vertical segment">
                         <div class="row">
                             <h3 class="ui header">评论</h3>
                         </div>
@@ -159,7 +161,7 @@
                                     <p class="text">${bean.content}</p>
                                     <div class="commentInfo ui grid">
                                         <span class="floor two wide column">#${bean.storey}</span>
-                                        <span class="time six wide column">2017-09-11 22:14</span>
+                                        <span class="time six wide column">${bean.created}</span>
                                         <span class="like one wide column">
                                             <i class="icon thumbs outline up"></i>
                                             <span></span>
@@ -191,35 +193,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="five wide column">
-                    <div class="ui raised segment">
-                        <div class="row">
+                <div class="five wide column ui rail">
+                    <div class="ui vertical segment ui sticky">
+                        <div class="row" style="margin-top: 100px">
                             <h2 class="ui header">
                                 <div class="content">
                                     有售商家
                                     <div class="sub header">参考列表</div>
                                 </div>
                             </h2>
-                        </div>
-                        <div class="row">
-                            <div class="ui items"><c:forEach items="${requestScope.detail.sale}" var="bean">
+                            <div class="ui relaxed divided list"><c:forEach items="${requestScope.detail.sale}" var="bean">
                                 <div class="item">
-                                    <div class="ui mini image">
-                                        <img class="ui large avatar bordered image"  src="<%=path%>/upload/sale/${bean.id}.jpg" onerror="javascript:this.src='<%=path%>/upload/timg.jpg'">
+                                    <img class="ui middle aligned avatar bordered image"  src="<%=path%>/upload/sale/${bean.id}.jpg" onerror="javascript:this.src='<%=path%>/upload/timg.jpg'">
+                                    <div class="content">
+                                        <a class="header" style="color: #333!important;font-weight: 100" href="${bean.address}">
+                                                ${bean.name}
+                                            <span  style="color: red">￥${bean.price}</span>
+                                        </a>
+                                        <div class="description">
+                                            <p><i class="icon mobile"></i>${bean.phone}</p>
+                                        </div>
                                     </div>
-                                    <div class="content" style="width: 100%">
-                                        <a class="header">${bean.name}</a>
-                                        <div class="meta">
-                                            <span style="color: red">￥${bean.price}</span></div>
-                                    </div>
-                                    <div class="description">
-                                        <p></p>
-                                    </div>
-                                    <div class="extra">
-                                            ${bean.address}
-                                    </div>
-                                </div>
-                                <div class="ui divider"></div></c:forEach>
+                                </div></c:forEach>
                             </div>
                         </div>
                     </div>
@@ -318,5 +313,12 @@
         $('.comment .ui.avatar.image').outerHeight($('.comment .ui.avatar.image').outerWidth());
         $('.ui.mini.image .ui.avatar.image').outerHeight($('.ui.mini.image .ui.avatar.image').outerWidth());
     }
+
+    $('.ui.sticky')
+        .sticky({
+            context: '#context',
+            pushing: true
+        })
+    ;
 </script>
 </html>
