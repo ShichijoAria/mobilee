@@ -136,7 +136,7 @@
             </div>
             <div class="field column">
                 <label>录入时间</label>
-                <input type="text" date="false" readonly name="created">
+                <input type="text" datetime="false" readonly name="created">
             </div>
             <div class="field column">
                 <label>录入作者</label>

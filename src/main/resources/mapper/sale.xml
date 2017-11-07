@@ -27,7 +27,7 @@
         <set>
             <if test="name != null">name=#{name},</if>
             <if test="address != null">address=#{address},</if>
-            <if test="phone != null">author=#{phone},</if>
+            <if test="phone != null">phone=#{phone},</if>
             <if test="edition != null"> edition=edition+1,</if>
         </set>
         WHERE id = #{id} AND edition=#{edition}

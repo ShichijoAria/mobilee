@@ -216,12 +216,12 @@ Date.prototype.format = function(format) {
 function jsonToForm(key,value) {
     var choose="#modal input[name='"+key+"']";
     $(choose).val(value);
-    choose="#modal textarea[name='"+key+"']";
-    $(choose).val(value);
     if($(choose).attr('date')=="false"||$(choose).attr('date')=="true")
         $(choose).val(new Date(value).format('yyyy/MM/dd'));
     if($(choose).attr('datetime')=="false"||$(choose).attr('datetime')=="true")
         $(choose).val(new Date(value).format('yyyy/MM/dd hh:mm'));
+    choose="#modal textarea[name='"+key+"']";
+    $(choose).val(value);
     choose="select[name='"+i+"']";
     var opt="[data-value='"+value+"']";
     $(choose).parent().dropdown('set selected', value)
