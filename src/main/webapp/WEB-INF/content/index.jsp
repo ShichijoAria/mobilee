@@ -41,7 +41,7 @@
                     <span id="adminName">${sessionScope.USER_NAME}</span>
                     <div class="menu">
                         <a class="item" modal="personalInformation"><i class="icon setting"></i> 个人信息</a>
-                        <a class="item" href="<%=path%>/admin/loginOut"><i class="icon sign out"></i> 注销</a>
+                        <a class="item" href="<%=path%>/admin/cancel"><i class="icon sign out"></i> 注销</a>
                     </div>
                 </div>
                 <div class="ui item">

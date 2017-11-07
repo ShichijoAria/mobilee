@@ -57,26 +57,24 @@
             <span id="userName">${sessionScope.TOURIST_NAME}</span>
             <div class="menu">
                 <a class="item" modal="personalInformation"><i class="icon setting"></i> 个人信息</a>
-                <a class="item" href="<%=path%>/tourist/loginOut"><i class="icon sign out"></i> 注销</a>
+                <a class="item" href="<%=path%>/tourist/cancel"><i class="icon sign out"></i> 注销</a>
             </div>
         </div>
     </div></c:if>
 </div>
 
 <div class="ui main container">
-    <div class="ui segment attached">
-        <div class="ui horizontal divided list" id="myList">
-            <div class="item">
-                <div class="content">
-                    <h1 class="ui header">${requestScope.detail.mobilePhone.name}</h1>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="ui grid">
         <div class="sixteen wide column">
             <div class="ui grid" id="context">
                 <div class="eleven wide column">
+                    <div class="ui fluid card">
+                        <div class="content">
+                            <span class="right floated">收藏</span>
+                            <i class="right floated star icon <c:if test="${requestScope.detail.isCollected>0}">yellow</c:if> "></i>
+                            <div class="header">${requestScope.detail.mobilePhone.name}</div>
+                        </div>
+                    </div>
                     <div class="ui vertical segment">
                             <div class="ui grid">
                                 <div class="seven wide column">
@@ -86,11 +84,7 @@
                                     <div class="row">
                                         <h2 class="ui header">
                                             <div class="content" style="width: 100%">
-                                                <span class="right floated meta">
-                                                    <i class="heart <c:if test="${requestScope.detail.isCollected>0}">red</c:if> like icon"></i>
-                                                    喜欢
-                                                </span>
-                                                <div class="sub header">参考报价:<span style="color: red">￥${requestScope.detail.mobilePhone.price}</span></div>
+                                                <div class="sub header">参考报价:<span style="color: red">￥<span style="font-size: 2em">${requestScope.detail.mobilePhone.price}</span></span></div>
                                             </div>
                                         </h2>
                                     </div>
@@ -231,33 +225,28 @@
             <div class="three wide column">
                 <h4 class="ui inverted header">合作厂商</h4>
                 <div class="ui inverted link list">
-                    <a href="#" class="item">Link One</a>
-                    <a href="#" class="item">Link Two</a>
-                    <a href="#" class="item">Link Three</a>
-                    <a href="#" class="item">Link Four</a>
+                    <a href="javascript:void(0);" class="item">暂无</a>
                 </div>
             </div>
             <div class="three wide column">
                 <h4 class="ui inverted header">友情链接</h4>
                 <div class="ui inverted link list">
-                    <a href="#" class="item">Link One</a>
-                    <a href="#" class="item">Link Two</a>
-                    <a href="#" class="item">Link Three</a>
-                    <a href="#" class="item">Link Four</a>
+                    <a href="javascript:void(0);" class="item"><i class="icon qq"></i>QQ</a>
+                    <a href="javascript:void(0);" class="item"><i class="icon weibo"></i>weibo</a>
+                    <a href="javascript:void(0);" class="item"><i class="icon wechat"></i>wechat</a>
+                    <a href="javascript:void(0);" class="item"><i class="icon twitter"></i>twitter</a>
                 </div>
             </div>
             <div class="three wide column">
                 <h4 class="ui inverted header">联系方式</h4>
                 <div class="ui inverted link list">
-                    <a href="#" class="item">Link One</a>
-                    <a href="#" class="item">Link Two</a>
-                    <a href="#" class="item">Link Three</a>
-                    <a href="#" class="item">Link Four</a>
+                    <a href="#" class="item"><i class="icon qq"></i>1056358034</a>
+                    <a href="https://github.com/ShichijoAria" class="item"><i class="icon github"></i>shichijoaria</a>
                 </div>
             </div>
             <div class="seven wide column">
-                <h4 class="ui inverted header">Footer Header</h4>
-                <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+                <h4 class="ui inverted header">声明</h4>
+                <p>本网站做学习用途</p>
             </div>
         </div>
         <div class="ui inverted section divider"></div>
@@ -289,14 +278,17 @@
             });
     });
 
-    $('.heart.like.icon').click(function () {
+    $('.right.floated.star.icon').click(function () {
         $.post("<%=path%>/tourist/collect?id=${requestScope.detail.mobilePhone.id}",
             function (data, status) {
                 if (status != "success") {
                     showError(["无法连接服务器"]);
                 }else {
                     if(data.msg=="success"){
-                        location.reload();
+                        if($('.right.floated.star.icon').hasClass('yellow'))
+                            $('.right.floated.star.icon').removeClass('yellow');
+                        else
+                            $('.right.floated.star.icon').addClass('yellow');
                     }else {
                         showError([data.msg]);
                     }

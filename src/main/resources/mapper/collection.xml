@@ -11,15 +11,15 @@
         WHERE c.id = #{id} AND c.user=u.id AND mo.id=c.mobile_phone
     </select>
 
-    <insert id="targetCollection" parameterType="CollectionEntity" keyProperty="long">
+    <select id="targetCollection" parameterType="CollectionEntity" resultType="long">
         <![CDATA[
         {call p_target_collection(
-                (#{mobilePhone.id},#{user.id})
+                #{mobilePhone.id},#{user.id}
         )
         }
         ]]>
 
-    </insert>
+    </select>
 
     <select id="isCollected" parameterType="CollectionEntity" resultType="long">
         SELECT count(*) FROM t_collection WHERE mobile_phone=#{mobilePhone.id} AND user=#{user.id}

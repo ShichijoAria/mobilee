@@ -69,14 +69,11 @@ public class TouristController {
     }
 
     @RequestMapping("cancel")
-    @ResponseBody
-    public Map cancel(HttpSession session){
-        Map dataMap = new HashMap<String, Object>();
+    public String cancel(HttpSession session){
         session.removeAttribute("TOURIST_ID");
         session.removeAttribute("TOURIST_NAME");
         session.removeAttribute("TOURIST_PASSWORD");
-        dataMap.put("msg","success");
-        return dataMap;
+        return "touristLogin";
     }
 
     @RequestMapping("index")

@@ -47,7 +47,7 @@
             <span id="userName">${sessionScope.TOURIST_NAME}</span>
             <div class="menu">
                 <a class="item" modal="personalInformation"><i class="icon setting"></i> 个人信息</a>
-                <a class="item" href="<%=path%>/tourist/loginOut"><i class="icon sign out"></i> 注销</a>
+                <a class="item" href="<%=path%>/tourist/cancel"><i class="icon sign out"></i> 注销</a>
             </div>
         </div>
     </div></c:if>
@@ -84,7 +84,7 @@
                         <div class="content">
                             <div class="header" style="text-align: center">${bean.name}</div>
                             <span class="right floated">
-                              <i class="heart outline like icon"></i>
+                              <i class="heart outline star icon"></i>
                               ${bean.collection} 喜欢
                             </span>
                             <i class="comment icon"></i>
@@ -96,39 +96,35 @@
         </div>
     </div>
 </div>
+
 <div class="ui inverted vertical footer segment">
     <div class="ui center aligned container">
         <div class="ui stackable inverted divided grid">
             <div class="three wide column">
                 <h4 class="ui inverted header">合作厂商</h4>
                 <div class="ui inverted link list">
-                    <a href="#" class="item">Link One</a>
-                    <a href="#" class="item">Link Two</a>
-                    <a href="#" class="item">Link Three</a>
-                    <a href="#" class="item">Link Four</a>
+                    <a href="javascript:void(0);" class="item">暂无</a>
                 </div>
             </div>
             <div class="three wide column">
                 <h4 class="ui inverted header">友情链接</h4>
                 <div class="ui inverted link list">
-                    <a href="#" class="item">Link One</a>
-                    <a href="#" class="item">Link Two</a>
-                    <a href="#" class="item">Link Three</a>
-                    <a href="#" class="item">Link Four</a>
+                    <a href="javascript:void(0);" class="item"><i class="icon qq"></i>QQ</a>
+                    <a href="javascript:void(0);" class="item"><i class="icon weibo"></i>weibo</a>
+                    <a href="javascript:void(0);" class="item"><i class="icon wechat"></i>wechat</a>
+                    <a href="javascript:void(0);" class="item"><i class="icon twitter"></i>twitter</a>
                 </div>
             </div>
             <div class="three wide column">
                 <h4 class="ui inverted header">联系方式</h4>
                 <div class="ui inverted link list">
-                    <a href="#" class="item">Link One</a>
-                    <a href="#" class="item">Link Two</a>
-                    <a href="#" class="item">Link Three</a>
-                    <a href="#" class="item">Link Four</a>
+                    <a href="#" class="item"><i class="icon qq"></i>1056358034</a>
+                    <a href="https://github.com/ShichijoAria" class="item"><i class="icon github"></i>shichijoaria</a>
                 </div>
             </div>
             <div class="seven wide column">
-                <h4 class="ui inverted header">Footer Header</h4>
-                <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+                <h4 class="ui inverted header">声明</h4>
+                <p>本网站做学习用途</p>
             </div>
         </div>
         <div class="ui inverted section divider"></div>
@@ -140,6 +136,7 @@
         </div>
     </div>
 </div>
+
 </body>
 <script>
 
