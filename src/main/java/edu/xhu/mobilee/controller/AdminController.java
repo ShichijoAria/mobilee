@@ -162,5 +162,12 @@ public class AdminController {
         return dataMap;
     }
 
+    @RequestMapping(value = "statistics",method = RequestMethod.GET)
+    public ModelAndView statistics(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("statistics",adminService.getStatistics());
+        modelAndView.setViewName("statistics");
+        return modelAndView;
+    }
 
 }
