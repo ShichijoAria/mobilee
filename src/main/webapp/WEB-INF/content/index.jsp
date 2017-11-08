@@ -167,7 +167,7 @@
         <div class="ui black deny button">
             关闭
         </div>
-        <div class="ui positive right labeled icon button" id="saveEntity">
+        <div class="ui positive right labeled icon button" id="saveAdmin">
             保存
             <i class="checkmark icon"></i>
         </div>
@@ -294,7 +294,7 @@
         $('#myPicture').outerHeight($('#myPicture').outerWidth());
     })
 
-    $('#saveEntity').click(function () {
+    $('#saveAdmin').click(function () {
         $('#modal').addClass('loading');
         $.post("/mobilee/admin/save",
             {

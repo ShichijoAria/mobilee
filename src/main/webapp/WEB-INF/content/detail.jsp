@@ -36,6 +36,123 @@
 </head>
 <body>
 
+<%--模态框 个人信息--%>
+<div class="ui first modal">
+    <div class="header">
+        详细信息
+    </div>
+    <div class="image content">
+        <form class="ui stackable  form two column grid" id="modal" style="width:100%">
+            <div class="field column">
+                <img id="myPicture" class="ui medium bordered  circular image" data-position="right center" data-title='点击更改图片', onerror="javascript:this.src='<%=path%>/upload/timg.jpg'" src="<%=path%>/upload/user/${sessionScope.TOURIST_ID}.jpg?a" id="myPicture" onclick="document.getElementById('file').click();"/>
+            </div>
+            <div class="field column">
+                <div class="ui items">
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui teal label">
+                                编号：
+                            </div>
+                            <input name="id" value="${sessionScope.TOURIST_ID}" readonly/>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui teal label">
+                                昵称：
+                            </div>
+                            <input name="name" value="${sessionScope.TOURIST_NAME}"/>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui teal label">
+                                密码：
+                            </div>
+                            <input name="password" type="password" value="${sessionScope.TOURIST_PASSWORD}"/>
+                        </div>
+                    </div>
+                    <input type="file" name="file" id="file" style="display: none" onchange="myUpload()">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            关闭
+        </div>
+        <div class="ui positive right labeled icon button" id="saveUser">
+            保存
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>
+
+<%--注册模态框 --%>
+<div class="ui register modal">
+    <div class="header">
+        详细信息
+    </div>
+    <div class="image content">
+        <form class="ui stackable  form two column grid" id="register" style="width:100%">
+            <div class="field column">
+                <div class="ui items">
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui teal label">
+                                注册昵称：
+                            </div>
+                            <input name="name" value=""/>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui teal label">
+                                输入密码：
+                            </div>
+                            <input name="password" type="password" value=""/>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui teal label">
+                                确认密码：
+                            </div>
+                            <input name="confirm" type="password" value=""/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            关闭
+        </div>
+        <div class="ui positive right labeled icon button" id="submit">
+            提交
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>
+
+<%--模态框 反馈信息--%>
+<div class="ui small modal">
+    <div class="header">
+
+    </div>
+    <div class="ui icon header">
+
+    </div>
+
+    <div class="actions">
+        <div class="ui green ok inverted button">
+            <i class="checkmark icon"></i>
+            是
+        </div>
+    </div>
+</div>
+
 <div class="ui fixed inverted menu">
     <div class="ui container">
         <a href="#" class="header item">
@@ -50,7 +167,7 @@
             </div>
         </div>
     </div><c:if test="${sessionScope.TOURIST_ID==null}">
-    <a class="ui item right floated" href="<%=path%>/tourist/welcome">登录</a></c:if><c:if test="${sessionScope.TOURIST_ID!=null}">
+    <div class="ui item right floated"><a class="item" href="<%=path%>/tourist/welcome">登录</a><div id="signUp" class="item">注册</div></div></c:if><c:if test="${sessionScope.TOURIST_ID!=null}">
     <div class="menu right">
         <div class="ui dropdown fluid item">
             <img class="ui avatar image" src="<%=path%>/upload/admin/${sessionScope.TOURIST_ID}.jpg?a" onerror="javascript:this.src='<%=path%>/upload/timg.jpg'">
@@ -180,7 +297,7 @@
                                     <textarea name="content" <c:if test="${sessionScope.TOURIST_ID==null}"> readonly placeholder="请先登录才能进行评论。" </c:if>></textarea>
                                     <input name='mobilePhone.id' value="${requestScope.detail.mobilePhone.id}" style="display:none" />
                                 </div>
-                                <div class="ui primary<c:if test="${sessionScope.TOURIST_ID==null}"> disabled</c:if> labeled icon button" id="submit">
+                                <div class="ui primary<c:if test="${sessionScope.TOURIST_ID==null}"> disabled</c:if> labeled icon button" id="submitComment">
                                     <i class="icon edit"></i>评论
                                 </div>
                             </form>
@@ -257,13 +374,69 @@
             <a class="item" href="#">Privacy Policy</a>
         </div>
     </div>
-</div>
+</div
+
+
 </body>
 <script>
 
     $('.ui.dropdown').dropdown()
 
-    $('#submit').click(function(){
+    //模态框
+    $('.ui.first.modal').modal({
+        onDeny    : function(){
+            if($('#modal').hasClass('loading'))
+                return false;
+        },
+        onApprove : function() {
+            return false;
+        }
+    }) .modal('setting', 'closable', false)
+    //模态框
+    $('.ui.register.modal').modal({
+        onDeny    : function(){
+            if($('#modal').hasClass('loading'))
+                return false;
+        },
+        onApprove : function() {
+            return false;
+        }
+    }) .modal('setting', 'closable', false)
+    $('.small.modal')
+        .modal({
+            allowMultiple: true,
+            onApprove : function() {
+                $('#modal').removeClass('loading');
+            }
+        })
+        .modal('setting', 'closable', false)
+
+    $('#submit').click(function () {
+        if($("#register input[name='password']").val()==$("#register input[name='confirm']").val()) {
+            $.post("/mobilee/tourist/register",
+                {
+                    password: $("#register input[name='password']").val(),
+                    name: $("#register input[name='name']").val(),
+                },function(data, status) {
+                    if (status != "success") {
+                        showToast("<i class='warning icon'></i>连接服务器失败！");
+                    }else {
+                        if(data.msg=="success"){
+                            showToast("<i class='archive icon'></i>注册成功,请牢记您的账号id:"+data.id);
+                        }else {
+                            showToast("<i class='remove circle outline icon'></i>"+data.msg);
+                        }
+                    }
+                });
+        }
+    })
+
+    $('#signUp').click(function () {
+        $('.ui.register.modal').modal('show')
+    })
+
+
+    $('#submitComment').click(function(){
         $.post("<%=path%>/tourist/add?"+serializeNotNull($('#comment').serialize()),
             function (data, status) {
                 if (status != "success") {

@@ -128,4 +128,31 @@ public class TouristController {
         return dataMap;
     }
 
+    @RequestMapping(value = "save",method = RequestMethod.POST)
+    @ResponseBody
+    public Map save(UserEntity userEntity,@RequestParam("edition") long edition,HttpSession session){
+        Map dataMap = new HashMap<String, Object>();
+        String msg="非法的数据";
+        userEntity.setId((Long) session.getAttribute("TOURIST_ID"));
+        if(userService.updateUserById(userEntity)>0)
+            msg="success";
+        else
+            msg="保存失败或无信息更新";
+        dataMap.put("msg",msg);
+        return dataMap;
+    }
+
+    @RequestMapping("register")
+    @ResponseBody
+    public Map register(UserEntity userEntity,@RequestParam("name") String name,@RequestParam String password){
+        Map dataMap = new HashMap<String, Object>();
+        String msg="非法的请求";
+        long id=touristService.register(userEntity);
+        if(id>0) {
+            msg = "success";
+            dataMap.put("id",userEntity.getId());
+        }
+        dataMap.put("msg",msg);
+        return dataMap;
+    }
 }

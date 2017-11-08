@@ -1,9 +1,6 @@
 package edu.xhu.mobilee.service.impl;
 
-import edu.xhu.mobilee.dao.CollectionDao;
-import edu.xhu.mobilee.dao.CommentDao;
-import edu.xhu.mobilee.dao.MobilePhoneDao;
-import edu.xhu.mobilee.dao.SaleDao;
+import edu.xhu.mobilee.dao.*;
 import edu.xhu.mobilee.entity.CollectionEntity;
 import edu.xhu.mobilee.entity.MobilePhoneEntity;
 import edu.xhu.mobilee.entity.UserEntity;
@@ -25,6 +22,8 @@ public class TouristServiceImpl implements TouristService{
     private SaleDao saleDao;
     @Autowired
     private CollectionDao collectionDao;
+    @Autowired
+    private UserDao userDao;
 
     @Transactional
     @Override
@@ -51,5 +50,10 @@ public class TouristServiceImpl implements TouristService{
         map.put("mobilePhone",mobilePhoneDao.selectMobile());
         map.put("newMobilePhone",mobilePhoneDao.selectNewMobilePhone());
         return map;
+    }
+
+    @Override
+    public long register(UserEntity userEntity) {
+        return userDao.insertUser(userEntity);
     }
 }

@@ -16,6 +16,10 @@
         <result property="edition" column="edition"/>
     </resultMap>
 
+    <insert id="insertUser" parameterType="UserEntity" keyProperty="id">
+        INSERT INTO t_user (name,password) VALUES (#{name},#{password})
+    </insert>
+
     <select id="findUserById" parameterType="long" resultMap="user">
         SELECT
             id,

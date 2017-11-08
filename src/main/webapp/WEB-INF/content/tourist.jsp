@@ -19,6 +19,7 @@
 
     <script src="<%=path%>/dist/jquery.min.js"></script>
     <script src="<%=path%>/dist/semantic.min.js"></script>
+    <script src="<%=path%>/js/util.js"></script>
     <link rel="stylesheet" type="text/css" href="<%=path%>/dist/semantic.css">
     <link rel="stylesheet" href="<%=path%>/css/general.css">
     <link rel="stylesheet" href="<%=path%>/css/tourist.css">
@@ -40,10 +41,10 @@
             </div>
         </div>
     </div><c:if test="${sessionScope.TOURIST_ID==null}">
-    <a class="ui item right floated" href="<%=path%>/tourist/welcome">登录</a></c:if><c:if test="${sessionScope.TOURIST_ID!=null}">
+    <div class="ui item right floated"><a class="item" href="<%=path%>/tourist/welcome">登录</a><div id="signUp" class="item">注册</div></div></c:if><c:if test="${sessionScope.TOURIST_ID!=null}">
     <div class="menu right" id="personal">
         <div class="ui dropdown item">
-            <img class="ui avatar image" src="<%=path%>/upload/admin/${sessionScope.TOURIST_ID}.jpg?a" onerror="javascript:this.src='<%=path%>/upload/timg.jpg'">
+            <img id="headPhoto" class="ui avatar image" src="<%=path%>/upload/user/${sessionScope.TOURIST_ID}.jpg?a" onerror="javascript:this.src='<%=path%>/upload/timg.jpg'">
             <span id="userName">${sessionScope.TOURIST_NAME}</span>
             <div class="menu">
                 <a class="item" modal="personalInformation"><i class="icon setting"></i> 个人信息</a>
@@ -73,26 +74,22 @@
         </div>
     </div>
     <div class="ui grid">
-        <div class="sixteen wide column">
-            <div class="ui raised segment four column grid"><c:forEach var="bean" items="${requestScope.data.mobilePhone}">
-                <div class="column">
-                    <div class="ui card" mobile_phone_id="${bean.id}">
-                        <div class="image">
-                            <img class="ui fluid image" src='<%=path%>/upload/mobilePhone/${bean.id}.jpg' onerror="javascript:this.src='<%=path%>/upload/mobilePhone/timg.jpg'">
-                        </div>
-                        <div class="ui floating red tag label">￥${bean.price}</div>
-                        <div class="content">
-                            <div class="header" style="text-align: center">${bean.name}</div>
-                            <span class="right floated">
-                              <i class="heart outline star icon"></i>
-                              ${bean.collection} 喜欢
-                            </span>
-                            <i class="comment icon"></i>
-                                ${bean.comment} 评论
-                        </div>
-                    </div>
-                </div></c:forEach>
-            </div>
+        <div class="ui four stackable cards"><c:forEach var="bean" items="${requestScope.data.mobilePhone}">
+            <div class="ui card" mobile_phone_id="${bean.id}">
+                <div class="image">
+                    <img class="ui fluid image" src='<%=path%>/upload/mobilePhone/${bean.id}.jpg' onerror="javascript:this.src='<%=path%>/upload/mobilePhone/timg.jpg'">
+                </div>
+                <div class="ui floating red tag label">￥${bean.price}</div>
+                <div class="content">
+                    <div class="header" style="text-align: center">${bean.name}</div>
+                    <span class="right floated">
+                      <i class="yellow star icon"></i>
+                      ${bean.collection} 收藏
+                    </span>
+                    <i class="comment icon"></i>
+                        ${bean.comment} 评论
+                </div>
+            </div></c:forEach>
         </div>
     </div>
 </div>
@@ -137,6 +134,124 @@
     </div>
 </div>
 
+
+<%--模态框 个人信息--%>
+<div class="ui first modal">
+    <div class="header">
+        详细信息
+    </div>
+    <div class="image content">
+        <form class="ui stackable  form two column grid" id="modal" style="width:100%">
+            <div class="field column">
+                <img id="myPicture" class="ui medium bordered  circular image" data-position="right center" data-title='点击更改图片', onerror="javascript:this.src='<%=path%>/upload/timg.jpg'" src="<%=path%>/upload/user/${sessionScope.TOURIST_ID}.jpg?a" id="myPicture" onclick="document.getElementById('file').click();"/>
+            </div>
+            <div class="field column">
+                <div class="ui items">
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui teal label">
+                                编号：
+                            </div>
+                            <input name="id" value="${sessionScope.TOURIST_ID}" readonly/>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui teal label">
+                                昵称：
+                            </div>
+                            <input name="name" value="${sessionScope.TOURIST_NAME}"/>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui teal label">
+                                密码：
+                            </div>
+                            <input name="password" type="password" value="${sessionScope.TOURIST_PASSWORD}"/>
+                        </div>
+                    </div>
+                    <input type="file" name="file" id="file" style="display: none" onchange="myUpload()">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            关闭
+        </div>
+        <div class="ui positive right labeled icon button" id="saveUser">
+            保存
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>
+
+<%--注册模态框 --%>
+<div class="ui register modal">
+    <div class="header">
+        详细信息
+    </div>
+    <div class="image content">
+        <form class="ui stackable  form two column grid" id="register" style="width:100%">
+            <div class="field column">
+                <div class="ui items">
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui teal label">
+                                注册昵称：
+                            </div>
+                            <input name="name" value=""/>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui teal label">
+                                输入密码：
+                            </div>
+                            <input name="password" type="password" value=""/>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui labeled input">
+                            <div class="ui teal label">
+                                确认密码：
+                            </div>
+                            <input name="confirm" type="password" value=""/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            关闭
+        </div>
+        <div class="ui positive right labeled icon button" id="submit">
+            提交
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>
+
+<%--模态框 反馈信息--%>
+<div class="ui small modal">
+    <div class="header">
+
+    </div>
+    <div class="ui icon header">
+
+    </div>
+
+    <div class="actions">
+        <div class="ui green ok inverted button">
+            <i class="checkmark icon"></i>
+            是
+        </div>
+    </div>
+</div>
+
 </body>
 <script>
 
@@ -146,8 +261,67 @@
         .dropdown()
     ;/*下拉菜单初始化*/
 
+
+    //模态框
+    $('.ui.first.modal').modal({
+        onDeny    : function(){
+            if($('#modal').hasClass('loading'))
+                return false;
+        },
+        onApprove : function() {
+            return false;
+        }
+    }) .modal('setting', 'closable', false)
+    //模态框
+    $('.ui.register.modal').modal({
+        onDeny    : function(){
+            if($('#modal').hasClass('loading'))
+                return false;
+        },
+        onApprove : function() {
+            return false;
+        }
+    }) .modal('setting', 'closable', false)
+    $('.small.modal')
+        .modal({
+            allowMultiple: true,
+            onApprove : function() {
+                $('#modal').removeClass('loading');
+            }
+        })
+        .modal('setting', 'closable', false)
+
     $('.ui.card').click(function () {
         window.open("<%=path%>/tourist/detail?id="+$(this).attr("mobile_phone_id"));
+    })
+
+    $("[modal='personalInformation']").click(function () {
+        $('.ui.first.modal')
+            .modal('show');
+    })
+
+    $('#submit').click(function () {
+        if($("#register input[name='password']").val()==$("#register input[name='confirm']").val()) {
+            $.post("/mobilee/tourist/register",
+                {
+                    password: $("#register input[name='password']").val(),
+                    name: $("#register input[name='name']").val(),
+                },function(data, status) {
+                    if (status != "success") {
+                        showToast("<i class='warning icon'></i>连接服务器失败！");
+                    }else {
+                        if(data.msg=="success"){
+                            showToast("<i class='archive icon'></i>注册成功,请牢记您的账号id:"+data.id);
+                        }else {
+                            showToast("<i class='remove circle outline icon'></i>"+data.msg);
+                        }
+                    }
+                });
+        }
+    })
+
+    $('#signUp').click(function () {
+        $('.ui.register.modal').modal('show')
     })
 
     function changeList(list) {
@@ -171,10 +345,34 @@
             "            </div>"
     }
 
+    $('#saveTourist').click(function () {
+        $('#modal').addClass('loading');
+        $.post("/mobilee/tourist/save",
+            {
+                id:$(".field.column [name='id']").val(),
+                name:$(".field.column [name='name']").val(),
+                password:$(".field.column [name='password']").val()},
+            function(data, status) {
+                if (status != "success") {
+                    showToast("<i class='warning icon'></i>连接服务器失败！");
+                }else {
+                    if(data.msg=="success"){
+                        showToast("<i class='archive icon'></i>保存成功");
+                        $('#adminName').text($(".field.column [name='name']").val());
+                        $('#myPicture').attr('src',"../upload/user/${sessionScope.TOURIST_ID}.jpg?"+Math.random());
+                        $('#headPhoto').attr('src',"../upload/user/${sessionScope.TOURIST_ID}.jpg?"+Math.random());
+                    }else {
+                        showToast("<i class='remove circle outline icon'></i>"+data.msg);
+                    }
+                }
+            });
+    })
+
     window.onload=alterSize();
 
     function alterSize(){
         $('.ui.fluid.image').outerHeight(5/4*$('.ui.fluid.image').outerWidth());
+        $('#myPicture').outerHeight($('#myPicture').outerWidth());
     }
 </script>
 </html>

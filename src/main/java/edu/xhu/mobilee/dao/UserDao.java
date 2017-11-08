@@ -14,4 +14,6 @@ public interface UserDao {
     int updateUserById(UserEntity userEntity);
 
     int deleteUser(List<String> id);
+
+    long insertUser(UserEntity userEntity);
 }
