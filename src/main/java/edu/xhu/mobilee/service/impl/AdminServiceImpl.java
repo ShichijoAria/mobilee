@@ -28,5 +28,11 @@ public class AdminServiceImpl implements AdminService{
         return adminDao.updateAdminById(adminEntity);
     }
 
+    @Override
+    public Map<String, Object> getStatistics() {
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("countTableRows",adminDao.CountTableRows());
+        return map;
+    }
 
 }
