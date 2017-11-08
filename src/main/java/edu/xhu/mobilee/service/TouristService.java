@@ -11,4 +11,6 @@ public interface TouristService {
     Map<String,Object> getMobilePhoneIndex();
 
     long register(UserEntity userEntity);
+
+    String userLogin(UserEntity userEntity);
 }
