@@ -371,7 +371,7 @@
     window.onload=alterSize();
 
     function alterSize(){
-        $('.ui.fluid.image').outerHeight(5/4*$('.ui.fluid.image').outerWidth());
+        $('.ui.fluid.image').outerHeight(4/3*$('.ui.fluid.image').outerWidth());
         $('#myPicture').outerHeight($('#myPicture').outerWidth());
     }
 </script>
