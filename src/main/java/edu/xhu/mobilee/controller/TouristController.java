@@ -48,14 +48,17 @@ public class TouristController {
             if (password != null && password.trim().length() < 6) {
                 msg = "用户密码不应少于6位";
             } else {
-                UserEntity temp = userService.findUserById(id);
+                UserEntity temp = new UserEntity();
+                temp.setId(id);
+                temp.setPassword(password);
+                String name=touristService.userLogin(temp);
                 if (temp != null && password.equals(temp.getPassword())) {
                     flag = true;
                 }
                 if (flag) {
-                    session.setAttribute("TOURIST_ID", temp.getId());
-                    session.setAttribute("TOURIST_NAME", temp.getName());
-                    session.setAttribute("TOURIST_PASSWORD", temp.getPassword());
+                    session.setAttribute("TOURIST_ID", id);
+                    session.setAttribute("TOURIST_NAME", name);
+                    session.setAttribute("TOURIST_PASSWORD", password);
                     msg = "success";
                 } else {
                     msg = "用户名或密码不正确";
