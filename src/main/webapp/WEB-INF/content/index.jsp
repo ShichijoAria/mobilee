@@ -116,7 +116,7 @@
         </div>
         <div class="pusher" style="height: 100%">
             <div class="ui segment" style="height: 100%">
-                <iframe class="" id="myframe" src="/SIS/desktop/welcome" height="95%" width="100%" frameborder="no" border="0" ></iframe>
+                <iframe class="" id="myframe" src="<%=path%>/admin/statistics" height="95%" width="100%" frameborder="no" border="0" ></iframe>
             </div>
         </div>
     </div>
