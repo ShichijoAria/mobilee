@@ -20,6 +20,14 @@
         INSERT INTO t_user (name,password) VALUES (#{name},#{password})
     </insert>
 
+    <select id="userLogin" parameterType="UserEntity" resultType="String">
+     <![CDATA[
+        {
+              CALL p_user_login(#{id},#{password})
+        }
+        ]]>
+    </select>
+
     <select id="findUserById" parameterType="long" resultMap="user">
         SELECT
             id,

@@ -24,4 +24,11 @@
         WHERE id = #{id}
     </update>
 
+    <select id="CountTableRows" resultType="HashMap">
+        SELECT (SELECT count(*) FROM t_user) count_user,
+               (SELECT count(*) FROM t_admin) count_admin,
+               (SELECT count(*) FROM t_manufacturer) count_manufacturer,
+               (SELECT count(*) FROM t_mobile_phone) count_mobile_phone,
+               (SELECT count(*) FROM t_sale) count_sale;
+    </select>
 </mapper>

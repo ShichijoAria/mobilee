@@ -56,4 +56,9 @@ public class TouristServiceImpl implements TouristService{
     public long register(UserEntity userEntity) {
         return userDao.insertUser(userEntity);
     }
+
+    @Override
+    public String userLogin(UserEntity userEntity) {
+        return userDao.userLogin(userEntity);
+    }
 }

@@ -11,4 +11,6 @@ public interface AdminService {
     AdminEntity findAdminById(long id);
 
     int updateAdminById(AdminEntity adminEntity);
+
+    Map<String,Object> getStatistics();
 }

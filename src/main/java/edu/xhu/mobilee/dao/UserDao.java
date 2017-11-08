@@ -16,4 +16,6 @@ public interface UserDao {
     int deleteUser(List<String> id);
 
     long insertUser(UserEntity userEntity);
+
+    String userLogin(UserEntity userEntity);
 }
