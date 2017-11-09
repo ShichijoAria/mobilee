@@ -112,7 +112,7 @@
                 <input type="text" readonly name="name">
             </div>
             <div class="field column">
-                <label>管理元密码</label>
+                <label>管理员密码</label>
                 <input type="password" readonly name="password">
             </div>
             <input type="text" style="display: none" name="edition">
