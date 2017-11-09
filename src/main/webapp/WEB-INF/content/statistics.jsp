@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String path = request.getContextPath();
 %>
@@ -16,13 +16,16 @@
     <title>Title</title>
     <script src="<%=path%>/dist/jquery.min.js"></script>
     <script src="<%=path%>/dist/semantic.min.js"></script>
-    <script src="<%=path%>/dist/echarts.js"></script>
+    <script src="<%=path%>/dist/echarts-all-3.js"></script>
     <link rel="stylesheet" href="<%=path%>/dist/semantic.css">
 </head>
 <body style="height: 100%">
-<div class="ui two column grid stackable"></div>
-<div class="column" id="countTableRows" style="width: 100%;height: 100%;background-color: #0d71bb"></div>
+<div class="ui two column grid stackable" style="min-height: 100%;">
+    <div class="column" id="countTableRows" style="background-color: #0d71bb;"></div>
+    <div class="column" id="loginLog"></div>
+</div>
 <script>
+
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('countTableRows'));
     // 指定图表的配置项和数据
@@ -104,6 +107,101 @@
     };
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
+
+    var loginLog = echarts.init(document.getElementById('loginLog'));
+
+    var loginLogOption = {
+        title: {
+            text: '最近登录数'
+        },
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            },
+            feature: {
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        legend: {
+            data:['登录次数']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+                data : [
+                    <c:forEach items="${requestScope.statistics.loginLog}" var="bean" varStatus="stat">
+                    '${bean.day}'<c:if test="${!stat.last}">,</c:if>
+                    </c:forEach>
+                ]
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        dataZoom: [{
+
+        }, {
+            type: 'inside'
+        }],
+
+        series : [
+            {
+                name:'登录次数',
+                type:'line',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgb(255, 158, 68)'
+                        }, {
+                            offset: 1,
+                            color: 'rgb(255, 70, 131)'
+                        }])
+                    }
+                },
+                data:[
+                    <c:forEach items="${requestScope.statistics.loginLog}" var="bean" varStatus="stat">
+                    ${bean.count}<c:if test="${!stat.last}">,</c:if>
+                    </c:forEach>
+                ],
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+
+    loginLog.setOption(loginLogOption);
+
 </script>
 </body>
 </html>

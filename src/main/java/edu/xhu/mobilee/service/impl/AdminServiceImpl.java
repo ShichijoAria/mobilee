@@ -32,6 +32,8 @@ public class AdminServiceImpl implements AdminService{
     public Map<String, Object> getStatistics() {
         Map<String,Object> map=new HashMap<String, Object>();
         map.put("countTableRows",adminDao.CountTableRows());
+        map.put("loginLog",adminDao.getLoginLog());
+        map.put("maxTenComment",adminDao.getMaxTenComment());
         return map;
     }
 

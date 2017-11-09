@@ -31,4 +31,13 @@
                (SELECT count(*) FROM t_mobile_phone) count_mobile_phone,
                (SELECT count(*) FROM t_sale) count_sale;
     </select>
+
+    <select id="getLoginLog" resultType="HashMap">
+        SELECT DATE_FORMAT(created,'%Y/%m/%d') day,  count(*) count FROM t_login_log GROUP BY day;
+    </select>
+
+    <select id="getMaxTenComment" resultType="HashMap">
+        SELECT m.id,count(*) comment FROM t_mobile_phone m JOIN t_comment c ON m.id=c.mobile_phone GROUP BY m.id ORDER BY comment DESC LIMIT 0,10;
+    </select>
+
 </mapper>
