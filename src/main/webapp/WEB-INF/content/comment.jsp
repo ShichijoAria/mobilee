@@ -63,6 +63,11 @@
         </h2>
         <div  id="menu">
             <div class="ui small menu">
+                <div class="left menu">
+                    <div class="item">
+                        <div class="ui red button" id="delete">删除</div>
+                    </div>
+                </div>
                 <div class="right menu">
                     <div class="item">
                         <div id="search" class="ui teal icon button">
