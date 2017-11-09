@@ -112,7 +112,7 @@ public class AdminController {
                 "admin.name admin_name");
         if(adminEntity!=null) {
             if (adminEntity.getName() != null)
-                where += "and adminEntity.name like '%" + adminEntity.getName() + "%'";
+                where += "and admin.name like '%" + adminEntity.getName() + "%'";
             if (adminEntity.getId() >0 )
                 where += "and admin.id = " + adminEntity.getId();
         }

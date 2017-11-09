@@ -221,68 +221,68 @@
     </div>
     <div class="image content">
         <form class="ui stackable  form three column grid" id="newModal" style="width: 100%">
-            <div class="field column">
+            <div class="field column required">
                 <label>手机名称</label>
                 <input type="text" name="name">
             </div>
-            <div class="field column">
+            <div class="field column required">
                 <label>cpu</label>
                 <input type="text" name="cpu">
             </div>
-            <div class="field column">
+            <div class="field column required">
                 <label>运行内存</label>
                 <div class="ui right labeled input">
                     <input type="number" name="memory">
                     <div class="ui basic label">GB</div>
                 </div>
             </div>
-            <div class="field column">
+            <div class="field column required">
                 <label>存储容量</label>
                 <div class="ui right labeled input">
                     <input type="number" name="storage" >
                     <div class="ui basic label">GB</div>
                 </div>
             </div>
-            <div class="field column">
+            <div class="field column required">
                 <label>手机价格</label>
                 <div class="ui labeled input">
                     <div class="ui label">￥</div>
                     <input type="number" name="price">
                 </div>
             </div>
-            <div class="field column">
+            <div class="field column required">
                 <label>开售时间</label>
                 <input type="text" date="true" readonly name="listTime">
             </div>
-            <div class="field column">
+            <div class="field column required">
                 <label>尺寸</label>
                 <div class="ui right labeled input">
                     <input type="text" name="size">
                     <div class="ui basic label">寸</div>
                 </div>
             </div>
-            <div class="field column">
+            <div class="field column required">
                 <label>长</label>
                 <div class="ui right labeled input">
                     <input type="text" name="length">
                     <div class="ui basic label">cm</div>
                 </div>
             </div>
-            <div class="field column">
+            <div class="field column required">
                 <label>宽</label>
                 <div class="ui right labeled input">
                     <input type="text" name="width">
                     <div class="ui basic label">cm</div>
                 </div>
             </div>
-            <div class="field column">
+            <div class="field column required">
                 <label>高</label>
                 <div class="ui right labeled input">
                     <input type="text" name="height">
                     <div class="ui basic label">cm</div>
                 </div>
             </div>
-            <div class="field column">
+            <div class="field column required">
                 <label>出品厂商</label>
                 <select class="ui search selection dropdown" name="manufacturer.id">
                     <option value="0">&nbsp;</option>

@@ -159,14 +159,18 @@ function generatePagination(total,curPage,viewName) {
             array.push(curPage - 1)
         }
         if(curPage!=total-1) {
-            if(curPage!=2)
+            if(curPage!=2) {
                 array.push(curPage);
+            }
             array.push(curPage + 1);
             if(curPage<total-2) {
                 array.push(0);
             }
         }else {
-            array.push(curPage);
+            if(curPage==2) {
+
+            }else
+                array.push(curPage);
         }
         array.push(total);
     }else if(total==3){

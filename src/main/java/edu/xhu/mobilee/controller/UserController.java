@@ -67,9 +67,9 @@ public class UserController {
         if(userEntity!=null) {
             if (userEntity.getGender() != null && userEntity.getGender() != 0) {
                 if (userEntity.getGender() == 1)
-                    where += "and user.gender= 1";
+                    where += "and user.gender= 1 ";
                 else
-                    where += "and user.gender= 2";
+                    where += "and user.gender= 2 ";
             }
             if (userEntity.getName() != null)
                 where += "and user.name like '%" + userEntity.getName() + "%'";
@@ -111,7 +111,6 @@ public class UserController {
         dataMap.put("msg",msg);
         return dataMap;
     }
-
 
     @RequestMapping(value = "delete",method = RequestMethod.POST)
     @ResponseBody
