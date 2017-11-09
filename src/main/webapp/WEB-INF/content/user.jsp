@@ -140,7 +140,7 @@
             </div>
             <div class="field column">
                 <label>用户编号</label>
-                <input type="number" name="id">
+                <input type="number" readonly name="id">
             </div>
             <div class="field column">
                 <label>用户姓名</label>

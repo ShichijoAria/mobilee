@@ -121,7 +121,7 @@
             </div>
             <div class="field column">
                 <label>厂商编号</label>
-                <input type="number" name="id">
+                <input type="number" readonly name="id">
             </div>
             <div class="field column">
                 <label>厂商名称</label>

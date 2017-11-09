@@ -108,7 +108,7 @@
         <form class="ui stackable  form three column grid" id="modal" style="width: 100%">
             <div class="field column">
                 <label>收藏编号</label>
-                <input type="number" name="id">
+                <input type="number" readonly name="id">
             </div>
             <div class="field column">
                 <label>用户姓名</label>

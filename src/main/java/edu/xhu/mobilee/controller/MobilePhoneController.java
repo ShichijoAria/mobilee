@@ -60,21 +60,19 @@ public class MobilePhoneController {
         paramMap.put("pageIndex",pageIndex);
         paramMap.put("fields", "mobile_phone.id mobile_phone_id," +
                 "mobile_phone.name mobile_phone_name," +
-                "date_format(mobile_phone.list_time,'%Y/%m/%d %H:%i') mobile_phone_list_time," +
-                "admin.name mobile_phone_author");
-        where+="and mobile_phone.author=admin.id and mobile_phone.manufacturer = manufacturer.id";
+                "date_format(mobile_phone.list_time,'%Y/%m/%d %H:%i') mobile_phone_list_time, " +
+                "admin.name mobile_phone_author ");
+        where+=" mobile_phone.author=admin.id and mobile_phone.manufacturer = manufacturer.id ";
         if(mobilePhoneEntity!=null) {
             if (mobilePhoneEntity.getName() != null)
-                where += "and mobile_phone.name like '%" + mobilePhoneEntity.getName() + "%'";
+                where += " and mobile_phone.name like '%" + mobilePhoneEntity.getName() + "%'";
             if (mobilePhoneEntity.getId() >0 )
-                where += "and mobile_phone.id = " + mobilePhoneEntity.getId();
+                where += " and mobile_phone.id = " + mobilePhoneEntity.getId();
             if(mobilePhoneEntity.getAuthor()!=null) {
                 if (mobilePhoneEntity.getAuthor().getName() != null)
                     where += "and admin.name like '%" + mobilePhoneEntity.getAuthor().getName() + "%'";
             }
         }
-        if (where.length()>3)
-            where=where.substring(3);
         paramMap.put("where",where);
         paramMap.put("orderBy",orderBy+" "+sequence);
         paramMap.put("pageSize", Proper.pageSize());
