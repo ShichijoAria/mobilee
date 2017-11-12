@@ -33,7 +33,7 @@
             <div class="field">
                 <div class="ui mini left icon input">
                     <i class="user icon"></i>
-                    <input type="text" name="id" placeholder="账号">
+                    <input type="text" name="id" placeholder="账号" onkeyup="return validateInteger($(this),value)" onchange="return validateInteger($(this),value)">
                 </div>
             </div>
             <div class="field">

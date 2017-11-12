@@ -1,5 +1,14 @@
 "use strict"
 
+//验证整数
+function validateInteger(e,value) {
+    if (!/^\d+$/.test(value)){
+        $(e).val(/^\d+/.exec($(e).val()));
+    }
+    return false;
+}
+
+
 //通用功能初始化
 function init() {
     $('#saveEntity').click(function () {
