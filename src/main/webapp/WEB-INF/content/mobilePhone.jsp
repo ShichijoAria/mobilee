@@ -115,8 +115,8 @@
         <form class="ui stackable  form three column grid" id="modal" style="width: 100%">
             <div class="row">
                 <div class="field column">
-                    <label>头像</label>
-                    <img class="ui medium bordered  circular image" data-position="right center" data-title='点击更改图片' onerror="javascript:this.src='../upload/timg.jpg'" src="" id="myPicture" />
+                    <label>图片</label>
+                    <img class="ui medium bordered  image" data-position="right center" data-title='点击更改图片' onerror="javascript:this.src='../upload/timg.jpg'" src="" id="myPicture" />
                 </div>
             </div>
             <div class="field column">
@@ -172,21 +172,21 @@
                 <label>长</label>
                 <div class="ui right labeled input">
                     <input type="text" name="length">
-                    <div class="ui basic label">cm</div>
+                    <div class="ui basic label">mm</div>
                 </div>
             </div>
             <div class="field column">
                 <label>宽</label>
                 <div class="ui right labeled input">
                     <input type="text" name="width">
-                    <div class="ui basic label">cm</div>
+                    <div class="ui basic label">mm</div>
                 </div>
             </div>
             <div class="field column">
                 <label>高</label>
                 <div class="ui right labeled input">
                     <input type="text" name="height">
-                    <div class="ui basic label">cm</div>
+                    <div class="ui basic label">mm</div>
                 </div>
             </div>
             <div class="field column">
@@ -265,21 +265,21 @@
                 <label>长</label>
                 <div class="ui right labeled input">
                     <input type="text" name="length">
-                    <div class="ui basic label">cm</div>
+                    <div class="ui basic label">mm</div>
                 </div>
             </div>
             <div class="field column required">
                 <label>宽</label>
                 <div class="ui right labeled input">
                     <input type="text" name="width">
-                    <div class="ui basic label">cm</div>
+                    <div class="ui basic label">mm</div>
                 </div>
             </div>
             <div class="field column required">
                 <label>高</label>
                 <div class="ui right labeled input">
                     <input type="text" name="height">
-                    <div class="ui basic label">cm</div>
+                    <div class="ui basic label">mm</div>
                 </div>
             </div>
             <div class="field column required">

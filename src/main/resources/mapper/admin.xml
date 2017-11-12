@@ -37,7 +37,13 @@
     </select>
 
     <select id="getMaxTenComment" resultType="HashMap">
-        SELECT m.id,count(*) comment FROM t_mobile_phone m JOIN t_comment c ON m.id=c.mobile_phone GROUP BY m.id ORDER BY comment DESC LIMIT 0,10;
+        SELECT m.id,m.name,count(*) comment FROM t_mobile_phone m JOIN t_comment c ON m.id=c.mobile_phone GROUP BY m.id ORDER BY comment DESC LIMIT 0,10;
+    </select>
+
+    <select id="getCommentAndCollection" resultType="HashMap">
+        SELECT m.id,m.name,(SELECT count(*)FROM t_comment com WHERE com.mobile_phone=m.id) comment,
+            (SELECT count(*)FROM t_collection con WHERE con.mobile_phone=m.id) collection
+        FROM t_mobile_phone m
     </select>
 
 </mapper>

@@ -5,3 +5,5 @@ CREATE TABLE mobilee.t_admin
     password varchar(18) DEFAULT '123456' COMMENT '密码'
 );
 INSERT INTO mobilee.t_admin (id, name, password) VALUES (1, '龙傲天', '123456');
+INSERT INTO mobilee.t_admin (id, name, password) VALUES (2, '叶良辰d', '123456');
+INSERT INTO mobilee.t_admin (id, name, password) VALUES (3, '赵日天', '123456');

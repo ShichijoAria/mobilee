@@ -126,10 +126,7 @@
         </div>
         <div class="ui inverted section divider"></div>
         <div class="ui horizontal inverted small divided link list">
-            <a class="item" href="#">Site Map</a>
-            <a class="item" href="#">Contact Us</a>
-            <a class="item" href="#">Terms and Conditions</a>
-            <a class="item" href="#">Privacy Policy</a>
+            <a class="item" href="#">联系我们</a>
         </div>
     </div>
 </div>
@@ -143,7 +140,7 @@
     <div class="image content">
         <form class="ui stackable  form two column grid" id="modal" style="width:100%">
             <div class="field column">
-                <img id="myPicture" class="ui medium bordered  circular image" data-position="right center" data-title='点击更改图片', onerror="javascript:this.src='<%=path%>/upload/timg.jpg'" src="<%=path%>/upload/user/${sessionScope.TOURIST_ID}.jpg?a" id="myPicture" onclick="document.getElementById('file').click();"/>
+                <img id="myPicture" class="ui medium bordered  circular image" data-position="right center" data-title='点击更改图片', onerror="javascript:this.src='<%=path%>/upload/timg.jpg'" src="<%=path%>/upload/user/${sessionScope.TOURIST_ID}.jpg?a" id="myPicture" onclick="document.getElementById('headPortrait').click();"/>
             </div>
             <div class="field column">
                 <div class="ui items">
@@ -171,7 +168,7 @@
                             <input name="password" type="password" value="${sessionScope.TOURIST_PASSWORD}"/>
                         </div>
                     </div>
-                    <input type="file" name="file" id="file" style="display: none" onchange="myUpload()">
+                    <input type="file" name="headPortrait" id="headPortrait" style="display: none" onchange="myUpload()">
                 </div>
             </div>
         </form>
@@ -373,6 +370,36 @@
     function alterSize(){
         $('.ui.fluid.image').outerHeight(4/3*$('.ui.fluid.image').outerWidth());
         $('#myPicture').outerHeight($('#myPicture').outerWidth());
+    }
+
+    function myUpload() {
+        $('#modal').addClass('loading');
+        var formData = new FormData($( "#modal" )[0]);
+        $.ajax({
+            url: "upload?id="+$("input[name='id']").val(),
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if(data.msg=="success"){
+                    $('#modal').removeClass('loading');
+                    showToast("<i class='upload icon'></i>上传成功");
+                    $('#myPicture').attr('src',"../upload/user/${sessionScope.USER_ID}.jpg?"+Math.random())
+                    $('.ui.avatar.image').attr('src',"../upload/user/${sessionScope.USER_ID}.jpg?"+Math.random());
+                }else {
+                    $('#modal').removeClass('loading');
+                    showToast("<i class='remove circle outline icon'></i>"+data.msg);
+                }
+
+            },
+            error: function (data) {
+                $('#modal').removeClass('loading');
+                showToast("<i class='warning icon'></i>连接服务器失败！");
+            }
+        });
     }
 </script>
 </html>

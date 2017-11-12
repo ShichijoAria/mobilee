@@ -15,3 +15,4 @@ CREATE INDEX t_sell_t_admin_id_fk ON mobilee.t_sell (author);
 CREATE INDEX t_sell_t_mobile_phone_id_fk ON mobilee.t_sell (mobile_phone);
 CREATE INDEX t_sell_t_sale_id_fk ON mobilee.t_sell (sale);
 INSERT INTO mobilee.t_sell (id, price, mobile_phone, sale, author, created, edtion) VALUES (1, 0, 1, 1, 1, '2017-11-04 14:55:33', 0);
+INSERT INTO mobilee.t_sell (id, price, mobile_phone, sale, author, created, edtion) VALUES (2, 1500, 1, 2, 1, '2017-11-06 16:59:55', 0);

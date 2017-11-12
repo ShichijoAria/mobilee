@@ -158,7 +158,7 @@
                             <input name="password" value="${sessionScope.USER_PASSWORD}"/>
                         </div>
                     </div>
-                    <input type="file" name="file" id="file" style="display: none" onchange="myUpload()">
+                    <input type="file" name="headPortrait" id="file" style="display: none" onchange="myUpload()">
                 </div>
             </div>
         </form>
@@ -334,9 +334,9 @@
 
     function myUpload() {
         $('#modal').addClass('loading');
-        var formData = new FormData($( "form" )[0]);
+        var formData = new FormData($( "#modal" )[0]);
         $.ajax({
-            url: "upload?fileId="+$("input[name='id']").val(),
+            url: "upload",
             type: 'POST',
             data: formData,
             async: false,

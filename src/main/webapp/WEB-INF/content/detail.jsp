@@ -368,10 +368,7 @@
         </div>
         <div class="ui inverted section divider"></div>
         <div class="ui horizontal inverted small divided link list">
-            <a class="item" href="#">Site Map</a>
-            <a class="item" href="#">Contact Us</a>
-            <a class="item" href="#">Terms and Conditions</a>
-            <a class="item" href="#">Privacy Policy</a>
+            <a class="item" href="#">联系我们</a>
         </div>
     </div>
 </div

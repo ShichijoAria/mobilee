@@ -33,7 +33,7 @@ public class AdminServiceImpl implements AdminService{
         Map<String,Object> map=new HashMap<String, Object>();
         map.put("countTableRows",adminDao.CountTableRows());
         map.put("loginLog",adminDao.getLoginLog());
-        map.put("maxTenComment",adminDao.getMaxTenComment());
+        map.put("commentAndCollection",adminDao.getCommentAndCollection());
         return map;
     }
 

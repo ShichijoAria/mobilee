@@ -5,14 +5,17 @@ import edu.xhu.mobilee.entity.CommentEntity;
 import edu.xhu.mobilee.entity.MobilePhoneEntity;
 import edu.xhu.mobilee.entity.UserEntity;
 import edu.xhu.mobilee.service.*;
+import edu.xhu.mobilee.util.Upload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -156,6 +159,16 @@ public class TouristController {
             dataMap.put("id",userEntity.getId());
         }
         dataMap.put("msg",msg);
+        return dataMap;
+    }
+
+    @RequestMapping(value = "upload", method = RequestMethod.POST)
+    @ResponseBody
+    public Map upload(HttpServletRequest request, @RequestParam("headPortrait") MultipartFile file, @RequestParam("id") long id) {
+        Map dataMap = new HashMap<String, Object>();
+        String msg="上传失败";
+        msg= Upload.uploadJpg(file,request,id,"user");
+        dataMap.put("msg", msg);
         return dataMap;
     }
 }
