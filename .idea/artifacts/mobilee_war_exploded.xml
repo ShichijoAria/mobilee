@@ -19,11 +19,6 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.0.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:5.0.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:5.0.1.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:5.0.0.RC1" />
-          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-taglibs:5.0.0.RC1" />
-          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-acl:5.0.0.RC1" />
-          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:5.0.0.RC1" />
-          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-config:5.0.0.RC1" />
           <element id="library" level="project" name="Maven: org.springframework:spring-orm:5.0.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.4.5" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.3.1" />
