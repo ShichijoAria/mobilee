@@ -6,6 +6,12 @@ import edu.xhu.mobilee.entity.MobilePhoneEntity;
 import edu.xhu.mobilee.entity.UserEntity;
 import edu.xhu.mobilee.service.*;
 import edu.xhu.mobilee.util.Upload;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +37,40 @@ public class TouristController {
     private UserService userService;
     @Autowired
     private CommentService commentService;
+
     @Autowired
     private CollectionService collectionService;
+
+    private String shiroLogin(UserEntity userEntity) {
+        UsernamePasswordToken token = new UsernamePasswordToken(String.valueOf(userEntity.getId()), userEntity.getPassword().toCharArray());
+        try {
+            SecurityUtils.getSubject().login(token);
+        } catch (UnknownAccountException ex) {
+            return "用户不存在或者密码错误！";
+        } catch (IncorrectCredentialsException ex) {
+            return "用户不存在或者密码错误！";
+        } catch (AuthenticationException ex) {
+            return ex.getMessage(); // 自定义报错信息
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "内部错误，请重试！";
+        }
+        return "SUCCESS";
+    }
+
+    private boolean isLogin(UserEntity userEntity) {
+        Subject us = SecurityUtils.getSubject();
+        if (us.isAuthenticated()) {
+            return true; // 参数未改变，无需重新登录，默认为已经登录成功
+        }
+        return false; // 需要重新登陆
+    }
+
+    private String userLogin(UserEntity userEntity) {
+        if (this.isLogin(userEntity))
+            return "SUCCESS";
+        return shiroLogin(userEntity);
+    }
 
     @RequestMapping("welcome")
     public ModelAndView welcome(){
@@ -45,8 +83,7 @@ public class TouristController {
     @ResponseBody
     public Map login(@RequestParam(value = "id",defaultValue = "0") long id, @RequestParam("password") String password, HttpSession session) {
         Map<String,Object> dataMap = new HashMap<String, Object>();
-        boolean flag=false;
-        String msg;
+        String msg=null;
         if(id>0) {
             if (password != null && password.trim().length() < 6) {
                 msg = "用户密码不应少于6位";
@@ -54,17 +91,8 @@ public class TouristController {
                 UserEntity temp = new UserEntity();
                 temp.setId(id);
                 temp.setPassword(password);
-                String name=touristService.userLogin(temp);
-                if (temp != null && password.equals(temp.getPassword())) {
-                    flag = true;
-                }
-                if (flag) {
-                    session.setAttribute("TOURIST_ID", id);
-                    session.setAttribute("TOURIST_NAME", name);
-                    session.setAttribute("TOURIST_PASSWORD", password);
+                if (this.userLogin(temp) == "SUCCESS") {
                     msg = "success";
-                } else {
-                    msg = "用户名或密码不正确";
                 }
             }
         }else {

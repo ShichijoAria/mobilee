@@ -4,10 +4,7 @@ import javax.annotation.Resource;
 
 import com.alibaba.fastjson.JSON;
 import edu.xhu.mobilee.dao.*;
-import edu.xhu.mobilee.entity.AdminEntity;
-import edu.xhu.mobilee.entity.CollectionEntity;
-import edu.xhu.mobilee.entity.ManufacturerEntity;
-import edu.xhu.mobilee.entity.MobilePhoneEntity;
+import edu.xhu.mobilee.entity.*;
 import edu.xhu.mobilee.service.CollectionService;
 import edu.xhu.mobilee.service.MobilePhoneService;
 import org.apache.log4j.Logger;
@@ -30,6 +27,8 @@ public class TestMyBatis {
 //  private ApplicationContext ac = null;  
     @Resource  
     private ProcedureDao procedureDao = null;
+    @Resource
+    private UserDao userDao=null;
     @Resource
     private ManufacturerDao manufacturerDao = null;
     @Resource
@@ -106,7 +105,10 @@ public class TestMyBatis {
 
     @Test
     public void test8(){
-
+        UserEntity userEntity=new UserEntity();
+        userEntity.setId(15);
+        userEntity.setPassword("123456");
+        System.out.printf("aaa"+userDao.userLogin(userEntity)+"bb");
     }
 
 }  

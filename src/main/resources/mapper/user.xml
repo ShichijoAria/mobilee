@@ -20,7 +20,7 @@
         INSERT INTO t_user (name,password) VALUES (#{name},#{password})
     </insert>
 
-    <select id="userLogin" parameterType="UserEntity" resultType="String">
+    <select id="userLogin" parameterType="UserEntity" resultMap="user">
      <![CDATA[
         {
               CALL p_user_login(#{id},#{password})

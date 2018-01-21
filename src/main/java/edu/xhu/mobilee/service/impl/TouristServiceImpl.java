@@ -58,7 +58,7 @@ public class TouristServiceImpl implements TouristService{
     }
 
     @Override
-    public String userLogin(UserEntity userEntity) {
+    public UserEntity userLogin(UserEntity userEntity) {
         return userDao.userLogin(userEntity);
     }
 }

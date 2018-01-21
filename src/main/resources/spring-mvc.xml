@@ -20,13 +20,13 @@
     </bean>
 
     <!-- 拦截器 -->
-    <mvc:interceptors>
-        <!-- 多个拦截器，顺序执行 -->
+   <!-- <mvc:interceptors>
+        &lt;!&ndash; 多个拦截器，顺序执行 &ndash;&gt;
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <bean class="edu.xhu.mobilee.interceptor.LoginInterceptor"></bean>
         </mvc:interceptor>
-    </mvc:interceptors>
+    </mvc:interceptors>-->
 
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
