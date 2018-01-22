@@ -17,5 +17,5 @@ public interface UserDao {
 
     long insertUser(UserEntity userEntity);
 
-    UserEntity userLogin(UserEntity userEntity);
+    UserEntity userLogin(String temp,String password,int type);
 }

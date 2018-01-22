@@ -5,6 +5,7 @@ import edu.xhu.mobilee.entity.CommentEntity;
 import edu.xhu.mobilee.entity.MobilePhoneEntity;
 import edu.xhu.mobilee.entity.UserEntity;
 import edu.xhu.mobilee.service.*;
+import edu.xhu.mobilee.shiro.CustomizedToken;
 import edu.xhu.mobilee.util.Upload;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -42,9 +43,9 @@ public class TouristController {
     private CollectionService collectionService;
 
     private String shiroLogin(UserEntity userEntity) {
-        UsernamePasswordToken token = new UsernamePasswordToken(String.valueOf(userEntity.getId()), userEntity.getPassword().toCharArray());
+        CustomizedToken customizedToken = new CustomizedToken(userEntity.getName(), userEntity.getPassword().toCharArray(),"user");
         try {
-            SecurityUtils.getSubject().login(token);
+            SecurityUtils.getSubject().login(customizedToken);
         } catch (UnknownAccountException ex) {
             return "用户不存在或者密码错误！";
         } catch (IncorrectCredentialsException ex) {

@@ -59,6 +59,11 @@ public class TouristServiceImpl implements TouristService{
 
     @Override
     public UserEntity userLogin(UserEntity userEntity) {
-        return userDao.userLogin(userEntity);
+        if (userEntity.getName()!=null)
+            return userDao.userLogin(userEntity.getName(),userEntity.getPassword(),0);
+        else if (userEntity.getPhone()!=null)
+            return userDao.userLogin(userEntity.getPhone(),userEntity.getPassword(),0);
+        else
+            return userDao.userLogin(userEntity.getEmail(),userEntity.getPassword(),0);
     }
 }

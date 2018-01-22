@@ -34,7 +34,7 @@
         </property>-->
     </bean>
 
-    <bean id="myRealm" class="edu.xhu.mobilee.shiro.MyRealm"></bean>
+    <bean id="myRealm" class="edu.xhu.mobilee.shiro.UserRealm"></bean>
     <!-- Define any javax.servlet.Filter beans you want anywhere in this application context.   -->
     <!-- They will automatically be acquired by the 'shiroFilter' bean above and made available -->
     <!-- to the 'filterChainDefinitions' property.  Or you can manually/explicitly add them     -->

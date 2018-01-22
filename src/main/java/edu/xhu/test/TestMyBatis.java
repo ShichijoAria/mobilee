@@ -30,6 +30,8 @@ public class TestMyBatis {
     @Resource
     private UserDao userDao=null;
     @Resource
+    private AdminDao adminDao=null;
+    @Resource
     private ManufacturerDao manufacturerDao = null;
     @Resource
     private OptionDao optionDao;
@@ -105,10 +107,11 @@ public class TestMyBatis {
 
     @Test
     public void test8(){
-        UserEntity userEntity=new UserEntity();
-        userEntity.setId(15);
-        userEntity.setPassword("123456");
-        System.out.printf("aaa"+userDao.userLogin(userEntity)+"bb");
+        System.out.printf("aaa"+userDao.userLogin("卡fd","123456",0)+"bb");
     }
 
+    @Test
+    public void test9(){
+        System.out.printf("aaa"+adminDao.adminLogin("龙傲天","123456",0)+"bb");
+    }
 }  

@@ -19,4 +19,6 @@ public interface AdminDao {
     List<HashMap<String,Object>> getMaxTenComment();
 
     List<HashMap<String,Object>> getCommentAndCollection();
+
+    AdminEntity adminLogin(String temp,String password,int type);
 }

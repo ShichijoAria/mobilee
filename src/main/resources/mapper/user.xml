@@ -5,25 +5,25 @@
 <mapper namespace="edu.xhu.mobilee.dao.UserDao">
 
     <resultMap type="UserEntity" id="user">
-        <id property="id" column="id" />
-        <result property="name" column="name" />
-        <result property="password" column="password" />
-        <result property="gender" column="gender" />
-        <result property="created" column="created"/>
-        <result property="birthday" column="birthday"/>
-        <result property="phone" column="phone"/>
-        <result property="email" column="email"/>
-        <result property="edition" column="edition"/>
+        <id property="id" column="t_id" />
+        <result property="name" column="t_name" />
+        <result property="password" column="t_password" />
+        <result property="gender" column="t_gender" />
+        <result property="created" column="t_created"/>
+        <result property="birthday" column="t_birthday"/>
+        <result property="phone" column="t_phone"/>
+        <result property="email" column="t_email"/>
+        <result property="edition" column="t_edition"/>
     </resultMap>
 
     <insert id="insertUser" parameterType="UserEntity" keyProperty="id">
         INSERT INTO t_user (name,password) VALUES (#{name},#{password})
     </insert>
 
-    <select id="userLogin" parameterType="UserEntity" resultMap="user">
+    <select id="userLogin" resultMap="user">
      <![CDATA[
         {
-              CALL p_user_login(#{id},#{password})
+              CALL p_user_login(#{param1},#{param2},#{param3})
         }
         ]]>
     </select>

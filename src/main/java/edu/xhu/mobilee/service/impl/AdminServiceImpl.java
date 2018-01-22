@@ -37,4 +37,14 @@ public class AdminServiceImpl implements AdminService{
         return map;
     }
 
+    @Override
+    public AdminEntity adminLogin(AdminEntity adminEntity) {
+        if (adminEntity.getName()!=null)
+            return adminDao.adminLogin(adminEntity.getName(),adminEntity.getPassword(),0);
+        else if (adminEntity.getPhone()!=null)
+            return adminDao.adminLogin(adminEntity.getPhone(),adminEntity.getPassword(),0);
+        else
+            return adminDao.adminLogin(adminEntity.getEmail(),adminEntity.getPassword(),0);
+    }
+
 }

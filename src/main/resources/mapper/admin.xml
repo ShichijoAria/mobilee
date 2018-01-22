@@ -8,8 +8,22 @@
         <id property="id" column="id" />
         <result property="name" column="name" />
         <result property="password" column="password" />
+        <result property="gender" column="t_gender" />
+        <result property="created" column="t_created"/>
+        <result property="phone" column="t_phone"/>
+        <result property="email" column="t_email"/>
+        <result property="edition" column="t_edition"/>
     </resultMap>
     <!-- 目的：为dao接口方法提供sql语句配置 -->
+
+    <select id="adminLogin" resultMap="admin">
+        <![CDATA[
+        {
+              CALL p_admin_login(#{param1},#{param2},#{param3})
+        }
+        ]]>
+    </select>
+
     <select id="findAdminById" parameterType="long" resultType="AdminEntity">
         <!-- 具体的sql -->
         SELECT id,name,password FROM t_admin WHERE id = #{id}
