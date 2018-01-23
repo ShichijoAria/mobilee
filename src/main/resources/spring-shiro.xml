@@ -9,29 +9,40 @@
         <property name="securityManager" ref="securityManager"/>
     </bean>
 
+    <bean id="adminFilter" class="edu.xhu.mobilee.shiro.RoleFilter">
+        <property name="loginUrl" value="/admin/welcome" />
+        <property name="roleType" value="admin"></property>
+    </bean>
+
+    <bean id="userFilter" class="edu.xhu.mobilee.shiro.RoleFilter">
+        <property name="loginUrl" value="/tourist/welcome" />
+        <property name="roleType" value="user"></property>
+    </bean>
+
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <!-- override these for application-specific URLs if you like:-->
-        <property name="loginUrl" value="/login.jsp"/>
+        <!--<property name="loginUrl" value="/tourist/welcome"/>
         <property name="successUrl" value="/home.jsp"/>
-        <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+        <property name="unauthorizedUrl" value="/unauthorized.jsp"/>-->
         <!-- The 'filters' property is not necessary since any declared javax.servlet.Filter bean  -->
         <!-- defined will be automatically acquired and available via its beanName in chain        -->
         <!-- definitions, but you can perform instance overrides or name aliases here if you like: -->
-        <!-- <property name="filters">
-            <util:map>
-                <entry key="anAlias" value-ref="someFilter"/>
-            </util:map>
-        </property> -->
-       <!-- <property name="filterChainDefinitions">
+        <property name="filters">
+            <map>
+                <entry key="adminFilter" value-ref="adminFilter"/>
+                <entry key="userFilter" value-ref="userFilter"/>
+            </map>
+        </property>
+        <property name="filterChainDefinitions">
             <value>
-                # some example chain definitions:
-                /admin/** = authc, roles[admin]
-                /docs/** = authc, perms[document:read]
-                /** = authc
-                # more URL-to-FilterChain definitions here
+                /tourist/login = anon
+                /tourist/** = userFilter
+                /login.jsp=anon
+                /admin/login = anon
+                /admin/**=adminFilter
             </value>
-        </property>-->
+        </property>
     </bean>
 
     <!-- 配置使用自定义认证器，可以实现多Realm认证，并且可以指定特定Realm处理特定类型的验证 -->
@@ -85,7 +96,7 @@
 
         <!-- By default the servlet container sessions will be used.  Uncomment this line
              to use shiro's native sessions (see the JavaDoc for more): -->
-        <!-- <property name="sessionMode" value="native"/> -->
+         <property name="sessionMode" value="http"/>
     </bean>
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 

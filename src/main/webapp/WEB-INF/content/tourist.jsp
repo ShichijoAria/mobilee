@@ -40,12 +40,16 @@
                 <i class="inverted circular search link icon"></i>
             </div>
         </div>
-    </div><c:if test="${sessionScope.TOURIST_ID==null}">
-    <div class="ui item right floated"><a class="item" href="<%=path%>/tourist/welcome">登录</a><div id="signUp" class="item">注册</div></div></c:if><c:if test="${sessionScope.TOURIST_ID!=null}">
+        <%
+            HttpSession session1=request.getSession();
+            System.out.println(session1.getId());
+        %>
+    </div><c:if test="${sessionScope.principal.id==null}">
+    <div class="ui item right floated"><a class="item" href="<%=path%>/tourist/welcome">登录</a><div id="signUp" class="item">注册</div></div></c:if><c:if test="${sessionScope.principal.id!=null}">
     <div class="menu right" id="personal">
         <div class="ui dropdown item">
-            <img id="headPhoto" class="ui avatar image" src="<%=path%>/upload/user/${sessionScope.TOURIST_ID}.jpg?a" onerror="javascript:this.src='<%=path%>/upload/timg.jpg'">
-            <span id="userName">${sessionScope.TOURIST_NAME}</span>
+            <img id="headPhoto" class="ui avatar image" src="<%=path%>/upload/user/${sessionScope.principal.id}.jpg?a" onerror="javascript:this.src='<%=path%>/upload/timg.jpg'">
+            <span id="userName">${sessionScope.principal.name}</span>
             <div class="menu">
                 <a class="item" modal="personalInformation"><i class="icon setting"></i> 个人信息</a>
                 <a class="item" href="<%=path%>/tourist/cancel"><i class="icon sign out"></i> 注销</a>
