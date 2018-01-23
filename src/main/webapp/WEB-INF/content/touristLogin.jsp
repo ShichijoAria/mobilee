@@ -33,7 +33,7 @@
             <div class="field">
                 <div class="ui mini left icon input">
                     <i class="user icon"></i>
-                    <input type="text" name="id" placeholder="账号">
+                    <input type="text" name="name" placeholder="账号">
                 </div>
             </div>
             <div class="field">
@@ -122,12 +122,12 @@
 
     function postLogin() {
         var point=0;
-        var id=$("input[name='id']").val();
+        var name=$("input[name='name']").val();
         var password=$("input[name='password']").val();
         var arr=[];
 
-        if(id.trim().length<=0){
-            arr.push("管理员id不能为空");
+        if(name.trim().length<=0){
+            arr.push("第一项不能为空");
             point++;
         }
         if(password.trim().length<=0){
@@ -143,7 +143,7 @@
             $('form').addClass('loading');
             $.post("<%=path%>/tourist/login",
                 {
-                    "id": id,
+                    "name": name,
                     "password": password
                 },
                 function (data, status) {

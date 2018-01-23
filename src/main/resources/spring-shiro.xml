@@ -34,7 +34,37 @@
         </property>-->
     </bean>
 
-    <bean id="myRealm" class="edu.xhu.mobilee.shiro.UserRealm"></bean>
+    <!-- 配置使用自定义认证器，可以实现多Realm认证，并且可以指定特定Realm处理特定类型的验证 -->
+    <bean id="authenticator" class="edu.xhu.mobilee.shiro.CustomizedModularRealmAuthenticator">
+        <!-- 配置认证策略，只要有一个Realm认证成功即可，并且返回所有认证成功信息 -->
+        <property name="authenticationStrategy">
+            <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"></bean>
+        </property>
+    </bean>
+
+    <bean id="userRealm" class="edu.xhu.mobilee.shiro.UserRealm">
+       <!-- &lt;!&ndash; 配置密码匹配器 &ndash;&gt;
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                &lt;!&ndash; 加密算法为MD5 &ndash;&gt;
+                <property name="hashAlgorithmName" value="MD5"></property>
+                &lt;!&ndash; 加密次数 &ndash;&gt;
+                <property name="hashIterations" value="1024"></property>
+            </bean>
+        </property>-->
+    </bean>
+
+    <bean id="adminRealm" class="edu.xhu.mobilee.shiro.AdminRealm">
+        <!--&lt;!&ndash; 配置密码匹配器 &ndash;&gt;
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                &lt;!&ndash; 加密算法为MD5 &ndash;&gt;
+                <property name="hashAlgorithmName" value="MD5"></property>
+                &lt;!&ndash; 加密次数 &ndash;&gt;
+                <property name="hashIterations" value="1024"></property>
+            </bean>
+        </property>-->
+    </bean>
     <!-- Define any javax.servlet.Filter beans you want anywhere in this application context.   -->
     <!-- They will automatically be acquired by the 'shiroFilter' bean above and made available -->
     <!-- to the 'filterChainDefinitions' property.  Or you can manually/explicitly add them     -->
@@ -45,7 +75,13 @@
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <!-- Single realm app.  If you have multiple realms, use the 'realms' property instead.-->
-        <property name="realm" ref="myRealm"/>
+        <property name="authenticator" ref="authenticator"></property>
+        <property name="realms">
+            <list>
+                <ref bean="userRealm" />
+                <ref bean="adminRealm"/>
+            </list>
+        </property>
 
         <!-- By default the servlet container sessions will be used.  Uncomment this line
              to use shiro's native sessions (see the JavaDoc for more): -->

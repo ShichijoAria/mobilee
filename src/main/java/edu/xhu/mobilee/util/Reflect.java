@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 public class Reflect {
     public static Object getEntity(CustomizedToken customizedToken) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Object object=new Object();
-        if(customizedToken.getLoginType().equals("user"))
+        if(customizedToken.getLoginType().equals("User"))
             object=new UserEntity();
         else
             object=new AdminEntity();

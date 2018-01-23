@@ -43,7 +43,7 @@ public class TouristController {
     private CollectionService collectionService;
 
     private String shiroLogin(UserEntity userEntity) {
-        CustomizedToken customizedToken = new CustomizedToken(userEntity.getName(), userEntity.getPassword().toCharArray(),"user");
+        CustomizedToken customizedToken = new CustomizedToken(userEntity.getName(), userEntity.getPassword().toCharArray(),"User");
         try {
             SecurityUtils.getSubject().login(customizedToken);
         } catch (UnknownAccountException ex) {
@@ -51,7 +51,8 @@ public class TouristController {
         } catch (IncorrectCredentialsException ex) {
             return "用户不存在或者密码错误！";
         } catch (AuthenticationException ex) {
-            return ex.getMessage(); // 自定义报错信息
+            ex.printStackTrace(); // 自定义报错信息
+            return "AuthenticationException";
         } catch (Exception ex) {
             ex.printStackTrace();
             return "内部错误，请重试！";
@@ -82,17 +83,15 @@ public class TouristController {
 
     @RequestMapping(value = "login",method = RequestMethod.POST)
     @ResponseBody
-    public Map login(@RequestParam(value = "id",defaultValue = "0") long id, @RequestParam("password") String password, HttpSession session) {
+    public Map login(@RequestParam(value = "name") String name, @RequestParam("password") String password, UserEntity userEntity) {
         Map<String,Object> dataMap = new HashMap<String, Object>();
         String msg=null;
-        if(id>0) {
+        if(name!=null) {
             if (password != null && password.trim().length() < 6) {
                 msg = "用户密码不应少于6位";
             } else {
-                UserEntity temp = new UserEntity();
-                temp.setId(id);
-                temp.setPassword(password);
-                if (this.userLogin(temp) == "SUCCESS") {
+                String flag=this.userLogin(userEntity);
+                if (flag.equals("SUCCESS")) {
                     msg = "success";
                 }
             }
