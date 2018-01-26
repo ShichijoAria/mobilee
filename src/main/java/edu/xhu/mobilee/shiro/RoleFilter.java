@@ -18,7 +18,8 @@ public class RoleFilter extends UserFilter{
             Subject subject = this.getSubject(request, response);
             if(subject.getPrincipal() == null)
                 return false;
-            return subject.hasRole(roleType);
+            boolean flag=subject.hasRole(roleType);
+            return flag;
         }
     }
 

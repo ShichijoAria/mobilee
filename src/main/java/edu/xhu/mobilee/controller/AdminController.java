@@ -3,9 +3,12 @@ package edu.xhu.mobilee.controller;
 import edu.xhu.mobilee.entity.AdminEntity;
 import edu.xhu.mobilee.service.AdminService;
 import edu.xhu.mobilee.service.ProcedureService;
-import edu.xhu.mobilee.util.Field;
+import edu.xhu.mobilee.shiro.CustomizedToken;
 import edu.xhu.mobilee.util.Proper;
+import edu.xhu.mobilee.util.ShiroMessage;
 import edu.xhu.mobilee.util.Upload;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,32 +47,8 @@ public class AdminController {
      */
     @RequestMapping(value = "login",method = RequestMethod.POST)
     @ResponseBody
-    public Map login(@RequestParam(value = "id",defaultValue = "0") long id, @RequestParam("password") String password, HttpSession session) {
-        Map<String,Object> dataMap = new HashMap<String, Object>();
-        boolean flag=false;
-        String msg;
-        if(id>0) {
-            if (password != null && password.trim().length() < 6) {
-                msg = "管理员密码不应少于6位";
-            } else {
-                AdminEntity temp = adminService.findAdminById(id);
-                if (temp != null && password.equals(temp.getPassword())) {
-                    flag = true;
-                }
-                if (flag) {
-                    session.setAttribute("USER_ID", temp.getId());
-                    session.setAttribute("USER_NAME", temp.getName());
-                    session.setAttribute("USER_PASSWORD", temp.getPassword());
-                    msg = "success";
-                } else {
-                    msg = "用户名或密码不正确";
-                }
-            }
-        }else {
-            msg="不合法的数据";
-        }
-        dataMap.put("msg", msg);
-        return dataMap;
+    public Map login(@RequestParam(value = "name") String name, @RequestParam("password") String password) {
+        return ShiroMessage.login(SecurityUtils.getSubject(),name,password,"Admin");
     }
 
     @RequestMapping("cancel")

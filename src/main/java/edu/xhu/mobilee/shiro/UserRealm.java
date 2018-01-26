@@ -30,7 +30,7 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         Set<String> roles=new HashSet<String>();
-        roles.add("user");
+        roles.add("frontUser");
         info.setRoles(roles);
         return info;
     }

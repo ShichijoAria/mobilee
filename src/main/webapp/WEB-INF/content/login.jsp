@@ -33,7 +33,7 @@
             <div class="field">
                 <div class="ui mini left icon input">
                     <i class="user icon"></i>
-                    <input type="text" name="id" placeholder="账号" onkeyup="return validateInteger($(this),value)" onchange="return validateInteger($(this),value)">
+                    <input type="text" name="name" placeholder="账号">
                 </div>
             </div>
             <div class="field">
@@ -122,11 +122,11 @@
 
     function postLogin() {
         var point=0;
-        var id=$("input[name='id']").val();
+        var name=$("input[name='name']").val();
         var password=$("input[name='password']").val();
         var arr=[];
 
-        if(id.trim().length<=0){
+        if(name.trim().length<=0){
             arr.push("管理员id不能为空");
             point++;
         }
@@ -143,7 +143,7 @@
             $('form').addClass('loading');
             $.post("<%=path%>/admin/login",
                 {
-                    "id": id,
+                    "name": name,
                     "password": password
                 },
                 function (data, status) {
@@ -162,7 +162,7 @@
             showError(arr);
         }
     }
-    
+
     //线条：开始xy坐标，结束xy坐标，线条透明度
     function Line (x, y, _x, _y, o) {
         this.beginX = x,

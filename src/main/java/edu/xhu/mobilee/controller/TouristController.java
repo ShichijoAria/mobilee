@@ -6,6 +6,7 @@ import edu.xhu.mobilee.entity.MobilePhoneEntity;
 import edu.xhu.mobilee.entity.UserEntity;
 import edu.xhu.mobilee.service.*;
 import edu.xhu.mobilee.shiro.CustomizedToken;
+import edu.xhu.mobilee.util.ShiroMessage;
 import edu.xhu.mobilee.util.Upload;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -43,38 +44,6 @@ public class TouristController {
     @Autowired
     private CollectionService collectionService;
 
-    private String shiroLogin(UserEntity userEntity) {
-        CustomizedToken customizedToken = new CustomizedToken(userEntity.getName(), userEntity.getPassword().toCharArray(),"User");
-        try {
-            SecurityUtils.getSubject().login(customizedToken);
-        } catch (UnknownAccountException ex) {
-            return "用户不存在或者密码错误！";
-        } catch (IncorrectCredentialsException ex) {
-            return "用户不存在或者密码错误！";
-        } catch (AuthenticationException ex) {
-            ex.printStackTrace(); // 自定义报错信息
-            return "AuthenticationException";
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return "内部错误，请重试！";
-        }
-        return "SUCCESS";
-    }
-
-    private boolean isLogin(UserEntity userEntity) {
-        Subject us = SecurityUtils.getSubject();
-        if (us.isAuthenticated()) {
-            return true; // 参数未改变，无需重新登录，默认为已经登录成功
-        }
-        return false; // 需要重新登陆
-    }
-
-    private String userLogin(UserEntity userEntity) {
-        if (this.isLogin(userEntity))
-            return "SUCCESS";
-        return shiroLogin(userEntity);
-    }
-
     @RequestMapping("welcome")
     public ModelAndView welcome(){
         ModelAndView modelAndView = new ModelAndView();
@@ -84,23 +53,8 @@ public class TouristController {
 
     @RequestMapping(value = "login",method = RequestMethod.POST)
     @ResponseBody
-    public Map login(@RequestParam(value = "name") String name, @RequestParam("password") String password, UserEntity userEntity) {
-        Map<String,Object> dataMap = new HashMap<String, Object>();
-        String msg=null;
-        if(name!=null) {
-            if (password != null && password.trim().length() < 6) {
-                msg = "用户密码不应少于6位";
-            } else {
-                String flag=this.userLogin(userEntity);
-                if (flag.equals("SUCCESS")) {
-                    msg = "success";
-                }
-            }
-        }else {
-            msg="不合法的数据";
-        }
-        dataMap.put("msg", msg);
-        return dataMap;
+    public Map login(@RequestParam(value = "name") String name, @RequestParam("password") String password) {
+        return ShiroMessage.login(SecurityUtils.getSubject(),name,password,"User");
     }
 
     @RequestMapping("cancel")

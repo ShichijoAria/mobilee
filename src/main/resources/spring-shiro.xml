@@ -16,7 +16,7 @@
 
     <bean id="userFilter" class="edu.xhu.mobilee.shiro.RoleFilter">
         <property name="loginUrl" value="/tourist/welcome" />
-        <property name="roleType" value="user"></property>
+        <property name="roleType" value="frontUser"></property>
     </bean>
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
