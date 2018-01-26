@@ -5,15 +5,15 @@
 <mapper namespace="edu.xhu.mobilee.dao.UserDao">
 
     <resultMap type="UserEntity" id="user">
-        <id property="id" column="t_id" />
-        <result property="name" column="t_name" />
-        <result property="password" column="t_password" />
-        <result property="gender" column="t_gender" />
-        <result property="created" column="t_created"/>
-        <result property="birthday" column="t_birthday"/>
-        <result property="phone" column="t_phone"/>
-        <result property="email" column="t_email"/>
-        <result property="edition" column="t_edition"/>
+        <id property="id" column="__id" />
+        <result property="name" column="__name" />
+        <result property="password" column="__password" />
+        <result property="gender" column="__gender" />
+        <result property="created" column="__created"/>
+        <result property="birthday" column="__birthday"/>
+        <result property="phone" column="__phone"/>
+        <result property="email" column="__email"/>
+        <result property="edition" column="__edition"/>
     </resultMap>
 
     <insert id="insertUser" parameterType="UserEntity" keyProperty="id">
@@ -28,7 +28,7 @@
         ]]>
     </select>
 
-    <select id="findUserById" parameterType="long" resultMap="user">
+    <select id="findUserById" parameterType="long" resultType="UserEntity">
         SELECT
             id,
             name,
@@ -41,6 +41,51 @@
             edition
         FROM t_user
         WHERE id = #{id}
+    </select>
+
+    <select id="findUserByName" parameterType="String" resultType="UserEntity">
+        SELECT
+        id,
+        name,
+        password,
+        gender,
+        created,
+        birthday,
+        phone,
+        email,
+        edition
+        FROM t_user
+        WHERE name = #{name}
+    </select>
+
+    <select id="findUserByEmail" parameterType="String" resultType="UserEntity">
+        SELECT
+        id,
+        name,
+        password,
+        gender,
+        created,
+        birthday,
+        phone,
+        email,
+        edition
+        FROM t_user
+        WHERE email = #{email}
+    </select>
+
+    <select id="findUserByPhone" parameterType="String" resultType="UserEntity">
+        SELECT
+        id,
+        name,
+        password,
+        gender,
+        created,
+        birthday,
+        phone,
+        email,
+        edition
+        FROM t_user
+        WHERE phonr = #{phone}
     </select>
 
     <update id="updateUserById" parameterType="UserEntity">

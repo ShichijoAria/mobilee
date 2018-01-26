@@ -54,27 +54,27 @@
     </bean>
 
     <bean id="userRealm" class="edu.xhu.mobilee.shiro.UserRealm">
-       <!-- &lt;!&ndash; 配置密码匹配器 &ndash;&gt;
+        <!-- 配置密码匹配器 -->
         <property name="credentialsMatcher">
             <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-                &lt;!&ndash; 加密算法为MD5 &ndash;&gt;
+                <!-- 加密算法为MD5 -->
                 <property name="hashAlgorithmName" value="MD5"></property>
-                &lt;!&ndash; 加密次数 &ndash;&gt;
+                <!-- 加密次数 -->
                 <property name="hashIterations" value="1024"></property>
             </bean>
-        </property>-->
+        </property>
     </bean>
 
     <bean id="adminRealm" class="edu.xhu.mobilee.shiro.AdminRealm">
-        <!--&lt;!&ndash; 配置密码匹配器 &ndash;&gt;
+        <!-- 配置密码匹配器 -->
         <property name="credentialsMatcher">
             <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-                &lt;!&ndash; 加密算法为MD5 &ndash;&gt;
+                <!-- 加密算法为MD5 -->
                 <property name="hashAlgorithmName" value="MD5"></property>
-                &lt;!&ndash; 加密次数 &ndash;&gt;
+                <!-- 加密次数 -->
                 <property name="hashIterations" value="1024"></property>
             </bean>
-        </property>-->
+        </property>
     </bean>
     <!-- Define any javax.servlet.Filter beans you want anywhere in this application context.   -->
     <!-- They will automatically be acquired by the 'shiroFilter' bean above and made available -->

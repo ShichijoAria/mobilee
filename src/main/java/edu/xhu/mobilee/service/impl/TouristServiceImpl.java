@@ -5,6 +5,7 @@ import edu.xhu.mobilee.entity.CollectionEntity;
 import edu.xhu.mobilee.entity.MobilePhoneEntity;
 import edu.xhu.mobilee.entity.UserEntity;
 import edu.xhu.mobilee.service.TouristService;
+import edu.xhu.mobilee.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,12 +59,13 @@ public class TouristServiceImpl implements TouristService{
     }
 
     @Override
-    public UserEntity userLogin(UserEntity userEntity) {
-        if (userEntity.getName()!=null)
-            return userDao.userLogin(userEntity.getName(),userEntity.getPassword(),0);
-        else if (userEntity.getPhone()!=null)
-            return userDao.userLogin(userEntity.getPhone(),userEntity.getPassword(),0);
-        else
-            return userDao.userLogin(userEntity.getEmail(),userEntity.getPassword(),0);
+    public UserEntity findUserByLoginInfo(String temp) {
+        if(Validator.isMobile(temp)) {
+           return userDao.findUserByPhone(temp);
+        } else if(Validator.isEmail(temp)){
+            return userDao.findUserByEmail(temp);
+        }else {
+            return userDao.findUserByName(temp);
+        }
     }
 }

@@ -10,6 +10,12 @@ public interface AdminDao {
 
     AdminEntity findAdminById(long id);
 
+    AdminEntity findAdminByName(String name);
+
+    AdminEntity findAdminByPhone(String phone);
+
+    AdminEntity findAdminByEmail(String email);
+
     int updateAdminById(AdminEntity adminEntity);
 
     Map<String,Object> CountTableRows();

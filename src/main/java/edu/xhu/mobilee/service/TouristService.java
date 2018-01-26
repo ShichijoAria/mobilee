@@ -12,5 +12,5 @@ public interface TouristService {
 
     long register(UserEntity userEntity);
 
-    UserEntity userLogin(UserEntity userEntity);
+    UserEntity findUserByLoginInfo(String temp);
 }

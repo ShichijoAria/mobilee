@@ -15,4 +15,6 @@ public interface AdminService {
     Map<String,Object> getStatistics();
 
     AdminEntity adminLogin(AdminEntity adminEntity);
+
+    AdminEntity findAdminByLoginInfo(String temp);
 }

@@ -4,6 +4,7 @@ import edu.xhu.mobilee.dao.AdminDao;
 import edu.xhu.mobilee.dao.ProcedureDao;
 import edu.xhu.mobilee.entity.AdminEntity;
 import edu.xhu.mobilee.service.AdminService;
+import edu.xhu.mobilee.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +46,17 @@ public class AdminServiceImpl implements AdminService{
             return adminDao.adminLogin(adminEntity.getPhone(),adminEntity.getPassword(),0);
         else
             return adminDao.adminLogin(adminEntity.getEmail(),adminEntity.getPassword(),0);
+    }
+
+    @Override
+    public AdminEntity findAdminByLoginInfo(String temp) {
+        if(Validator.isMobile(temp)) {
+            return adminDao.findAdminByPhone(temp);
+        } else if(Validator.isEmail(temp)){
+            return adminDao.findAdminByEmail(temp);
+        }else {
+            return adminDao.findAdminByName(temp);
+        }
     }
 
 }

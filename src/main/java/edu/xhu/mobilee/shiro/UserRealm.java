@@ -13,6 +13,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.InvocationTargetException;
@@ -36,28 +37,13 @@ public class UserRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        // 把token转换成User对象
-        UserEntity userLogin = null;
-        try {
-            userLogin = (UserEntity) Reflect.getEntity((CustomizedToken)authenticationToken);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        // 验证用户是否可以登录
-        Session session=SecurityUtils.getSubject().getSession();
-        UserEntity principal = touristService.userLogin(userLogin);
+        UserEntity principal = null;
+        principal = touristService.findUserByLoginInfo(authenticationToken.getPrincipal().toString());
         if(principal == null)
             throw new UnknownAccountException("用户不存在或密码错误！");
-        else {
-            principal.setPassword(null);
-            session.setAttribute(SESSION_USER_KEY,principal);
-        }
         //当前 Realm 的 name
         String realmName = this.getName();
-        return new SimpleAuthenticationInfo(principal, userLogin.getPassword(), realmName);
+        return new SimpleAuthenticationInfo(principal, principal.getPassword()
+                , ByteSource.Util.bytes(String.valueOf(principal.getId())+"user"),realmName);
     }
 }

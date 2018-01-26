@@ -5,14 +5,14 @@
 <mapper namespace="edu.xhu.mobilee.dao.AdminDao">
 
     <resultMap type="AdminEntity" id="admin">
-        <id property="id" column="id" />
-        <result property="name" column="name" />
-        <result property="password" column="password" />
-        <result property="gender" column="t_gender" />
-        <result property="created" column="t_created"/>
-        <result property="phone" column="t_phone"/>
-        <result property="email" column="t_email"/>
-        <result property="edition" column="t_edition"/>
+        <id property="id" column="__id" />
+        <result property="name" column="__name" />
+        <result property="password" column="__password" />
+        <result property="gender" column="__gender" />
+        <result property="created" column="__created"/>
+        <result property="phone" column="__phone"/>
+        <result property="email" column="__email"/>
+        <result property="edition" column="__edition"/>
     </resultMap>
     <!-- 目的：为dao接口方法提供sql语句配置 -->
 
@@ -27,6 +27,21 @@
     <select id="findAdminById" parameterType="long" resultType="AdminEntity">
         <!-- 具体的sql -->
         SELECT id,name,password FROM t_admin WHERE id = #{id}
+    </select>
+
+    <select id="findAdminByName" parameterType="String" resultType="AdminEntity">
+        <!-- 具体的sql -->
+        SELECT id,name,password FROM t_admin WHERE name = #{name}
+    </select>
+
+    <select id="findAdminByPhone" parameterType="String" resultType="AdminEntity">
+        <!-- 具体的sql -->
+        SELECT id,name,password FROM t_admin WHERE phone = #{phone}
+    </select>
+
+    <select id="findAdminByEmail" parameterType="String" resultType="AdminEntity">
+        <!-- 具体的sql -->
+        SELECT id,name,password FROM t_admin WHERE email = #{email}
     </select>
 
     <update id="updateAdminById" parameterType="AdminEntity">

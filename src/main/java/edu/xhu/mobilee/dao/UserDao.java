@@ -11,6 +11,12 @@ public interface UserDao {
 
     UserEntity findUserById(long id);
 
+    UserEntity findUserByName(String name);
+
+    UserEntity findUserByEmail(String email);
+
+    UserEntity findUserByPhone(String phone);
+
     int updateUserById(UserEntity userEntity);
 
     int deleteUser(List<String> id);
