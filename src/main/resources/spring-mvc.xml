@@ -58,14 +58,14 @@
     <bean id="dateConvert" class="edu.xhu.mobilee.util.DateConvert"/>
 
 
-<!--    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <props>
                 <prop key="java.sql.SQLException">500Page</prop>
                 <prop key="java.io.IOException">500Page</prop>
             </props>
         </property>
-    </bean>-->
+    </bean>
 
     <!--这里是对静态资源的映射-->
     <!--<mvc:resources mapping="/dist/**" location="/dist/" />

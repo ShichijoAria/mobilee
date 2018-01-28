@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+//已废弃，由shiro代替
 public class LoginInterceptor implements HandlerInterceptor {
 
     /**
