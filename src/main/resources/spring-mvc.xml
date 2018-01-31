@@ -12,7 +12,7 @@
     <!-- 启动注解驱动的spring MVC功能,注册请求url和注解POJO类方法的映射-->
     <mvc:annotation-driven />
     <!-- 对模型视图名称的解析,在请求时模型视图名称添加前后缀 -->
-    <context:component-scan base-package="edu.xhu.mobilee.controller" />
+    <context:component-scan base-package="org.yorha.mobilee.controller" />
 
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
@@ -55,7 +55,7 @@
     </bean>
 
     <!-- 自定义日期转换规则 -->
-    <bean id="dateConvert" class="edu.xhu.mobilee.util.DateConvert"/>
+    <bean id="dateConvert" class="org.yorha.mobilee.util.DateConvert"/>
 
 
     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">

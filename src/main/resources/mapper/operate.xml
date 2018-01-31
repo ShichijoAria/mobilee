@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="edu.xhu.mobilee.dao.OperateDao">
+<mapper namespace="org.yorha.mobilee.dao.OperateDao">
 
     <select id="findOperateById" parameterType="long" resultMap="operateResult">
         SELECT o.id o_id,o.created o_created,o.remark o_remark,a.name a_name,u.name u_name

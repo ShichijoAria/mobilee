@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="edu.xhu.mobilee.dao.SellDao">
+<mapper namespace="org.yorha.mobilee.dao.SellDao">
 
     <select id="findSellById" resultMap="sellResult">
         SELECT se.id se_id,se.price se_price,se.created se_created, mo.id mo_id,sa.id sa_id,a.name a_name,se.edtion se_edition

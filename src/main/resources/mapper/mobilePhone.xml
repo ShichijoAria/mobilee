@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="edu.xhu.mobilee.dao.MobilePhoneDao">
+<mapper namespace="org.yorha.mobilee.dao.MobilePhoneDao">
 
     <select id="selectNewMobilePhone" parameterType="long" resultType="HashMap">
         SELECT id,name FROM t_mobile_phone ORDER BY id DESC LIMIT 0, 10

@@ -9,12 +9,12 @@
         <property name="securityManager" ref="securityManager"/>
     </bean>
 
-    <bean id="adminFilter" class="edu.xhu.mobilee.shiro.RoleFilter">
+    <bean id="adminFilter" class="org.yorha.mobilee.shiro.RoleFilter">
         <property name="loginUrl" value="/admin/welcome" />
         <property name="roleType" value="admin"></property>
     </bean>
 
-    <bean id="userFilter" class="edu.xhu.mobilee.shiro.RoleFilter">
+    <bean id="userFilter" class="org.yorha.mobilee.shiro.RoleFilter">
         <property name="loginUrl" value="/tourist/welcome" />
         <property name="roleType" value="frontUser"></property>
     </bean>
@@ -46,14 +46,14 @@
     </bean>
 
     <!-- 配置使用自定义认证器，可以实现多Realm认证，并且可以指定特定Realm处理特定类型的验证 -->
-    <bean id="authenticator" class="edu.xhu.mobilee.shiro.CustomizedModularRealmAuthenticator">
+    <bean id="authenticator" class="org.yorha.mobilee.shiro.CustomizedModularRealmAuthenticator">
         <!-- 配置认证策略，只要有一个Realm认证成功即可，并且返回所有认证成功信息 -->
         <property name="authenticationStrategy">
             <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"></bean>
         </property>
     </bean>
 
-    <bean id="userRealm" class="edu.xhu.mobilee.shiro.UserRealm">
+    <bean id="userRealm" class="org.yorha.mobilee.shiro.UserRealm">
         <!-- 配置密码匹配器 -->
         <property name="credentialsMatcher">
             <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
@@ -65,7 +65,7 @@
         </property>
     </bean>
 
-    <bean id="adminRealm" class="edu.xhu.mobilee.shiro.AdminRealm">
+    <bean id="adminRealm" class="org.yorha.mobilee.shiro.AdminRealm">
         <!-- 配置密码匹配器 -->
         <property name="credentialsMatcher">
             <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">

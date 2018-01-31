@@ -1,12 +1,12 @@
-package edu.xhu.test;
+package org.yorha.test;
 
 import javax.annotation.Resource;
 
 import com.alibaba.fastjson.JSON;
-import edu.xhu.mobilee.dao.*;
-import edu.xhu.mobilee.entity.*;
-import edu.xhu.mobilee.service.CollectionService;
-import edu.xhu.mobilee.service.MobilePhoneService;
+import org.yorha.mobilee.dao.*;
+import org.yorha.mobilee.entity.*;
+import org.yorha.mobilee.service.CollectionService;
+import org.yorha.mobilee.service.MobilePhoneService;
 import org.apache.log4j.Logger;
 import org.junit.Test;  
 import org.junit.runner.RunWith;
@@ -15,7 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 

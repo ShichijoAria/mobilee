@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="edu.xhu.mobilee.dao.SaleDao">
+<mapper namespace="org.yorha.mobilee.dao.SaleDao">
 
     <select id="selectSaleByMobilePhoneId" parameterType="long" resultType="HashMap">
         SELECT sa.id,sa.name,sa.address,se.price,sa.phone FROM t_sale sa JOIN t_sell se ON se.sale=sa.id JOIN t_mobile_phone mo ON mo.id=se.mobile_phone AND mo.id=#{id} LIMIT 0,10;

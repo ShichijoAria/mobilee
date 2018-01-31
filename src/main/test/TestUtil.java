@@ -1,9 +1,9 @@
-package edu.xhu.test;
+package org.yorha.test;
 
-import edu.xhu.mobilee.entity.AdminEntity;
-import edu.xhu.mobilee.entity.UserEntity;
-import edu.xhu.mobilee.shiro.CustomizedToken;
-import edu.xhu.mobilee.util.Reflect;
+import org.yorha.mobilee.entity.AdminEntity;
+import org.yorha.mobilee.entity.UserEntity;
+import org.yorha.mobilee.shiro.CustomizedToken;
+import org.yorha.mobilee.util.Reflect;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

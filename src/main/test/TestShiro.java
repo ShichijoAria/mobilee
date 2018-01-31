@@ -1,10 +1,10 @@
-package edu.xhu.test;
+package org.yorha.test;
 
 
-import edu.xhu.mobilee.dao.AdminDao;
-import edu.xhu.mobilee.dao.UserDao;
-import edu.xhu.mobilee.entity.AdminEntity;
-import edu.xhu.mobilee.entity.UserEntity;
+import org.yorha.mobilee.dao.AdminDao;
+import org.yorha.mobilee.dao.UserDao;
+import org.yorha.mobilee.entity.AdminEntity;
+import org.yorha.mobilee.entity.UserEntity;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.junit.Test;
