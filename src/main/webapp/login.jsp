@@ -18,47 +18,14 @@
     <script src="<%=path%>/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="<%=path%>/dist/semantic.css">
     <script src="<%=path%>/dist/semantic.min.js"></script>
-    <link rel="stylesheet" href="<%=path%>/css/login.css">
-    <script src="<%=path%>/js/util.js"></script>
+    <script src="<%=path%>/dist/vue.js"></script>
+
+
 </head>
 <body>
 
-<div class="ui middle aligned center centered grid" id="myContainer" action>
-    <div id="login" class="six wide column">
-        <h2 class="ui center aligned icon header">
-            <i class="circular mobile icon"></i>
-            MobileE
-        </h2>
-        <form id="loginForm" class="ui large form" action="">
-            <div class="field">
-                <div class="ui mini left icon input">
-                    <i class="user icon"></i>
-                    <input type="text" name="name" placeholder="账号">
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui left icon mini input">
-                    <i class="lock icon"></i>
-                    <input type="password" name="password" placeholder="密码">
-                </div>
-            </div>
-            <div class="ui fluid large blue button" onclick="login()">登录</div>
-            <div class="ui error message">
-                <ul class="list"></ul>
-            </div>
-            <div id="message" class="ui message">
-                <a href="javascript:void(0);">忘记密码？</a>
-            </div>
-        </form>
-    </div>
-    <div id="picture" class="computer only ten wide column" style="height: 100%">
-        <div class="content" style="margin-top: 30%;">
-            <h2 class="ui header" style="height:100%;line-height: 100%;vertical-align: middle;color: white;margin-left: 5%;font-weight: 100">
-                智能化OS
-                <div class="sub header" style="color: white;margin-left: 15%">欢迎使用MobileE后台管理系统</div>
-            </h2>
-        </div>
-    </div>
+<div id="myContainer">
+    {{ message }}
 </div>
 
 <canvas id="myCanvas"></canvas>
@@ -95,74 +62,6 @@
         }, 16);
     }
 
-    /*重设布局*/
-    reLayout();
-    $(window).resize(function(){
-        reLayout();
-    });
-
-    $(function(){
-        document.onkeydown = function(e){
-            var ev = document.all ? window.event : e;
-            if(ev.keyCode==13) {
-                postLogin();
-                reLayout();
-            }
-        }
-    });//监听回车事件
-
-    function login() {
-        postLogin();
-        reLayout();
-    };
-
-    function reLayout() {
-        $('#picture').outerHeight($('#login').outerHeight());//右侧框高度随动左侧
-    }
-
-    function postLogin() {
-        var point=0;
-        var name=$("input[name='name']").val();
-        var password=$("input[name='password']").val();
-        var arr=[];
-
-        if(name.trim().length<=0){
-            arr.push("管理员id不能为空");
-            point++;
-        }
-        if(password.trim().length<=0){
-            arr.push("管理员密码不能为空");
-            point++;
-        }else if(password.trim().length<6){
-            arr.push("管理员密码不能少于6位");
-            point++;
-        }
-
-        if(point==0) {
-            $('.ui.error.message').css("display","none");
-            $('form').addClass('loading');
-            $.post("<%=path%>/admin/login",
-                {
-                    "name": name,
-                    "password": password
-                },
-                function (data, status) {
-                    $('form').removeClass('loading');
-                    if (status != "success") {
-                        showError(["无法连接服务器"]);
-                    }else {
-                        if(data.msg=="success"){
-                            window.location.href="<%=path%>/admin/index"
-                        }else {
-                            showError([data.msg]);
-                        }
-                    }
-                });
-        }else {
-            showError(arr);
-        }
-    }
-    
     //线条：开始xy坐标，结束xy坐标，线条透明度
     function Line (x, y, _x, _y, o) {
         this.beginX = x,
@@ -234,5 +133,6 @@
         }
     }
 </script>
+<script src="<%=path%>/vue/login.js"></script>
 </body>
 </html>
